@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandstone Growth Advisors</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #C8A97E;
+    --sand-light: #E8D5B7;
+    --sand-pale: #F5EDE0;
+    --ocean-deep: #0D2B3E;
+    --ocean-mid: #1A4A6B;
+    --ocean-teal: #2E7DA8;
+    --ocean-light: #5BA3C9;
+    --seafoam: #A8D5E2;
+    --white: #FDFAF6;
+    --text-dark: #0D1F2D;
+    --text-mid: #3A5268;
+    --text-light: #7A9BB5;
+    --border: rgba(200,169,126,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5%;
+    background: rgba(13,43,62,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,169,126,0.2);
+    transition: all 0.3s;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--sand-light);
+    letter-spacing: 0.04em;
+    cursor: pointer;
+  }
+  .nav-logo span { color: var(--sand); }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: rgba(232,213,183,0.75);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--sand); }
+
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--sand);
+    color: var(--sand);
+    padding: 0.55rem 1.4rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.25s;
+  }
+  .nav-cta:hover { background: var(--sand); color: var(--ocean-deep); }
+
+  /* ── HERO ── */
+  #home {
+    min-height: 100vh;
+    background: var(--ocean-deep);
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-ocean {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 45%;
+    overflow: hidden;
+  }
+
+  .wave {
+    position: absolute; bottom: 0; left: -10%; width: 120%;
+    animation: waveMove linear infinite;
+  }
+  .wave svg { width: 100%; }
+  .wave-1 { animation-duration: 8s; opacity: 0.6; }
+  .wave-2 { animation-duration: 11s; opacity: 0.4; animation-direction: reverse; bottom: 15px; }
+  .wave-3 { animation-duration: 14s; opacity: 0.25; bottom: 25px; }
+
+  @keyframes waveMove {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-5%); }
+    100% { transform: translateX(0); }
+  }
+
+  /* Subtle star/particle field */
+  .particles {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    overflow: hidden; pointer-events: none;
+  }
+  .particle {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: var(--sand-light);
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle var(--d) ease-in-out infinite var(--delay);
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 0.6; transform: scale(1); }
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 5%;
+    max-width: 900px;
+    margin-top: 80px;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sand);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: block; width: 50px; height: 1px;
+    background: var(--sand); opacity: 0.5;
+  }
+
+  .hero-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.08;
+    margin-bottom: 1.8rem;
+  }
+  .hero-h1 em {
+    font-style: italic;
+    color: var(--sand-light);
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: rgba(168,213,226,0.75);
+    max-width: 520px;
+    line-height: 1.75;
+    margin-bottom: 2.8rem;
+    font-weight: 300;
+  }
+
+  .hero-actions { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--sand);
+    color: var(--ocean-deep);
+    border: none;
+    padding: 1rem 2.2rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .btn-primary:hover { background: var(--sand-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    border: none;
+    color: var(--sand-light);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--sand); }
+  .btn-ghost::after { content: '→'; transition: transform 0.2s; }
+  .btn-ghost:hover::after { transform: translateX(4px); }
+
+  .hero-stats {
+    position: absolute; right: 5%; bottom: 15%;
+    display: flex; flex-direction: column; gap: 1.5rem;
+    z-index: 2;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(200,169,126,0.2);
+    backdrop-filter: blur(10px);
+    padding: 1.2rem 1.8rem;
+    text-align: right;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--sand);
+  }
+  .stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-top: 0.2rem;
+  }
+
+  /* ── SECTION WRAPPER ── */
+  section { padding: 7rem 5%; }
+
+  .section-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ocean-teal);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-tag::before {
+    content: '';
+    display: block; width: 30px; height: 1px;
+    background: var(--ocean-teal);
+  }
+
+  .section-h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--ocean-deep);
+    margin-bottom: 1.5rem;
+  }
+  .section-h2 em { font-style: italic; color: var(--ocean-teal); }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .about-visual {
+    position: relative;
+    height: 520px;
+  }
+  .about-img-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-mid) 60%, var(--ocean-teal) 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+
+  /* Geometric wave art */
+  .geo-art svg { width: 100%; height: 100%; }
+
+  .about-badge {
+    position: absolute;
+    bottom: -1.5rem; right: -1.5rem;
+    background: var(--sand);
+    color: var(--ocean-deep);
+    padding: 1.5rem 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    text-align: center;
+  }
+  .about-badge .big { font-size: 2.5rem; font-weight: 600; display: block; }
+  .about-badge .small { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  .about-text p {
+    color: var(--text-mid);
+    line-height: 1.85;
+    margin-bottom: 1.2rem;
+    font-weight: 300;
+    font-size: 0.95rem;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.8rem;
+    margin-top: 2.5rem;
+  }
+  .team-member {
+    background: var(--sand-pale);
+    border: 1px solid var(--border);
+    padding: 1rem 0.8rem;
+    text-align: center;
+    transition: all 0.25s;
+    cursor: default;
+  }
+  .team-member:hover {
+    background: var(--ocean-deep);
+    border-color: var(--ocean-deep);
+  }
+  .team-member:hover .member-name { color: var(--sand-light); }
+  .team-member:hover .member-role { color: var(--seafoam); }
+  .member-initials {
+    width: 42px; height: 42px;
+    background: var(--ocean-mid);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem;
+    color: var(--sand-light);
+    font-weight: 500;
+    margin: 0 auto 0.6rem;
+    letter-spacing: 0.04em;
+  }
+  .team-member:hover .member-initials { background: var(--sand); color: var(--ocean-deep); }
+  .member-name {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--ocean-deep);
+    letter-spacing: 0.04em;
+    transition: color 0.25s;
+  }
+  .member-role {
+    font-size: 0.58rem;
+    color: var(--text-light);
+    margin-top: 0.2rem;
+    line-height: 1.4;
+    transition: color 0.25s;
+  }
+
+  /* ── SERVICES ── */
+  #services {
+    background: var(--ocean-deep);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .services-bg-decor {
+    position: absolute; top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(46,125,168,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  #services .section-tag { color: var(--sand); }
+  #services .section-tag::before { background: var(--sand); }
+  #services .section-h2 { color: var(--white); }
+  #services .section-h2 em { color: var(--seafoam); }
+
+  .services-intro {
+    color: rgba(168,213,226,0.7);
+    font-weight: 300;
+    max-width: 560px;
+    line-height: 1.8;
+    margin-bottom: 3.5rem;
+    font-size: 0.95rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5px;
+    background: rgba(200,169,126,0.15);
+  }
+
+  .service-card {
+    background: var(--ocean-deep);
+    padding: 2.5rem;
+    border: 1px solid rgba(200,169,126,0.1);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--sand);
+    transition: height 0.3s;
+  }
+  .service-card:hover::before { height: 100%; }
+  .service-card:hover { background: rgba(26,74,107,0.5); }
+
+  .service-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--sand-light);
+    margin-bottom: 0.8rem;
+  }
+  .service-desc {
+    font-size: 0.85rem;
+    color: rgba(168,213,226,0.65);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+  }
+  .service-items {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .service-items li {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    display: flex; align-items: center; gap: 0.6rem;
+    letter-spacing: 0.03em;
+  }
+  .service-items li::before {
+    content: '—';
+    color: var(--sand);
+    flex-shrink: 0;
+  }
+
+  .pricing-strip {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .price-tier {
+    border: 1px solid rgba(200,169,126,0.2);
+    padding: 2rem;
+    position: relative;
+    transition: all 0.25s;
+  }
+  .price-tier:hover { border-color: var(--sand); }
+  .price-tier.featured {
+    border-color: var(--sand);
+    background: rgba(200,169,126,0.05);
+  }
+  .tier-badge {
+    position: absolute; top: -1px; right: 1.5rem;
+    background: var(--sand);
+    color: var(--ocean-deep);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    font-weight: 500;
+  }
+  .tier-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+  .tier-duration {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .tier-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--sand);
+    margin-bottom: 1rem;
+  }
+  .tier-desc {
+    font-size: 0.78rem;
+    color: rgba(168,213,226,0.6);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── CLIENT PORTAL ── */
+  #portal {
+    background: var(--sand-pale);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .portal-info .section-h2 { margin-bottom: 1rem; }
+  .portal-desc {
+    color: var(--text-mid);
+    line-height: 1.85;
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .portal-features {
+    display: flex; flex-direction: column; gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .portal-feature {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1rem;
+    background: white;
+    border-left: 3px solid var(--ocean-teal);
+  }
+  .feature-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .feature-title {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--ocean-deep);
+    margin-bottom: 0.2rem;
+    letter-spacing: 0.02em;
+  }
+  .feature-desc {
+    font-size: 0.75rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* Portal login card */
+  .portal-card {
+    background: var(--ocean-deep);
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .portal-card::after {
+    content: '';
+    position: absolute; bottom: -60px; right: -60px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,126,0.15);
+  }
+  .portal-card::before {
+    content: '';
+    position: absolute; bottom: -30px; right: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,126,0.1);
+  }
+
+  .portal-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    color: var(--sand-light);
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+  }
+  .portal-card-sub {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    letter-spacing: 0.04em;
+  }
+
+  .portal-form { display: flex; flex-direction: column; gap: 1rem; position: relative; z-index: 1; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-light);
+  }
+  .form-input {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(200,169,126,0.2);
+    color: var(--white);
+    padding: 0.85rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    font-weight: 300;
+  }
+  .form-input::placeholder { color: rgba(122,155,181,0.5); }
+  .form-input:focus { border-color: var(--sand); }
+
+  .portal-btn {
+    background: var(--sand);
+    color: var(--ocean-deep);
+    border: none;
+    padding: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: all 0.25s;
+  }
+  .portal-btn:hover { background: var(--sand-light); }
+
+  .portal-access-note {
+    font-size: 0.7rem;
+    color: rgba(122,155,181,0.6);
+    text-align: center;
+    margin-top: 0.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  .dashboard-preview {
+    margin-top: 1.5rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(200,169,126,0.1);
+    padding: 1.5rem;
+    position: relative; z-index: 1;
+  }
+  .dash-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sand);
+    margin-bottom: 1rem;
+  }
+  .dash-bars { display: flex; gap: 0.5rem; align-items: flex-end; height: 60px; }
+  .dash-bar {
+    flex: 1;
+    background: rgba(91,163,201,0.3);
+    border-top: 2px solid var(--ocean-light);
+    transition: all 0.3s;
+    border-radius: 1px 1px 0 0;
+    animation: growBar 1s ease-out forwards;
+    transform-origin: bottom;
+  }
+  @keyframes growBar {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ocean-deep);
+    padding: 3rem 5% 2rem;
+    border-top: 1px solid rgba(200,169,126,0.15);
+  }
+  .footer-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap; gap: 2rem;
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--sand-light);
+  }
+  .footer-brand span { color: var(--sand); }
+  .footer-tagline {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    margin-top: 0.3rem;
+    letter-spacing: 0.06em;
+  }
+  .footer-links {
+    display: flex; gap: 3rem;
+  }
+  .footer-col-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sand);
+    margin-bottom: 1rem;
+  }
+  .footer-col a {
+    display: block;
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--sand-light); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(200,169,126,0.1);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 0.5rem;
+  }
+  .footer-legal {
+    font-size: 0.7rem;
+    color: rgba(122,155,181,0.5);
+    letter-spacing: 0.04em;
+  }
+  .footer-location {
+    font-size: 0.7rem;
+    color: rgba(122,155,181,0.5);
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+
+  /* ── CONTACT MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(13,31,45,0.85);
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--ocean-deep);
+    border: 1px solid rgba(200,169,126,0.25);
+    padding: 3rem;
+    max-width: 480px; width: 92%;
+    position: relative;
+    animation: modalIn 0.3s ease;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .modal-close {
+    position: absolute; top: 1.2rem; right: 1.5rem;
+    color: var(--text-light);
+    background: none; border: none;
+    font-size: 1.2rem; cursor: pointer;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--sand); }
+
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+  .modal-sub {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 2rem;
+    color: var(--seafoam);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+  }
+
+  /* ── SCROLL FADE IN ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    #about, #portal { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-stats { display: none; }
+    .team-grid { grid-template-columns: repeat(3, 1fr); }
+    .services-grid { grid-template-columns: 1fr; }
+    .pricing-strip { grid-template-columns: 1fr; }
+    .footer-links { flex-direction: column; gap: 1.5rem; }
+    .nav-links { display: none; }
+    .about-visual { height: 280px; }
+    .about-badge { right: 0; bottom: -1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="scrollTo('home')">Sandstone<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#home" onclick="return scrollTo('home')">Home</a></li>
+    <li><a href="#about" onclick="return scrollTo('about')">About</a></li>
+    <li><a href="#services" onclick="return scrollTo('services')">Services</a></li>
+    <li><a href="#portal" onclick="return scrollTo('portal')">Client Portal</a></li>
+  </ul>
+  <button class="nav-cta" onclick="openModal()">Start a Project</button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="particles" id="particles"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Newport Beach, CA &nbsp;·&nbsp; Sandstone Growth Advisors</div>
+    <h1 class="hero-h1">
+      Built to Close<br>
+      the Gap Between<br>
+      <em>Vision & Infrastructure</em>
+    </h1>
+    <p class="hero-sub">Integrated financial advisory, legal strategy, and custom AI tools — delivered inside your business, not from a distance.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openModal()">Start a Project</button>
+      <button class="btn-ghost" onclick="navTo('services')">View Services</button>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-num">$129B</div>
+      <div class="stat-label">US Consulting Market</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">310%</div>
+      <div class="stat-label">Fractional CFO Growth Since 2020</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">4,000+</div>
+      <div class="stat-label">LA Venture-Backed Startups</div>
+    </div>
+  </div>
+
+  <div class="hero-ocean">
+    <!-- Wave 1 -->
+    <div class="wave wave-1">
+      <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,60 C240,100 480,20 720,60 C960,100 1200,20 1440,60 L1440,120 L0,120 Z" fill="rgba(26,74,107,0.6)"/>
+      </svg>
+    </div>
+    <!-- Wave 2 -->
+    <div class="wave wave-2">
+      <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,40 C360,80 720,10 1080,50 C1260,70 1380,30 1440,50 L1440,120 L0,120 Z" fill="rgba(46,125,168,0.4)"/>
+      </svg>
+    </div>
+    <!-- Wave 3 -->
+    <div class="wave wave-3">
+      <svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,50 C200,80 500,20 800,55 C1100,90 1300,25 1440,50 L1440,100 L0,100 Z" fill="rgba(13,43,62,0.9)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="fade-in">
+  <div class="about-visual">
+    <div class="about-img-placeholder">
+      <!-- Geometric ocean art -->
+      <svg viewBox="0 0 400 520" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+        <defs>
+          <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0D2B3E"/>
+            <stop offset="100%" stop-color="#2E7DA8"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="520" fill="url(#g1)"/>
+        <!-- Horizon lines -->
+        <line x1="0" y1="300" x2="400" y2="300" stroke="rgba(200,169,126,0.3)" stroke-width="1"/>
+        <line x1="0" y1="320" x2="400" y2="320" stroke="rgba(200,169,126,0.15)" stroke-width="1"/>
+        <!-- Sun/circle -->
+        <circle cx="200" cy="240" r="60" fill="none" stroke="rgba(200,169,126,0.4)" stroke-width="1"/>
+        <circle cx="200" cy="240" r="45" fill="none" stroke="rgba(200,169,126,0.25)" stroke-width="1"/>
+        <circle cx="200" cy="240" r="28" fill="rgba(200,169,126,0.15)"/>
+        <!-- Wave lines -->
+        <path d="M0,360 Q100,340 200,360 Q300,380 400,360" fill="none" stroke="rgba(91,163,201,0.4)" stroke-width="2"/>
+        <path d="M0,380 Q100,360 200,380 Q300,400 400,380" fill="none" stroke="rgba(91,163,201,0.3)" stroke-width="1.5"/>
+        <path d="M0,400 Q100,380 200,400 Q300,420 400,400" fill="none" stroke="rgba(91,163,201,0.2)" stroke-width="1"/>
+        <!-- Grid lines -->
+        <line x1="80" y1="0" x2="80" y2="520" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="160" y1="0" x2="160" y2="520" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="240" y1="0" x2="240" y2="520" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="320" y1="0" x2="320" y2="520" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <!-- Text watermark -->
+        <text x="200" y="490" text-anchor="middle" fill="rgba(200,169,126,0.2)" font-size="10" font-family="serif" letter-spacing="4">NEWPORT BEACH · CA</text>
+      </svg>
+    </div>
+    <div class="about-badge">
+      <span class="big">5</span>
+      <span class="small">Co-Founders</span>
+    </div>
+  </div>
+
+  <div class="about-text">
+    <div class="section-tag">Who We Are</div>
+    <h2 class="section-h2">Where Discipline<br>Meets <em>Execution</em></h2>
+    <p>Sandstone Growth Advisors was built around a single observation: the founders who build something are not always equipped to run it at the speed the market demands. We close that gap.</p>
+    <p>We are five co-founders from UCLA Anderson's FEMBA program — spanning institutional finance, employment law, systems engineering, operations, and entrepreneurship — united by a shared conviction that integrated advisory is more valuable than fragmented vendor relationships.</p>
+    <p>Every Sandstone engagement includes a dedicated Project Lead who embeds directly in your operation. We do not advise from a distance. We build alongside you, and we leave behind tools that run on their own when the project ends.</p>
+
+    <div class="team-grid">
+      <div class="team-member">
+        <div class="member-initials">AO</div>
+        <div class="member-name">Alex Overdyk</div>
+        <div class="member-role">Strategy & Operations</div>
+      </div>
+      <div class="team-member">
+        <div class="member-initials">RC</div>
+        <div class="member-name">Reid Connolly</div>
+        <div class="member-role">Investments & AI Strategy</div>
+      </div>
+      <div class="team-member">
+        <div class="member-initials">LA</div>
+        <div class="member-name">Lars Anderson</div>
+        <div class="member-role">Capital Strategy & Finance</div>
+      </div>
+      <div class="team-member">
+        <div class="member-initials">JS</div>
+        <div class="member-name">Julian Shojaie</div>
+        <div class="member-role">Legal & Compliance</div>
+      </div>
+      <div class="team-member">
+        <div class="member-initials">SE</div>
+        <div class="member-name">Sean Edwards</div>
+        <div class="member-role">Engineering & Systems</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="fade-in">
+  <div class="services-bg-decor"></div>
+
+  <div class="section-tag">What We Deliver</div>
+  <h2 class="section-h2">One Engagement.<br><em>Every Discipline.</em></h2>
+  <p class="services-intro">No competitor combines legal services, financial advisory, and custom AI tool development within a single project engagement. That integration is Sandstone's advantage.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">📊</span>
+      <div class="service-name">Financial Advisory</div>
+      <p class="service-desc">Real-time financial dashboards, capital raise materials, and models built around your actual data — not a template downloaded and never customized.</p>
+      <ul class="service-items">
+        <li>Financial modeling & forecasting</li>
+        <li>Capital formation & investor readiness</li>
+        <li>Cash flow architecture</li>
+        <li>CFO-level strategic guidance</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">⚖️</span>
+      <div class="service-name">Legal Strategy</div>
+      <p class="service-desc">California bar-admitted counsel embedded in every engagement. MSAs, employment agreements, entity structuring, and compliance — running alongside financial work in the same project.</p>
+      <ul class="service-items">
+        <li>Master service & operating agreements</li>
+        <li>Employment law & wage compliance</li>
+        <li>Entity structuring & data privacy</li>
+        <li>Partnership & founder agreements</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🤖</span>
+      <div class="service-name">Agentic AI Tools</div>
+      <p class="service-desc">Custom-built operational tools deployed within your project sprint. Dashboards, CRMs, and inventory models built around how your business actually works.</p>
+      <ul class="service-items">
+        <li>Custom AI workflow automation</li>
+        <li>CRM configuration & deployment</li>
+        <li>Operational intelligence dashboards</li>
+        <li>Full client training & handoff</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">⚙️</span>
+      <div class="service-name">Operations & Systems</div>
+      <p class="service-desc">We translate unclear requirements into structured, executable plans. Go-to-market infrastructure, process design, and the operational backbone growth-stage companies miss.</p>
+      <ul class="service-items">
+        <li>Go-to-market execution planning</li>
+        <li>Vendor & team coordination</li>
+        <li>Process design & documentation</li>
+        <li>Post-raise operational buildout</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pricing-strip">
+    <div class="price-tier">
+      <div class="tier-name">Sprint</div>
+      <div class="tier-duration">2 Months · 1 Lead + 1 Support</div>
+      <div class="tier-price">$18K – $30K</div>
+      <div class="tier-desc">One focused project. A complete deliverable for less than a single month of retainer fees at most fractional finance firms.</div>
+    </div>
+    <div class="price-tier featured">
+      <div class="tier-badge">Most Popular</div>
+      <div class="tier-name">Build</div>
+      <div class="tier-duration">3–4 Months · 1 Lead + 2 Support</div>
+      <div class="tier-price">$40K – $75K</div>
+      <div class="tier-desc">A multi-function project combining financial, legal, and AI tool deliverables in a single coordinated engagement.</div>
+    </div>
+    <div class="price-tier">
+      <div class="tier-name">Scale</div>
+      <div class="tier-duration">5–6 Months · 1 Lead + 3 Support</div>
+      <div class="tier-price">$80K – $150K+</div>
+      <div class="tier-desc">A full-scope program. Comparable to a fraction of what full-time CFO, GC, and ops hires would cost combined.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENT PORTAL -->
+<section id="portal" class="fade-in">
+  <div class="portal-info">
+    <div class="section-tag">Client Access</div>
+    <h2 class="section-h2">Your Project,<br><em>In Real Time</em></h2>
+    <p class="portal-desc">Every Sandstone client receives access to a dedicated project portal. Track deliverables, review financial dashboards, access legal documents, and communicate with your Project Lead — all in one place.</p>
+
+    <div class="portal-features">
+      <div class="portal-feature">
+        <div class="feature-icon">📈</div>
+        <div>
+          <div class="feature-title">Live Financial Dashboard</div>
+          <div class="feature-desc">Real-time visibility into your financial model, cash position, and key metrics — updated continuously throughout your engagement.</div>
+        </div>
+      </div>
+      <div class="portal-feature">
+        <div class="feature-icon">📁</div>
+        <div>
+          <div class="feature-title">Document Vault</div>
+          <div class="feature-desc">Secure access to all project deliverables, legal agreements, and final handoff materials. Organized and searchable.</div>
+        </div>
+      </div>
+      <div class="portal-feature">
+        <div class="feature-icon">✅</div>
+        <div>
+          <div class="feature-title">Milestone Tracker</div>
+          <div class="feature-desc">Follow your project scope in real time. Know exactly where each deliverable stands and what comes next.</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="openModal()">Request Portal Access</button>
+  </div>
+
+  <div class="portal-card">
+    <div class="portal-card-title">Client Portal</div>
+    <div class="portal-card-sub">Sandstone Growth Advisors · Secure Access</div>
+
+    <div class="portal-form">
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="you@company.com" id="portal-email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Access Code</label>
+        <input type="password" class="form-input" placeholder="Provided by your Project Lead" id="portal-code">
+      </div>
+      <button class="portal-btn" onclick="handlePortalLogin()">Access My Project →</button>
+      <div class="portal-access-note">Don't have a code? <span style="color:var(--sand);cursor:pointer;" onclick="openModal()">Start a project</span> to get access.</div>
+    </div>
+
+    <div class="dashboard-preview" style="margin-top:2rem;">
+      <div class="dash-label">Project Progress Preview</div>
+      <div class="dash-bars">
+        <div class="dash-bar" style="height:70%; animation-delay:0.1s;"></div>
+        <div class="dash-bar" style="height:90%; animation-delay:0.2s; border-color:var(--sand);"></div>
+        <div class="dash-bar" style="height:55%; animation-delay:0.3s;"></div>
+        <div class="dash-bar" style="height:80%; animation-delay:0.4s;"></div>
+        <div class="dash-bar" style="height:40%; animation-delay:0.5s;"></div>
+        <div class="dash-bar" style="height:65%; animation-delay:0.6s;"></div>
+        <div class="dash-bar" style="height:95%; animation-delay:0.7s; border-color:var(--sand);"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">Sandstone<span>.</span></div>
+      <div class="footer-tagline">Growth Advisors · Newport Beach, CA</div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <div class="footer-col-title">Navigate</div>
+        <a href="#home" onclick="return navTo('home')">Home</a>
+        <a href="#about" onclick="return navTo('about')">About</a>
+        <a href="#services" onclick="return navTo('services')">Services</a>
+        <a href="#portal" onclick="return navTo('portal')">Client Portal</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Services</div>
+        <a href="#">Financial Advisory</a>
+        <a href="#">Legal Strategy</a>
+        <a href="#">Agentic AI Tools</a>
+        <a href="#">Operations</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <a href="#" onclick="openModal(); return false;">Start a Project</a>
+        <a href="mailto:hello@sandstonegrowth.com">hello@sandstonegrowth.com</a>
+        <a href="#">Newport Beach, CA</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2025 Sandstone Growth Advisors. All rights reserved.</div>
+    <div class="footer-location">📍 Newport Beach, California</div>
+  </div>
+</footer>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-form-wrap">
+      <div class="modal-title">Start a Project</div>
+      <div class="modal-sub">Tell us about your business and we'll be in touch within one business day.</div>
+      <div class="portal-form">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" id="c-name" placeholder="Jane Smith">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Company</label>
+          <input type="text" class="form-input" id="c-company" placeholder="Your Company">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="c-email" placeholder="jane@company.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">What do you need most?</label>
+          <select class="form-input" id="c-need" style="cursor:pointer;">
+            <option value="" disabled selected>Select a focus area</option>
+            <option>Financial Advisory</option>
+            <option>Legal Strategy</option>
+            <option>AI Tool Development</option>
+            <option>Operations & Systems</option>
+            <option>Full Integrated Engagement</option>
+          </select>
+        </div>
+        <button class="portal-btn" onclick="submitContact()">Submit Inquiry →</button>
+      </div>
+    </div>
+    <div class="success-msg" id="modal-success">
+      ✦ Thank you.<br><br>
+      <span style="font-size:0.9rem;color:var(--text-light);font-family:'DM Sans',sans-serif;font-weight:300;">We'll be in touch within one business day.</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Particles
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 60 + '%';
+    p.style.setProperty('--d', (3 + Math.random() * 5) + 's');
+    p.style.setProperty('--delay', (Math.random() * 6) + 's');
+    container.appendChild(p);
+  }
+
+  // Smooth scroll
+  function navTo(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    return false;
+  }
+  function scrollTo(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Modal
+  function openModal() {
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e) {
+    if (e.target.id === 'modal') closeModal();
+  }
+
+  function submitContact() {
+    const name = document.getElementById('c-name').value;
+    const email = document.getElementById('c-email').value;
+    if (!name || !email) { alert('Please fill in your name and email.'); return; }
+    document.getElementById('modal-form-wrap').style.display = 'none';
+    document.getElementById('modal-success').style.display = 'block';
+    setTimeout(closeModal, 3500);
+    document.getElementById('modal-form-wrap').style.display = '';
+    document.getElementById('modal-success').style.display = 'none';
+  }
+
+  function handlePortalLogin() {
+    const email = document.getElementById('portal-email').value;
+    const code = document.getElementById('portal-code').value;
+    if (!email || !code) { alert('Please enter your email and access code.'); return; }
+    alert('Portal access coming soon. Contact your Project Lead for assistance.');
+  }
+
+  // Fade in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
