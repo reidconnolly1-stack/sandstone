@@ -856,6 +856,137 @@
   .bio-full p { margin-bottom: 0.8rem; }
   .bio-full p:last-child { margin-bottom: 0; }
 
+  /* ── BEACH FINANCE THEME ENHANCEMENTS ── */
+  /* Subtle sand-grain texture on light sections */
+  #about { background: linear-gradient(160deg, #FDFAF6 60%, #F0E8D8 100%); }
+  #portal { background: linear-gradient(160deg, var(--sand-pale) 0%, #EDE0CC 100%) !important; }
+
+  /* Horizon line divider between sections */
+  #about::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0; left: 5%; right: 5%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--sand), transparent);
+  }
+  #about { position: relative; }
+
+  /* Tide-mark accent on service section */
+  #services {
+    background: linear-gradient(180deg, var(--ocean-deep) 0%, #0A2233 100%);
+  }
+
+  /* Warm golden glow on stat cards */
+  .stat-card {
+    background: rgba(200,169,126,0.08) !important;
+    border: 1px solid rgba(200,169,126,0.3) !important;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  }
+
+  /* ── MILESTONE TRACKER ── */
+  .milestone-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 40px;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .milestone-label {
+    font-size: 0.68rem;
+    color: var(--text-light);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .milestone-track {
+    height: 5px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .milestone-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--ocean-teal), var(--ocean-light));
+    border-radius: 3px;
+    transition: width 1s ease;
+  }
+  .milestone-status {
+    font-size: 0.62rem;
+    text-align: right;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+  .milestone-status.done { color: var(--sand); }
+  .milestone-status.active { color: var(--ocean-light); }
+  .milestone-status.pending { color: rgba(122,155,181,0.4); }
+
+  /* ── MINI CALENDAR ── */
+  .mini-cal {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(200,169,126,0.15);
+    padding: 1rem;
+    position: relative; z-index: 1;
+  }
+  .cal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 0.8rem;
+  }
+  .cal-month {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--sand-light);
+    font-weight: 300;
+  }
+  .cal-nav {
+    background: none; border: none;
+    color: var(--text-light); cursor: pointer;
+    font-size: 0.9rem; padding: 0.2rem 0.5rem;
+    transition: color 0.2s;
+  }
+  .cal-nav:hover { color: var(--sand); }
+  .cal-days-header {
+    display: grid; grid-template-columns: repeat(7,1fr);
+    text-align: center; margin-bottom: 0.4rem;
+  }
+  .cal-days-header span {
+    font-size: 0.58rem; color: var(--text-light);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .cal-grid {
+    display: grid; grid-template-columns: repeat(7,1fr);
+    gap: 2px;
+  }
+  .cal-day {
+    text-align: center; padding: 0.35rem 0.1rem;
+    font-size: 0.72rem; color: var(--text-light);
+    cursor: pointer; border-radius: 2px;
+    transition: all 0.15s;
+  }
+  .cal-day:hover:not(.empty):not(.past) { background: rgba(200,169,126,0.2); color: var(--sand-light); }
+  .cal-day.selected { background: var(--sand); color: var(--ocean-deep); font-weight: 500; }
+  .cal-day.today { color: var(--seafoam); font-weight: 500; }
+  .cal-day.past { opacity: 0.25; cursor: default; }
+  .cal-day.empty { cursor: default; }
+  .cal-day.weekend { color: rgba(122,155,181,0.45); }
+
+  /* ── TIME SLOTS ── */
+  .time-slots {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 0.4rem;
+  }
+  .time-slot {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(200,169,126,0.15);
+    color: var(--text-light);
+    font-size: 0.7rem;
+    padding: 0.5rem 0.3rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .time-slot:hover { border-color: var(--sand); color: var(--sand-light); }
+  .time-slot.selected { background: var(--sand); color: var(--ocean-deep); border-color: var(--sand); font-weight: 500; }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     #about, #portal { grid-template-columns: 1fr; gap: 3rem; }
@@ -879,7 +1010,7 @@
     <li><a href="#home" onclick="return scrollTo('home')">Home</a></li>
     <li><a href="#about" onclick="return scrollTo('about')">About</a></li>
     <li><a href="#services" onclick="return scrollTo('services')">Services</a></li>
-    <li><a href="#portal" onclick="return scrollTo('portal')">Client Portal</a></li>
+    <li><a href="#portal" onclick="return scrollTo('portal')">Project Tracker</a></li>
   </ul>
   <button class="nav-cta" onclick="openModal()">Start a Project</button>
 </nav>
@@ -905,7 +1036,7 @@
   <div class="hero-stats">
     <div class="stat-card">
       <div class="stat-num">$900K+</div>
-      <div class="stat-label">Saved vs. Hiring CFO, GC & Ops Exec</div>
+      <div class="stat-label">Saved vs. Hiring CFO, GC & Ops Executive</div>
     </div>
     <div class="stat-card">
       <div class="stat-num">0%</div>
@@ -1172,67 +1303,149 @@
   </div>
 </section>
 
-<!-- CLIENT PORTAL -->
-<section id="portal" class="fade-in">
-  <div class="portal-info">
-    <div class="section-tag">Client Access</div>
-    <h2 class="section-h2">Your Project,<br><em>In Real Time</em></h2>
-    <p class="portal-desc">Every Sandstone client receives access to a dedicated project portal. Track deliverables, review financial dashboards, access legal documents, and communicate with your Project Lead — all in one place.</p>
-
-    <div class="portal-features">
-      <div class="portal-feature">
-        <div class="feature-icon">📈</div>
-        <div>
-          <div class="feature-title">Live Financial Dashboard</div>
-          <div class="feature-desc">Real-time visibility into your financial model, cash position, and key metrics — updated continuously throughout your engagement.</div>
-        </div>
-      </div>
-      <div class="portal-feature">
-        <div class="feature-icon">📁</div>
-        <div>
-          <div class="feature-title">Document Vault</div>
-          <div class="feature-desc">Secure access to all project deliverables, legal agreements, and final handoff materials. Organized and searchable.</div>
-        </div>
-      </div>
-      <div class="portal-feature">
-        <div class="feature-icon">✅</div>
-        <div>
-          <div class="feature-title">Milestone Tracker</div>
-          <div class="feature-desc">Follow your project scope in real time. Know exactly where each deliverable stands and what comes next.</div>
-        </div>
-      </div>
-    </div>
-
-    <button class="btn-primary" onclick="openModal()">Request Portal Access</button>
+<!-- PROJECT TRACKER -->
+<section id="portal" class="fade-in" style="background:var(--sand-pale); padding: 7rem 5%;">
+  <div style="text-align:center; max-width:680px; margin:0 auto 4rem;">
+    <div class="section-tag" style="justify-content:center;">Client Access</div>
+    <h2 class="section-h2" style="text-align:center;">Project Tracker &<br><em>Meeting Scheduler</em></h2>
+    <p style="color:var(--text-mid); font-size:0.92rem; font-weight:300; line-height:1.85;">Every Sandstone client gets a dedicated workspace — track your project milestones in real time and schedule time with your Project Lead directly from this page.</p>
   </div>
 
-  <div class="portal-card">
-    <div class="portal-card-title">Client Portal</div>
-    <div class="portal-card-sub">Sandstone Growth Advisors · Secure Access</div>
+  <!-- Two column layout -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; max-width:1100px; margin:0 auto;">
 
-    <div class="portal-form">
-      <div class="form-group">
-        <label class="form-label">Email Address</label>
-        <input type="email" class="form-input" placeholder="you@company.com" id="portal-email">
+    <!-- PROJECT TRACKER CARD -->
+    <div class="portal-card" style="display:flex; flex-direction:column; gap:0;">
+      <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.8rem; position:relative; z-index:1;">
+        <span style="font-size:1.3rem;">🗂️</span>
+        <div>
+          <div class="portal-card-title" style="font-size:1.4rem; margin-bottom:0.1rem;">Project Tracker</div>
+          <div class="portal-card-sub" style="margin-bottom:0;">Sandstone Growth Advisors · Secure Access</div>
+        </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Access Code</label>
-        <input type="password" class="form-input" placeholder="Provided by your Project Lead" id="portal-code">
+
+      <div class="portal-form" style="margin-bottom:1.5rem;">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" placeholder="you@company.com" id="portal-email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Access Code</label>
+          <input type="password" class="form-input" placeholder="Provided by your Project Lead" id="portal-code">
+        </div>
+        <button class="portal-btn" onclick="handlePortalLogin()">Access My Project →</button>
+        <div class="portal-access-note">Don't have a code? <span style="color:var(--sand);cursor:pointer;" onclick="openModal()">Start a project</span> to get access.</div>
       </div>
-      <button class="portal-btn" onclick="handlePortalLogin()">Access My Project →</button>
-      <div class="portal-access-note">Don't have a code? <span style="color:var(--sand);cursor:pointer;" onclick="openModal()">Start a project</span> to get access.</div>
+
+      <!-- Milestone preview -->
+      <div class="dashboard-preview">
+        <div class="dash-label">Sample Milestone Progress</div>
+        <div style="display:flex; flex-direction:column; gap:0.7rem; position:relative; z-index:1;">
+          <div class="milestone-row">
+            <div class="milestone-label">Discovery & Scoping</div>
+            <div class="milestone-track"><div class="milestone-fill" style="width:100%; background:var(--sand);"></div></div>
+            <div class="milestone-status done">✓</div>
+          </div>
+          <div class="milestone-row">
+            <div class="milestone-label">Financial Model</div>
+            <div class="milestone-track"><div class="milestone-fill" style="width:75%;"></div></div>
+            <div class="milestone-status active">75%</div>
+          </div>
+          <div class="milestone-row">
+            <div class="milestone-label">AI Tool Build</div>
+            <div class="milestone-track"><div class="milestone-fill" style="width:40%;"></div></div>
+            <div class="milestone-status active">40%</div>
+          </div>
+          <div class="milestone-row">
+            <div class="milestone-label">Legal Documents</div>
+            <div class="milestone-track"><div class="milestone-fill" style="width:20%;"></div></div>
+            <div class="milestone-status pending">20%</div>
+          </div>
+          <div class="milestone-row">
+            <div class="milestone-label">Handoff & Training</div>
+            <div class="milestone-track"><div class="milestone-fill" style="width:0%;"></div></div>
+            <div class="milestone-status pending">—</div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="dashboard-preview" style="margin-top:2rem;">
-      <div class="dash-label">Project Progress Preview</div>
-      <div class="dash-bars">
-        <div class="dash-bar" style="height:70%; animation-delay:0.1s;"></div>
-        <div class="dash-bar" style="height:90%; animation-delay:0.2s; border-color:var(--sand);"></div>
-        <div class="dash-bar" style="height:55%; animation-delay:0.3s;"></div>
-        <div class="dash-bar" style="height:80%; animation-delay:0.4s;"></div>
-        <div class="dash-bar" style="height:40%; animation-delay:0.5s;"></div>
-        <div class="dash-bar" style="height:65%; animation-delay:0.6s;"></div>
-        <div class="dash-bar" style="height:95%; animation-delay:0.7s; border-color:var(--sand);"></div>
+    <!-- MEETING SCHEDULER CARD -->
+    <div class="portal-card" style="display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.8rem; position:relative; z-index:1;">
+        <span style="font-size:1.3rem;">📅</span>
+        <div>
+          <div class="portal-card-title" style="font-size:1.4rem; margin-bottom:0.1rem;">Schedule a Meeting</div>
+          <div class="portal-card-sub" style="margin-bottom:0;">Book time with your Project Lead</div>
+        </div>
+      </div>
+
+      <div style="position:relative; z-index:1; flex:1; display:flex; flex-direction:column; gap:1.2rem;">
+
+        <!-- Meeting type -->
+        <div class="form-group">
+          <label class="form-label">Meeting Type</label>
+          <select class="form-input" id="meet-type" style="cursor:pointer;">
+            <option value="" disabled selected>Select a meeting type</option>
+            <option>Initial Project Consultation (60 min)</option>
+            <option>Weekly Check-In (30 min)</option>
+            <option>Financial Review (45 min)</option>
+            <option>Legal Strategy Session (45 min)</option>
+            <option>AI Tool Walkthrough (30 min)</option>
+            <option>Handoff & Training Session (60 min)</option>
+          </select>
+        </div>
+
+        <!-- Mini calendar -->
+        <div class="form-group">
+          <label class="form-label">Select a Date</label>
+          <div class="mini-cal" id="miniCal"></div>
+        </div>
+
+        <!-- Time slots -->
+        <div class="form-group" id="time-slot-group" style="display:none;">
+          <label class="form-label">Available Times (PT)</label>
+          <div class="time-slots" id="timeSlots"></div>
+        </div>
+
+        <!-- Name + email -->
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" id="meet-name" placeholder="Jane Smith">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" id="meet-email" placeholder="jane@company.com">
+        </div>
+
+        <button class="portal-btn" onclick="bookMeeting()" id="book-btn">Request Meeting →</button>
+        <div class="portal-access-note" id="book-confirm" style="display:none; color:var(--seafoam); font-size:0.78rem;">✦ Meeting request sent! Your Project Lead will confirm shortly.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Feature strip below -->
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; max-width:1100px; margin:2rem auto 0;">
+    <div class="portal-feature" style="background:white;">
+      <div class="feature-icon">📈</div>
+      <div>
+        <div class="feature-title">Live Financial Dashboard</div>
+        <div class="feature-desc">Real-time visibility into your financial model and key metrics throughout the engagement.</div>
+      </div>
+    </div>
+    <div class="portal-feature" style="background:white;">
+      <div class="feature-icon">📁</div>
+      <div>
+        <div class="feature-title">Document Vault</div>
+        <div class="feature-desc">Secure access to all deliverables, legal agreements, and final handoff materials.</div>
+      </div>
+    </div>
+    <div class="portal-feature" style="background:white;">
+      <div class="feature-icon">🔔</div>
+      <div>
+        <div class="feature-title">Project Notifications</div>
+        <div class="feature-desc">Get notified when milestones are hit, documents are ready, or your Lead leaves an update.</div>
       </div>
     </div>
   </div>
@@ -1251,7 +1464,7 @@
         <a href="#home" onclick="return navTo('home')">Home</a>
         <a href="#about" onclick="return navTo('about')">About</a>
         <a href="#services" onclick="return navTo('services')">Services</a>
-        <a href="#portal" onclick="return navTo('portal')">Client Portal</a>
+        <a href="#portal" onclick="return navTo('portal')">Project Tracker</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Services</div>
@@ -1328,7 +1541,106 @@
     container.appendChild(p);
   }
 
-  // Bio toggle
+  // ── MINI CALENDAR ──
+  let calDate = new Date();
+  let selectedDay = null;
+  let selectedTime = null;
+
+  function renderCal() {
+    const cal = document.getElementById('miniCal');
+    if (!cal) return;
+    const year = calDate.getFullYear();
+    const month = calDate.getMonth();
+    const today = new Date();
+    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    let html = `<div class="cal-header">
+      <button class="cal-nav" onclick="prevMonth()">‹</button>
+      <div class="cal-month">${monthNames[month]} ${year}</div>
+      <button class="cal-nav" onclick="nextMonth()">›</button>
+    </div>
+    <div class="cal-days-header">
+      <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+    </div>
+    <div class="cal-grid">`;
+
+    for (let i = 0; i < firstDay; i++) html += `<div class="cal-day empty"></div>`;
+    for (let d = 1; d <= daysInMonth; d++) {
+      const thisDate = new Date(year, month, d);
+      const isPast = thisDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+      const isSelected = selectedDay === d && calDate.getMonth() === month;
+      const isWeekend = thisDate.getDay() === 0 || thisDate.getDay() === 6;
+      let cls = 'cal-day';
+      if (isPast) cls += ' past';
+      else if (isSelected) cls += ' selected';
+      else if (isToday) cls += ' today';
+      else if (isWeekend) cls += ' weekend';
+      html += `<div class="${cls}" onclick="${isPast ? '' : `selectDay(${d})`}">${d}</div>`;
+    }
+    html += `</div>`;
+    cal.innerHTML = html;
+  }
+
+  function prevMonth() {
+    calDate = new Date(calDate.getFullYear(), calDate.getMonth() - 1, 1);
+    selectedDay = null; selectedTime = null;
+    document.getElementById('time-slot-group').style.display = 'none';
+    renderCal();
+  }
+  function nextMonth() {
+    calDate = new Date(calDate.getFullYear(), calDate.getMonth() + 1, 1);
+    selectedDay = null; selectedTime = null;
+    document.getElementById('time-slot-group').style.display = 'none';
+    renderCal();
+  }
+
+  function selectDay(d) {
+    selectedDay = d; selectedTime = null;
+    renderCal();
+    const slots = ['9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','2:00 PM','2:30 PM','3:00 PM','3:30 PM','4:00 PM'];
+    // Randomly mark some as unavailable for realism
+    const avail = slots.filter((_, i) => ![2, 5, 8].includes(i));
+    const group = document.getElementById('time-slot-group');
+    const container = document.getElementById('timeSlots');
+    container.innerHTML = avail.map(t => `<div class="time-slot" onclick="selectTime('${t}', this)">${t}</div>`).join('');
+    group.style.display = 'block';
+  }
+
+  function selectTime(t, el) {
+    selectedTime = t;
+    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function bookMeeting() {
+    const name = document.getElementById('meet-name').value;
+    const email = document.getElementById('meet-email').value;
+    const type = document.getElementById('meet-type').value;
+    if (!name || !email) { alert('Please enter your name and email.'); return; }
+    if (!selectedDay) { alert('Please select a date.'); return; }
+    if (!selectedTime) { alert('Please select a time slot.'); return; }
+    if (!type) { alert('Please select a meeting type.'); return; }
+    document.getElementById('book-btn').style.display = 'none';
+    document.getElementById('book-confirm').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('book-btn').style.display = 'block';
+      document.getElementById('book-confirm').style.display = 'none';
+      document.getElementById('meet-name').value = '';
+      document.getElementById('meet-email').value = '';
+      document.getElementById('meet-type').selectedIndex = 0;
+      selectedDay = null; selectedTime = null;
+      document.getElementById('time-slot-group').style.display = 'none';
+      renderCal();
+    }, 4000);
+  }
+
+  // Init calendar on load
+  window.addEventListener('DOMContentLoaded', renderCal);
+
+
   function toggleBio(card) {
     const isOpen = card.classList.contains('open');
     document.querySelectorAll('.bio-card.open').forEach(c => c.classList.remove('open'));
