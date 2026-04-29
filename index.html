@@ -987,9 +987,112 @@
   .time-slot:hover { border-color: var(--sand); color: var(--sand-light); }
   .time-slot.selected { background: var(--sand); color: var(--ocean-deep); border-color: var(--sand); font-weight: 500; }
 
+  /* ── CLIENT PORTAL SECTION ── */
+  .client-portal-section {
+    background: linear-gradient(160deg, var(--sand-pale) 0%, #EDE0CC 100%);
+    padding: 7rem 5%;
+  }
+
+  .portal-section-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 4rem;
+  }
+  .portal-section-intro {
+    color: var(--text-mid);
+    font-size: 0.92rem;
+    font-weight: 300;
+    line-height: 1.85;
+    margin-top: 1rem;
+  }
+
+  /* Three pillars */
+  .portal-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto 4rem;
+  }
+  .portal-pillar {
+    background: white;
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--ocean-teal);
+    padding: 2rem 1.8rem;
+    transition: box-shadow 0.25s;
+  }
+  .portal-pillar:hover { box-shadow: 0 8px 32px rgba(13,43,62,0.08); }
+  .pillar-icon { font-size: 1.6rem; margin-bottom: 1rem; display: block; }
+  .pillar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ocean-deep);
+    margin-bottom: 0.7rem;
+  }
+  .pillar-body {
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    line-height: 1.85;
+    font-weight: 300;
+  }
+
+  /* Divider between pillars and tool cards */
+  .portal-tools-label {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto 2rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ocean-teal);
+    font-weight: 500;
+  }
+  .portal-tools-divider {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--ocean-teal), rgba(46,125,168,0.15));
+  }
+  .portal-tools-label span:last-child { color: var(--sand); }
+  .portal-tools-label span:last-child ~ .portal-tools-divider {
+    background: linear-gradient(90deg, rgba(200,169,126,0.15), var(--sand));
+  }
+
+  /* Tool cards grid */
+  .portal-tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Card header */
+  .portal-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px solid rgba(200,169,126,0.15);
+    padding-bottom: 1.2rem;
+  }
+  .portal-card-icon { font-size: 1.5rem; flex-shrink: 0; }
+
+  /* Milestone list */
+  .milestone-list { display: flex; flex-direction: column; gap: 0.8rem; position: relative; z-index: 1; }
+
+  /* Scheduler name row */
+  .scheduler-body { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 1.2rem; flex: 1; }
+  .scheduler-name-row { display: flex; gap: 1rem; }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    #about, #portal { grid-template-columns: 1fr; gap: 3rem; }
+    #about, .portal-tools-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .portal-pillars { grid-template-columns: 1fr; }
     .hero-stats { display: none; }
     .team-grid { grid-template-columns: repeat(3, 1fr); }
     .services-grid { grid-template-columns: 1fr; }
@@ -998,6 +1101,7 @@
     .nav-links { display: none; }
     .about-visual { height: 280px; }
     .about-badge { right: 0; bottom: -1rem; }
+    .scheduler-name-row { flex-direction: column; }
   }
 </style>
 </head>
@@ -1010,7 +1114,7 @@
     <li><a href="#home" onclick="return scrollTo('home')">Home</a></li>
     <li><a href="#about" onclick="return scrollTo('about')">About</a></li>
     <li><a href="#services" onclick="return scrollTo('services')">Services</a></li>
-    <li><a href="#portal" onclick="return scrollTo('portal')">Project Tracker</a></li>
+    <li><a href="#portal" onclick="return scrollTo('portal')">Client Portal</a></li>
   </ul>
   <button class="nav-cta" onclick="openModal()">Start a Project</button>
 </nav>
@@ -1303,24 +1407,52 @@
   </div>
 </section>
 
-<!-- PROJECT TRACKER -->
-<section id="portal" class="fade-in" style="background:var(--sand-pale); padding: 7rem 5%;">
-  <div style="text-align:center; max-width:680px; margin:0 auto 4rem;">
+<!-- CLIENT PORTAL -->
+<section id="portal" class="fade-in client-portal-section">
+
+  <!-- Section header -->
+  <div class="portal-section-header">
     <div class="section-tag" style="justify-content:center;">Client Access</div>
-    <h2 class="section-h2" style="text-align:center;">Project Tracker &<br><em>Meeting Scheduler</em></h2>
-    <p style="color:var(--text-mid); font-size:0.92rem; font-weight:300; line-height:1.85;">Every Sandstone client gets a dedicated workspace — track your project milestones in real time and schedule time with your Project Lead directly from this page.</p>
+    <h2 class="section-h2" style="text-align:center; color:var(--ocean-deep);">Client <em>Portal</em></h2>
+    <p class="portal-section-intro">Every Sandstone client gets a dedicated workspace — track milestones in real time, access your documents, and schedule time with your Project Lead, all in one place.</p>
   </div>
 
-  <!-- Two column layout -->
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; max-width:1100px; margin:0 auto;">
+  <!-- Feature pillars -->
+  <div class="portal-pillars">
+    <div class="portal-pillar">
+      <div class="pillar-icon">📈</div>
+      <div class="pillar-title">Live Financial Dashboard</div>
+      <div class="pillar-body">Real-time visibility into your financial model, cash position, and KPIs — updated continuously by your Project Lead throughout the engagement. No more waiting for weekly emails to know where you stand.</div>
+    </div>
+    <div class="portal-pillar">
+      <div class="pillar-icon">📁</div>
+      <div class="pillar-title">Document Vault</div>
+      <div class="pillar-body">Secure, organized access to every deliverable — financial models, legal agreements, AI tool documentation, and final handoff materials. Everything is version-controlled and searchable from day one.</div>
+    </div>
+    <div class="portal-pillar">
+      <div class="pillar-icon">🔔</div>
+      <div class="pillar-title">Project Notifications</div>
+      <div class="pillar-body">Get notified the moment a milestone is completed, a document is ready for review, or your Project Lead leaves an update. Stay in the loop without having to chase anyone for a status report.</div>
+    </div>
+  </div>
+
+  <!-- Divider label -->
+  <div class="portal-tools-label">
+    <span>Project Tracker</span>
+    <div class="portal-tools-divider"></div>
+    <span>Meeting Scheduler</span>
+  </div>
+
+  <!-- Two-column tool cards -->
+  <div class="portal-tools-grid">
 
     <!-- PROJECT TRACKER CARD -->
-    <div class="portal-card" style="display:flex; flex-direction:column; gap:0;">
-      <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.8rem; position:relative; z-index:1;">
-        <span style="font-size:1.3rem;">🗂️</span>
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <span class="portal-card-icon">🗂️</span>
         <div>
-          <div class="portal-card-title" style="font-size:1.4rem; margin-bottom:0.1rem;">Project Tracker</div>
-          <div class="portal-card-sub" style="margin-bottom:0;">Sandstone Growth Advisors · Secure Access</div>
+          <div class="portal-card-title">Project Tracker</div>
+          <div class="portal-card-sub">Sandstone Growth Advisors · Secure Access</div>
         </div>
       </div>
 
@@ -1337,10 +1469,9 @@
         <div class="portal-access-note">Don't have a code? <span style="color:var(--sand);cursor:pointer;" onclick="openModal()">Start a project</span> to get access.</div>
       </div>
 
-      <!-- Milestone preview -->
       <div class="dashboard-preview">
         <div class="dash-label">Sample Milestone Progress</div>
-        <div style="display:flex; flex-direction:column; gap:0.7rem; position:relative; z-index:1;">
+        <div class="milestone-list">
           <div class="milestone-row">
             <div class="milestone-label">Discovery & Scoping</div>
             <div class="milestone-track"><div class="milestone-fill" style="width:100%; background:var(--sand);"></div></div>
@@ -1371,18 +1502,16 @@
     </div>
 
     <!-- MEETING SCHEDULER CARD -->
-    <div class="portal-card" style="display:flex; flex-direction:column;">
-      <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.8rem; position:relative; z-index:1;">
-        <span style="font-size:1.3rem;">📅</span>
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <span class="portal-card-icon">📅</span>
         <div>
-          <div class="portal-card-title" style="font-size:1.4rem; margin-bottom:0.1rem;">Schedule a Meeting</div>
-          <div class="portal-card-sub" style="margin-bottom:0;">Book time with your Project Lead</div>
+          <div class="portal-card-title">Schedule a Meeting</div>
+          <div class="portal-card-sub">Book time with your Project Lead</div>
         </div>
       </div>
 
-      <div style="position:relative; z-index:1; flex:1; display:flex; flex-direction:column; gap:1.2rem;">
-
-        <!-- Meeting type -->
+      <div class="scheduler-body">
         <div class="form-group">
           <label class="form-label">Meeting Type</label>
           <select class="form-input" id="meet-type" style="cursor:pointer;">
@@ -1396,26 +1525,25 @@
           </select>
         </div>
 
-        <!-- Mini calendar -->
         <div class="form-group">
           <label class="form-label">Select a Date</label>
           <div class="mini-cal" id="miniCal"></div>
         </div>
 
-        <!-- Time slots -->
         <div class="form-group" id="time-slot-group" style="display:none;">
           <label class="form-label">Available Times (PT)</label>
           <div class="time-slots" id="timeSlots"></div>
         </div>
 
-        <!-- Name + email -->
-        <div class="form-group">
-          <label class="form-label">Your Name</label>
-          <input type="text" class="form-input" id="meet-name" placeholder="Jane Smith">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email Address</label>
-          <input type="email" class="form-input" id="meet-email" placeholder="jane@company.com">
+        <div class="scheduler-name-row">
+          <div class="form-group" style="flex:1;">
+            <label class="form-label">Your Name</label>
+            <input type="text" class="form-input" id="meet-name" placeholder="Jane Smith">
+          </div>
+          <div class="form-group" style="flex:1;">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" id="meet-email" placeholder="jane@company.com">
+          </div>
         </div>
 
         <button class="portal-btn" onclick="bookMeeting()" id="book-btn">Request Meeting →</button>
@@ -1423,31 +1551,6 @@
       </div>
     </div>
 
-  </div>
-
-  <!-- Feature strip below -->
-  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; max-width:1100px; margin:2rem auto 0;">
-    <div class="portal-feature" style="background:white;">
-      <div class="feature-icon">📈</div>
-      <div>
-        <div class="feature-title">Live Financial Dashboard</div>
-        <div class="feature-desc">Real-time visibility into your financial model and key metrics throughout the engagement.</div>
-      </div>
-    </div>
-    <div class="portal-feature" style="background:white;">
-      <div class="feature-icon">📁</div>
-      <div>
-        <div class="feature-title">Document Vault</div>
-        <div class="feature-desc">Secure access to all deliverables, legal agreements, and final handoff materials.</div>
-      </div>
-    </div>
-    <div class="portal-feature" style="background:white;">
-      <div class="feature-icon">🔔</div>
-      <div>
-        <div class="feature-title">Project Notifications</div>
-        <div class="feature-desc">Get notified when milestones are hit, documents are ready, or your Lead leaves an update.</div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1464,7 +1567,7 @@
         <a href="#home" onclick="return navTo('home')">Home</a>
         <a href="#about" onclick="return navTo('about')">About</a>
         <a href="#services" onclick="return navTo('services')">Services</a>
-        <a href="#portal" onclick="return navTo('portal')">Project Tracker</a>
+        <a href="#portal" onclick="return navTo('portal')">Client Portal</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Services</div>
