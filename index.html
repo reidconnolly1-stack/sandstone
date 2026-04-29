@@ -770,6 +770,92 @@
     transform: translateY(0);
   }
 
+  /* ── TEAM BIOS ── */
+  .team-full {
+    margin-top: 4rem;
+    border-top: 1px solid var(--border);
+    padding-top: 3rem;
+  }
+  .team-full-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--ocean-deep);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+  .bio-card {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 1.2rem;
+    padding: 1.6rem 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .bio-card:last-child { border-bottom: none; }
+  .bio-avatar {
+    width: 72px; height: 72px;
+    background: var(--ocean-mid);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    color: var(--sand-light);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+    border: 2px solid var(--border);
+    transition: border-color 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .bio-card:hover .bio-avatar { border-color: var(--sand); }
+  .bio-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 0.3rem;
+  }
+  .bio-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--ocean-deep);
+  }
+  .bio-toggle {
+    color: var(--ocean-teal);
+    font-size: 1rem;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    margin-left: 1rem;
+    margin-top: 2px;
+  }
+  .bio-card.open .bio-toggle { transform: rotate(45deg); }
+  .bio-title {
+    font-size: 0.72rem;
+    color: var(--ocean-teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+  }
+  .bio-snippet {
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .bio-full {
+    display: none;
+    margin-top: 0.8rem;
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    font-weight: 300;
+    line-height: 1.85;
+  }
+  .bio-card.open .bio-full { display: block; }
+  .bio-full p { margin-bottom: 0.8rem; }
+  .bio-full p:last-child { margin-bottom: 0; }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     #about, #portal { grid-template-columns: 1fr; gap: 3rem; }
@@ -899,32 +985,111 @@
     <p>We are five co-founders from UCLA Anderson's FEMBA program — spanning institutional finance, employment law, systems engineering, operations, and entrepreneurship — united by a shared conviction that integrated advisory is more valuable than fragmented vendor relationships.</p>
     <p>Every Sandstone engagement includes a dedicated Project Lead who embeds directly in your operation. We do not advise from a distance. We build alongside you, and we leave behind tools that run on their own when the project ends.</p>
 
-    <div class="team-grid">
-      <div class="team-member">
-        <div class="member-initials">AO</div>
-        <div class="member-name">Alex Overdyk</div>
-        <div class="member-role">Strategy & Operations</div>
+    <div class="team-full">
+      <div class="team-full-title">Meet the Team</div>
+
+      <!-- Alex Overdyk -->
+      <div class="bio-card" onclick="toggleBio(this)">
+        <div class="bio-avatar">AO</div>
+        <div>
+          <div class="bio-header">
+            <div>
+              <div class="bio-name">Alex Overdyk</div>
+              <div class="bio-title">Co-Founder, Strategy, Operations, & Marketing</div>
+            </div>
+            <div class="bio-toggle">+</div>
+          </div>
+          <div class="bio-snippet">Strategy and operations leader focused on scaling next-generation aerospace programs, with prior leadership roles at Boeing, Wisk Aero, L'Oréal, and Estée Lauder.</div>
+          <div class="bio-full">
+            <p>Alex Overdyk serves as Chief Operations Officer at Sandstone Advisors, where he evaluates incoming project requests, coordinates cross-functional team workflows, and implements program management practices to ensure projects are delivered on time, within budget, and with high-quality execution.</p>
+            <p>Alex is a strategy and operations leader focused on scaling next-generation aerospace programs. He currently serves as Business Planning Manager at Supernal, where he sits on the Corporate Strategy team supporting the development of electric vertical takeoff and landing (eVTOL) aircraft. His work centers on competitive research, market positioning, and building structured strategic frameworks that align complex engineering efforts with long-term commercial and program objectives.</p>
+            <p>Previously, Alex held aerospace leadership roles at Wisk Aero and Boeing, where he drove cross-functional coordination across engineering, finance, and operations teams. Earlier in his career, Alex led digital growth and commercial initiatives at L'Oréal and Estée Lauder.</p>
+            <p>He holds a B.A. in Economics from the University of Virginia and is completing his MBA at UCLA Anderson School of Management, concentrating in technology management and strategic execution.</p>
+          </div>
+        </div>
       </div>
-      <div class="team-member">
-        <div class="member-initials">RC</div>
-        <div class="member-name">Reid Connolly</div>
-        <div class="member-role">Investments & AI Strategy</div>
+
+      <!-- Reid Connolly -->
+      <div class="bio-card" onclick="toggleBio(this)">
+        <div class="bio-avatar">RC</div>
+        <div>
+          <div class="bio-header">
+            <div>
+              <div class="bio-name">Reid Connolly</div>
+              <div class="bio-title">Co-Founder, Investments & Asset Management, Business Development, AI Strategy</div>
+            </div>
+            <div class="bio-toggle">+</div>
+          </div>
+          <div class="bio-snippet">Nearly six years of institutional finance experience in credit trading and asset management, most recently at HalseyPoint Asset Management and Crescent Capital Group.</div>
+          <div class="bio-full">
+            <p>Reid Connolly is Co-Founder and Principal of Sandstone Advisors LLC, where he leverages nearly six years of institutional finance experience to provide strategic financial leadership to growing enterprises. With a career rooted in Credit Trading and Asset Management, Reid specializes in translating complex capital markets data into actionable growth strategies.</p>
+            <p>Most recently, he served on the Trading & Operations team at HalseyPoint Asset Management, a specialist CLO manager, where he was instrumental in supporting the active management and operational processes essential for complex credit portfolios. Prior to HalseyPoint, Reid spent five years at Crescent Capital Group as a member of the Trading & Capital Markets team, navigating volatile market cycles and coordinating with investment teams to execute total return strategies.</p>
+            <p>Reid holds a B.A. in Economics from the University of Southern California and is currently an M.B.A. candidate at UCLA Anderson School of Management.</p>
+          </div>
+        </div>
       </div>
-      <div class="team-member">
-        <div class="member-initials">LA</div>
-        <div class="member-name">Lars Anderson</div>
-        <div class="member-role">Capital Strategy & Finance</div>
+
+      <!-- Lars Anderson -->
+      <div class="bio-card" onclick="toggleBio(this)">
+        <div class="bio-avatar">LA</div>
+        <div>
+          <div class="bio-header">
+            <div>
+              <div class="bio-name">Lars Anderson</div>
+              <div class="bio-title">Co-Founder, Capital Strategy & Corporate Finance</div>
+            </div>
+            <div class="bio-toggle">+</div>
+          </div>
+          <div class="bio-snippet">Vice President at J.P. Morgan — the youngest VP in the Middle Market group — advising 40+ companies on financing, liquidity, and strategic growth.</div>
+          <div class="bio-full">
+            <p>Lars Anderson is a Co-Founder and Principal at Sandstone Capital Advisors, specializing in capital strategy, corporate finance, and transaction execution. He currently serves as a Vice President at J.P. Morgan, where he became the youngest Vice President in the Middle Market and Mid-Cap Multinational Corporations group, advising over 40 companies across industries on financing, liquidity, and strategic growth initiatives.</p>
+            <p>Lars has led the structuring and execution of complex debt facilities, underwriting processes, syndications, and M&A initiatives for companies ranging from $20 million to $2 billion in revenue. Prior to J.P. Morgan, he worked in Capital Markets Risk at Fannie Mae, gaining deep expertise in structured transactions, pricing, derivatives, and interest rate risk management.</p>
+            <p>Lars holds a B.S. in Finance, Operations Management, and Business Analytics from the University of Maryland and is currently pursuing his MBA at UCLA Anderson, where he focuses on investment finance and entrepreneurship.</p>
+          </div>
+        </div>
       </div>
-      <div class="team-member">
-        <div class="member-initials">JS</div>
-        <div class="member-name">Julian Shojaie</div>
-        <div class="member-role">Legal & Compliance</div>
+
+      <!-- Julian Shojaie -->
+      <div class="bio-card" onclick="toggleBio(this)">
+        <div class="bio-avatar">JS</div>
+        <div>
+          <div class="bio-header">
+            <div>
+              <div class="bio-name">Julian Shojaie</div>
+              <div class="bio-title">Co-Founder, Legal & Compliance</div>
+            </div>
+            <div class="bio-toggle">+</div>
+          </div>
+          <div class="bio-snippet">California bar-admitted attorney with experience at Fisher Phillips LLP and Wasser Cooperman & Mandles, and founder of Untapped Admissions, scaled more than tenfold.</div>
+          <div class="bio-full">
+            <p>Julian Shojaie serves as Chief Legal Officer and Head of Legal Compliance for Sandstone Capital Advisors, LLC, where he helps growing companies build scalable legal infrastructure, manage risk, and align legal strategy with long-term business objectives.</p>
+            <p>Julian began his legal career at top litigation firms, including Fisher Phillips LLP and Wasser Cooperman & Mandles, P.C., where he managed complex high-net-worth dissolution, corporate espionage, employment-related claims, data privacy, and compliance matters in both state and federal court. He also serves on the board and as Chief Legal Officer of The Branding Boutique, an LA-based digital marketing agency.</p>
+            <p>In addition to his legal practice, Julian founded and bootstrapped Untapped Admissions, a college admissions advisory focused on personal branding and strategic storytelling. Since inception, he has scaled operations and revenue more than tenfold.</p>
+            <p>A double Bruin, Julian earned his undergraduate degree in Psychology from UCLA and his Juris Doctor from Loyola Law School. He is currently completing his MBA at UCLA Anderson School of Management. Licensed to practice law in California.</p>
+          </div>
+        </div>
       </div>
-      <div class="team-member">
-        <div class="member-initials">SE</div>
-        <div class="member-name">Sean Edwards</div>
-        <div class="member-role">Engineering & Systems</div>
+
+      <!-- Sean Edwards -->
+      <div class="bio-card" onclick="toggleBio(this)">
+        <div class="bio-avatar">SE</div>
+        <div>
+          <div class="bio-header">
+            <div>
+              <div class="bio-name">Sean Edwards</div>
+              <div class="bio-title">Co-Founder, Engineering & Systems Management</div>
+            </div>
+            <div class="bio-toggle">+</div>
+          </div>
+          <div class="bio-snippet">Business Systems Engineering IPT Lead at Boeing Space Mission Systems, overseeing system-level execution across satellite programs with expertise in full lifecycle delivery.</div>
+          <div class="bio-full">
+            <p>Sean Edwards serves as Chief Technical Officer for Sandstone Capital Advisors, where he helps organizations design and execute complex systems with precision, aligning technical operations with cost, schedule, and long-term performance objectives.</p>
+            <p>Sean currently serves as a Business Systems Engineering Integrated Product Team Lead at Boeing Space Mission Systems, where he oversees system-level execution across satellite programs. He operates at the intersection of engineering, production, and integration — ensuring alignment across technical requirements, program objectives, and delivery timelines across the full lifecycle, from architecture and design through integration, test, and production.</p>
+            <p>Sean holds a B.S. in Electrical Engineering from UC Santa Barbara and an M.S. in Space Systems Engineering from Johns Hopkins University, and is currently completing his MBA at UCLA Anderson School of Management.</p>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -1161,6 +1326,13 @@
     p.style.setProperty('--d', (3 + Math.random() * 5) + 's');
     p.style.setProperty('--delay', (Math.random() * 6) + 's');
     container.appendChild(p);
+  }
+
+  // Bio toggle
+  function toggleBio(card) {
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.bio-card.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
   }
 
   // Smooth scroll
