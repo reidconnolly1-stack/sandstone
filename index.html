@@ -80,6 +80,26 @@
   }
   .nav-cta:hover { background: var(--sand); color: var(--ocean-deep); }
 
+  .creator-nav-btn {
+    background: rgba(254,44,85,0.12);
+    border: 1px solid rgba(254,44,85,0.4);
+    color: #FE2C55;
+    padding: 0.5rem 1.1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s;
+    white-space: nowrap;
+  }
+  .creator-nav-btn:hover {
+    background: rgba(254,44,85,0.25);
+    border-color: #FE2C55;
+    color: #ff6b85;
+  }
+
   /* ── HERO ── */
   #home {
     min-height: 100vh;
@@ -1278,9 +1298,11 @@
     <li><a href="#services" onclick="return scrollTo('services')">Services</a></li>
     <li><a href="#resources" onclick="return scrollTo('resources')">Resources</a></li>
     <li><a href="#portal" onclick="return scrollTo('portal')">Client Dashboard</a></li>
-    <li><a href="creator-dashboard.html" style="color:var(--tt-accent) !important;">Creator ✦</a></li>
   </ul>
-  <button class="nav-cta" onclick="openModal()">Start a Project</button>
+  <div style="display:flex;align-items:center;gap:0.8rem;">
+    <a href="creator-dashboard.html" class="creator-nav-btn">✦ Creator Dashboard</a>
+    <button class="nav-cta" onclick="openModal()">Start a Project</button>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -1828,6 +1850,44 @@
   <div class="resources-cta">
     <p>Want our full capabilities deck, case studies, or market research sent directly?</p>
     <button class="btn-primary" onclick="openModal()">Request Materials</button>
+  </div>
+</section>
+
+<!-- CREATOR DASHBOARD CALLOUT -->
+<section style="background:linear-gradient(135deg,#0A1929 0%,#1a0a1a 100%);padding:4rem 5%;border-top:1px solid rgba(254,44,85,0.2);border-bottom:1px solid rgba(254,44,85,0.2);">
+  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;align-items:center;gap:3rem;flex-wrap:wrap;">
+    <div>
+      <div style="font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:#FE2C55;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.6rem;">
+        <span style="display:inline-block;width:20px;height:1px;background:#FE2C55;"></span>
+        For Creators & Influencers
+      </div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;color:white;line-height:1.15;margin-bottom:0.8rem;">
+        Your <em style="font-style:italic;color:#FE2C55;">Creator Dashboard</em><br>is ready.
+      </div>
+      <p style="font-size:0.88rem;color:rgba(168,213,226,0.65);font-weight:300;line-height:1.8;max-width:520px;">
+        Instagram & TikTok analytics, financials, brand deal tracking, event scheduling, and project management — all in one place. Built for creators working with our agency partners.
+      </p>
+      <div style="display:flex;gap:0.8rem;margin-top:1.2rem;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:0.4rem;font-size:0.68rem;color:rgba(255,255,255,0.4);letter-spacing:0.08em;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#DD2A7B;"></div> Instagram Analytics
+        </div>
+        <div style="display:flex;align-items:center;gap:0.4rem;font-size:0.68rem;color:rgba(255,255,255,0.4);letter-spacing:0.08em;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#FE2C55;"></div> TikTok Analytics
+        </div>
+        <div style="display:flex;align-items:center;gap:0.4rem;font-size:0.68rem;color:rgba(255,255,255,0.4);letter-spacing:0.08em;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#C8A97E;"></div> Financials & Invoices
+        </div>
+        <div style="display:flex;align-items:center;gap:0.4rem;font-size:0.68rem;color:rgba(255,255,255,0.4);letter-spacing:0.08em;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#A8D5E2;"></div> Events & Projects
+        </div>
+      </div>
+    </div>
+    <div style="flex-shrink:0;">
+      <a href="creator-dashboard.html" style="display:block;background:#FE2C55;color:white;border:none;padding:1.1rem 2.4rem;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:500;text-decoration:none;transition:all 0.25s;white-space:nowrap;text-align:center;" onmouseover="this.style.background='#ff4d6d'" onmouseout="this.style.background='#FE2C55'">
+        ✦ Open Creator Dashboard
+      </a>
+      <div style="font-size:0.65rem;color:rgba(122,155,181,0.45);text-align:center;margin-top:0.7rem;letter-spacing:0.06em;">Access via agency partnership</div>
+    </div>
   </div>
 </section>
 
