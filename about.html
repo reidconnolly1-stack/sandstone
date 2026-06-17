@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us · Sandstone Growth Advisors</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #C8A97E; --sand-light: #E8D5B7; --sand-pale: #F5EDE0;
+    --ocean-deep: #0D2B3E; --ocean-mid: #1A4A6B; --ocean-teal: #2E7DA8; --ocean-light: #5BA3C9;
+    --seafoam: #A8D5E2; --white: #FDFAF6; --text-dark: #0D1F2D; --text-mid: #3A5268; --text-light: #7A9BB5;
+    --border: rgba(200,169,126,0.25);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text-dark); overflow-x: hidden; }
+  img { max-width: 100%; display: block; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5%; background: rgba(13,43,62,0.94); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,169,126,0.2);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--sand-light); letter-spacing: 0.04em; text-decoration: none; }
+  .nav-logo span { color: var(--sand); }
+  .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+  .nav-links a { color: rgba(232,213,183,0.75); text-decoration: none; font-size: 0.8rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; position: relative; }
+  .nav-links a:hover { color: var(--sand); }
+  .nav-links a.active { color: var(--sand); }
+  .nav-links a.active::after { content: ''; position: absolute; bottom: -8px; left: 0; right: 0; height: 2px; background: var(--sand); }
+  .nav-right { display: flex; align-items: center; gap: 0.8rem; }
+  .nav-cta { background: transparent; border: 1px solid var(--sand); color: var(--sand); padding: 0.55rem 1.4rem; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.25s; text-decoration: none; display: inline-block; }
+  .nav-cta:hover { background: var(--sand); color: var(--ocean-deep); }
+  .nav-portal-btn { background: rgba(200,169,126,0.12); border: 1px solid rgba(200,169,126,0.45); color: var(--sand); padding: 0.5rem 1.1rem; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 500; text-decoration: none; transition: all 0.25s; white-space: nowrap; }
+  .nav-portal-btn:hover { background: rgba(200,169,126,0.22); color: var(--sand-light); }
+  .nav-mobile-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+  .nav-mobile-toggle span { width: 24px; height: 2px; background: var(--sand-light); }
+  .mobile-menu { display: none; position: fixed; top: 0; right: -100%; width: 78%; max-width: 320px; height: 100vh; background: var(--ocean-deep); z-index: 200; padding: 6rem 2rem 2rem; transition: right 0.3s ease; border-left: 1px solid var(--border); }
+  .mobile-menu.open { right: 0; }
+  .mobile-menu a { display: block; color: var(--sand-light); text-decoration: none; padding: 1rem 0; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid rgba(200,169,126,0.12); }
+  .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 150; }
+  .mobile-overlay.open { display: block; }
+
+  .section-tag { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ocean-teal); margin-bottom: 1rem; font-weight: 500; }
+  .section-h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; color: var(--ocean-deep); margin-bottom: 1.4rem; }
+  .section-h2 em { font-style: italic; color: var(--ocean-teal); }
+
+  /* PAGE HERO */
+  .page-hero { position: relative; padding: 10rem 5% 5rem; background: var(--ocean-deep); overflow: hidden; }
+  .page-hero-bg { position: absolute; inset: 0; opacity: 0.32; }
+  .page-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+  .page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,43,62,0.4), rgba(13,43,62,0.96)); }
+  .page-hero-content { position: relative; z-index: 2; max-width: 760px; }
+  .page-hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--sand); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; }
+  .page-hero-eyebrow::before { content: ''; width: 36px; height: 1px; background: var(--sand); }
+  .page-hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.4rem, 5vw, 3.8rem); line-height: 1.1; color: var(--white); margin-bottom: 1.2rem; }
+  .page-hero h1 em { font-style: italic; color: var(--seafoam); }
+  .page-hero p { font-size: 1rem; color: rgba(232,213,183,0.78); line-height: 1.7; font-weight: 300; max-width: 560px; }
+
+  /* STORY SECTION */
+  .story-section { padding: 6rem 5%; max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .story-text p { font-size: 0.95rem; color: var(--text-mid); line-height: 1.85; margin-bottom: 1.2rem; }
+  .story-quote { background: var(--sand-pale); padding: 2rem; border-left: 3px solid var(--sand); margin-top: 1.5rem; }
+  .story-quote p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; color: var(--ocean-deep); line-height: 1.5; margin: 0; }
+  .story-visual { position: sticky; top: 100px; }
+  .story-visual img { width: 100%; height: 460px; object-fit: cover; }
+  .story-badge { background: var(--ocean-deep); padding: 1.4rem; margin-top: -50px; margin-left: 1.5rem; max-width: 200px; position: relative; z-index: 2; }
+  .story-badge .big { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; color: var(--sand); display: block; line-height: 1; }
+  .story-badge .small { font-size: 0.68rem; color: var(--seafoam); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* VALUES STRIP */
+  .values-strip { background: var(--ocean-deep); padding: 5rem 5%; }
+  .values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; max-width: 1100px; margin: 0 auto; }
+  .value-item { text-align: center; }
+  .value-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .value-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--white); margin-bottom: 0.6rem; }
+  .value-desc { font-size: 0.82rem; color: rgba(168,213,226,0.7); line-height: 1.65; font-weight: 300; }
+
+  /* TEAM SECTION */
+  .team-section { padding: 6rem 5%; max-width: 1100px; margin: 0 auto; }
+  .team-hdr { text-align: center; max-width: 640px; margin: 0 auto 3.5rem; }
+  .team-hdr .section-tag { display: flex; justify-content: center; }
+  .team-grid { display: flex; flex-direction: column; gap: 1rem; }
+
+  .bio-card { background: var(--sand-pale); padding: 1.8rem 2rem; cursor: pointer; transition: background 0.2s; display: flex; gap: 1.5rem; }
+  .bio-card:hover { background: #efe2cc; }
+  .bio-photo {
+    width: 76px; height: 76px; border-radius: 50%; flex-shrink: 0;
+    background: var(--ocean-deep); display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--sand-light);
+    overflow: hidden; border: 2px solid var(--sand);
+  }
+  .bio-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .bio-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .bio-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--ocean-deep); font-weight: 500; }
+  .bio-title { font-size: 0.78rem; color: var(--ocean-teal); margin-top: 0.2rem; letter-spacing: 0.02em; }
+  .bio-toggle { font-size: 1.4rem; color: var(--sand); flex-shrink: 0; transition: transform 0.3s; line-height: 1; }
+  .bio-card.open .bio-toggle { transform: rotate(45deg); }
+  .bio-snippet { font-size: 0.85rem; color: var(--text-mid); margin-top: 0.8rem; line-height: 1.6; }
+  .bio-full { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+  .bio-card.open .bio-full { max-height: 800px; margin-top: 1rem; }
+  .bio-full p { font-size: 0.85rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 0.9rem; }
+  .bio-content { flex: 1; }
+
+  /* CTA */
+  .cta-band { background: linear-gradient(135deg, var(--ocean-deep), var(--ocean-mid)); padding: 5rem 5%; text-align: center; }
+  .cta-band h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem,3.5vw,2.6rem); color: var(--white); font-weight: 300; margin-bottom: 1rem; }
+  .cta-band h2 em { color: var(--sand); font-style: italic; }
+  .cta-band p { color: rgba(168,213,226,0.7); margin-bottom: 2rem; font-size: 0.95rem; }
+  .btn-primary { background: var(--sand); color: var(--ocean-deep); padding: 0.9rem 2rem; border: none; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; text-decoration: none; display: inline-block; transition: all 0.25s; }
+  .btn-primary:hover { background: var(--sand-light); transform: translateY(-2px); }
+
+  footer { background: var(--ocean-deep); padding: 3.5rem 5% 2rem; border-top: 1px solid rgba(200,169,126,0.15); }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; max-width: 1200px; margin: 0 auto 2.5rem; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--sand-light); margin-bottom: 0.8rem; }
+  .footer-logo span { color: var(--sand); }
+  .footer-desc { font-size: 0.78rem; color: rgba(168,213,226,0.55); line-height: 1.7; max-width: 280px; }
+  .footer-col-title { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sand); margin-bottom: 1rem; }
+  .footer-col a { display: block; color: rgba(232,213,183,0.6); text-decoration: none; font-size: 0.8rem; margin-bottom: 0.7rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--sand); }
+  .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(200,169,126,0.1); font-size: 0.68rem; color: rgba(122,155,181,0.5); letter-spacing: 0.05em; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(13,43,62,0.85); z-index: 500; align-items: center; justify-content: center; padding: 2rem; }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: var(--white); max-width: 480px; width: 100%; padding: 2.5rem; position: relative; }
+  .modal-close { position: absolute; top: 1.2rem; right: 1.2rem; background: none; border: none; font-size: 1.4rem; color: var(--text-light); cursor: pointer; }
+  .modal-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--ocean-deep); margin-bottom: 0.6rem; font-weight: 400; }
+  .modal-box p { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 1.5rem; }
+  .modal-box input, .modal-box select, .modal-box textarea { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border); margin-bottom: 0.9rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; background: var(--sand-pale); outline: none; }
+  .modal-box button.submit { width: 100%; background: var(--ocean-deep); color: white; padding: 0.9rem; border: none; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+
+  @media (max-width: 980px) {
+    .nav-links { display: none; }
+    .nav-mobile-toggle { display: flex; }
+    .story-section { grid-template-columns: 1fr; }
+    .story-visual { position: static; }
+    .values-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .bio-card { flex-direction: column; }
+  }
+  @media (max-width: 600px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    nav { padding: 1rem 5%; }
+    .bio-header { flex-direction: column; gap: 0.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sandstone<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="resources.html">Resources</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="portal.html" class="nav-portal-btn">⬡ Client Portal</a>
+    <button class="nav-cta" onclick="openModal()">Start a Project</button>
+    <button class="nav-mobile-toggle" onclick="toggleMobile()" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobile()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="resources.html">Resources</a>
+  <a href="portal.html">Client Portal</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg"><img src="images/newport-cliff.jpg" alt="Coastal cliffside in Newport Beach"></div>
+  <div class="page-hero-content">
+    <div class="page-hero-eyebrow">Who We Are</div>
+    <h1>Where discipline<br>meets <em>execution.</em></h1>
+    <p>Sandstone Growth Advisors was built around a single observation: the founders who build something are not always equipped to run it at the speed the market demands. We close that gap.</p>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story-section">
+  <div class="story-visual">
+    <img src="images/newport-pier.jpg" alt="Newport Beach pier at sunset">
+    <div class="story-badge">
+      <span class="big">5</span>
+      <span class="small">Co-Founders</span>
+    </div>
+  </div>
+  <div class="story-text">
+    <div class="section-tag">Our Story</div>
+    <h2 class="section-h2">Built by operators,<br>not <em>theorists.</em></h2>
+    <p>We are five co-founders from UCLA Anderson — spanning institutional finance, capital markets, employment law, systems engineering, and operations — united by a shared conviction that integrated advisory is more valuable than fragmented vendor relationships.</p>
+    <p>Every Sandstone engagement includes a dedicated Project Lead who embeds directly in your operation. We do not advise from a distance. We build alongside you, and we leave behind tools, systems, and documentation that run on their own when the project ends.</p>
+    <p>Our first engagement — with Dymes Agency, an LA-based creator and influencer agency — became the proof point for how we work: full operational diagnostics, a custom-built client dashboard, and a financial infrastructure rebuild, delivered in weeks, not quarters.</p>
+    <div class="story-quote">
+      <p>"We don't take equity. We don't sign multi-year retainers. We get hired to solve a specific problem, and we leave once it's solved."</p>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-strip">
+  <div class="values-grid">
+    <div class="value-item">
+      <div class="value-icon">🎯</div>
+      <div class="value-title">Outcome-Driven</div>
+      <div class="value-desc">Every engagement starts with a defined business outcome — scale, revenue, cost, or exit — not a vague scope of work.</div>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">🛠️</div>
+      <div class="value-title">Embedded, Not Advisory</div>
+      <div class="value-desc">We sit inside your operation as a working partner. Our Project Leads build alongside your team, not from a deck.</div>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">⚖️</div>
+      <div class="value-title">Fee-Based, Equity-Free</div>
+      <div class="value-desc">We're compensated for outcomes delivered — never equity. Your cap table stays exactly as clean as it was before we arrived.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section">
+  <div class="team-hdr">
+    <div class="section-tag">Meet the Team</div>
+    <h2 class="section-h2">Five disciplines.<br>One <em>standard.</em></h2>
+  </div>
+
+  <div class="team-grid">
+
+    <div class="bio-card" onclick="toggleBio(this)">
+      <div class="bio-photo">AO</div>
+      <div class="bio-content">
+        <div class="bio-header">
+          <div>
+            <div class="bio-name">Alex Overdyk</div>
+            <div class="bio-title">Co-Founder, Strategy, Operations & Marketing</div>
+          </div>
+          <div class="bio-toggle">+</div>
+        </div>
+        <div class="bio-snippet">Strategy and operations leader focused on scaling next-generation aerospace programs, with prior leadership roles at Boeing, Wisk Aero, L'Oréal, and Estée Lauder.</div>
+        <div class="bio-full">
+          <p>Alex Overdyk serves as Chief Operations Officer at Sandstone Advisors, where he evaluates incoming project requests, coordinates cross-functional team workflows, and implements program management practices to ensure projects are delivered on time, within budget, and with high-quality execution.</p>
+          <p>Alex is a strategy and operations leader focused on scaling next-generation aerospace programs. He currently serves as Business Planning Manager at Supernal, where he sits on the Corporate Strategy team supporting the development of electric vertical takeoff and landing (eVTOL) aircraft. His work centers on competitive research, market positioning, and building structured strategic frameworks that align complex engineering efforts with long-term commercial and program objectives.</p>
+          <p>Previously, Alex held aerospace leadership roles at Wisk Aero and Boeing, where he drove cross-functional coordination across engineering, finance, and operations teams. Earlier in his career, Alex led digital growth and commercial initiatives at L'Oréal and Estée Lauder.</p>
+          <p>He holds a B.A. in Economics from the University of Virginia and earned his MBA at UCLA Anderson School of Management, concentrating in technology management and strategic execution.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bio-card" onclick="toggleBio(this)">
+      <div class="bio-photo">RC</div>
+      <div class="bio-content">
+        <div class="bio-header">
+          <div>
+            <div class="bio-name">Reid Connolly</div>
+            <div class="bio-title">Co-Founder, Investments & Asset Management, Business Development, AI Strategy</div>
+          </div>
+          <div class="bio-toggle">+</div>
+        </div>
+        <div class="bio-snippet">Nearly six years of institutional finance experience in credit trading and asset management, most recently at HalseyPoint Asset Management and Crescent Capital Group.</div>
+        <div class="bio-full">
+          <p>Reid Connolly is Co-Founder and Principal of Sandstone Advisors LLC, where he leverages nearly six years of institutional finance experience to provide strategic financial leadership to growing enterprises. With a career rooted in Credit Trading and Asset Management, Reid specializes in translating complex capital markets data into actionable growth strategies.</p>
+          <p>Most recently, he served on the Trading & Operations team at HalseyPoint Asset Management, a specialist CLO manager, where he was instrumental in supporting the active management and operational processes essential for complex credit portfolios. Prior to HalseyPoint, Reid spent five years at Crescent Capital Group as a member of the Trading & Capital Markets team, navigating volatile market cycles and coordinating with investment teams to execute total return strategies.</p>
+          <p>Reid holds a B.A. in Economics from the University of Southern California and earned his MBA at UCLA Anderson School of Management.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bio-card" onclick="toggleBio(this)">
+      <div class="bio-photo">LA</div>
+      <div class="bio-content">
+        <div class="bio-header">
+          <div>
+            <div class="bio-name">Lars Anderson</div>
+            <div class="bio-title">Co-Founder, Capital Strategy & Corporate Finance</div>
+          </div>
+          <div class="bio-toggle">+</div>
+        </div>
+        <div class="bio-snippet">Vice President at J.P. Morgan — the youngest VP in the Middle Market group — advising 40+ companies on financing, liquidity, and strategic growth.</div>
+        <div class="bio-full">
+          <p>Lars Anderson is a Co-Founder and Principal at Sandstone Capital Advisors, specializing in capital strategy, corporate finance, and transaction execution. He currently serves as a Vice President at J.P. Morgan, where he became the youngest Vice President in the Middle Market and Mid-Cap Multinational Corporations group, advising over 40 companies across industries on financing, liquidity, and strategic growth initiatives.</p>
+          <p>Lars has led the structuring and execution of complex debt facilities, underwriting processes, syndications, and M&A initiatives for companies ranging from $20 million to $2 billion in revenue. Prior to J.P. Morgan, he worked in Capital Markets Risk at Fannie Mae, gaining deep expertise in structured transactions, pricing, derivatives, and interest rate risk management.</p>
+          <p>Lars holds a B.S. in Finance, Operations Management, and Business Analytics from the University of Maryland and earned his MBA at UCLA Anderson School of Management, where he focused on investment finance and entrepreneurship.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bio-card" onclick="toggleBio(this)">
+      <div class="bio-photo">JS</div>
+      <div class="bio-content">
+        <div class="bio-header">
+          <div>
+            <div class="bio-name">Julian Shojaie</div>
+            <div class="bio-title">Co-Founder, Legal & Compliance</div>
+          </div>
+          <div class="bio-toggle">+</div>
+        </div>
+        <div class="bio-snippet">California bar-admitted attorney with experience at Fisher Phillips LLP and Wasser Cooperman & Mandles, and founder of Untapped Admissions, scaled more than tenfold.</div>
+        <div class="bio-full">
+          <p>Julian Shojaie serves as Chief Legal Officer and Head of Legal Compliance for Sandstone Capital Advisors, LLC, where he helps growing companies build scalable legal infrastructure, manage risk, and align legal strategy with long-term business objectives.</p>
+          <p>Julian began his legal career at top litigation firms, including Fisher Phillips LLP and Wasser Cooperman & Mandles, P.C., where he managed complex high-net-worth dissolution, corporate espionage, employment-related claims, data privacy, and compliance matters in both state and federal court. He also serves on the board and as Chief Legal Officer of The Branding Boutique, an LA-based digital marketing agency.</p>
+          <p>In addition to his legal practice, Julian founded and bootstrapped Untapped Admissions, a college admissions advisory focused on personal branding and strategic storytelling. Since inception, he has scaled operations and revenue more than tenfold.</p>
+          <p>A double Bruin, Julian earned his undergraduate degree in Psychology from UCLA and his Juris Doctor from Loyola Law School, and his MBA at UCLA Anderson School of Management. Licensed to practice law in California.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bio-card" onclick="toggleBio(this)">
+      <div class="bio-photo">SE</div>
+      <div class="bio-content">
+        <div class="bio-header">
+          <div>
+            <div class="bio-name">Sean Edwards</div>
+            <div class="bio-title">Co-Founder, Engineering & Systems Management</div>
+          </div>
+          <div class="bio-toggle">+</div>
+        </div>
+        <div class="bio-snippet">Business Systems Engineering IPT Lead at Boeing Space Mission Systems, overseeing system-level execution across satellite programs with expertise in full lifecycle delivery.</div>
+        <div class="bio-full">
+          <p>Sean Edwards serves as Chief Technical Officer for Sandstone Capital Advisors, where he helps organizations design and execute complex systems with precision, aligning technical operations with cost, schedule, and long-term performance objectives.</p>
+          <p>Sean currently serves as a Business Systems Engineering Integrated Product Team Lead at Boeing Space Mission Systems, where he oversees system-level execution across satellite programs. He operates at the intersection of engineering, production, and integration — ensuring alignment across technical requirements, program objectives, and delivery timelines across the full lifecycle, from architecture and design through integration, test, and production.</p>
+          <p>Sean holds a B.S. in Electrical Engineering from UC Santa Barbara and an M.S. in Space Systems Engineering from Johns Hopkins University, and earned his MBA at UCLA Anderson School of Management.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <h2>Want to work with <em>this team?</em></h2>
+  <p>Every engagement is led by a dedicated Project Lead from day one.</p>
+  <button class="btn-primary" onclick="openModal()">Start a Project →</button>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Sandstone<span>.</span></div>
+      <p class="footer-desc">A third-party consulting and business strategy firm helping growth-stage companies scale, optimize, and prepare for exit — without the cost of full-time executive hires.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="resources.html">Resources</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Client Access</div>
+      <a href="portal.html">Client Portal</a>
+      <a href="portal.html">Agency Login</a>
+      <a href="portal.html">Creator Login</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Connect</div>
+      <a href="#" onclick="openModal();return false;">Start a Project</a>
+      <a href="mailto:hello@sandstonegrowth.com">hello@sandstonegrowth.com</a>
+      <a href="#">Newport Beach, CA</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Sandstone Growth Advisors. All rights reserved.</div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h3>Let's start a conversation.</h3>
+    <p>Tell us about your business and what you're looking to achieve. We'll follow up within 1 business day.</p>
+    <input type="text" placeholder="Full Name">
+    <input type="email" placeholder="Email Address">
+    <input type="text" placeholder="Company Name">
+    <select>
+      <option value="" disabled selected>What's your primary goal?</option>
+      <option>Scale the business</option>
+      <option>Increase revenue</option>
+      <option>Decrease cost</option>
+      <option>Prepare for sale</option>
+      <option>Not sure yet</option>
+    </select>
+    <textarea rows="3" placeholder="Tell us a bit about your business..."></textarea>
+    <button class="submit" onclick="alert('Thank you! We will be in touch within 1 business day.');closeModal();">Submit →</button>
+  </div>
+</div>
+
+<script>
+function openModal(){document.getElementById('modalOverlay').classList.add('open');}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
+function toggleMobile(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('mobileOverlay').classList.toggle('open');
+}
+function toggleBio(card){
+  var wasOpen = card.classList.contains('open');
+  document.querySelectorAll('.bio-card').forEach(function(c){c.classList.remove('open');c.querySelector('.bio-toggle').textContent='+';});
+  if(!wasOpen){card.classList.add('open');card.querySelector('.bio-toggle').textContent='×';}
+}
+</script>
+</body>
+</html>

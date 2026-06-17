@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources · Sandstone Growth Advisors</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #C8A97E; --sand-light: #E8D5B7; --sand-pale: #F5EDE0;
+    --ocean-deep: #0D2B3E; --ocean-mid: #1A4A6B; --ocean-teal: #2E7DA8; --ocean-light: #5BA3C9;
+    --seafoam: #A8D5E2; --white: #FDFAF6; --text-dark: #0D1F2D; --text-mid: #3A5268; --text-light: #7A9BB5;
+    --border: rgba(200,169,126,0.25);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text-dark); overflow-x: hidden; }
+  img { max-width: 100%; display: block; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 5%; background: rgba(13,43,62,0.94); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,169,126,0.2); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--sand-light); letter-spacing: 0.04em; text-decoration: none; }
+  .nav-logo span { color: var(--sand); }
+  .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+  .nav-links a { color: rgba(232,213,183,0.75); text-decoration: none; font-size: 0.8rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; position: relative; }
+  .nav-links a:hover { color: var(--sand); }
+  .nav-links a.active { color: var(--sand); }
+  .nav-links a.active::after { content: ''; position: absolute; bottom: -8px; left: 0; right: 0; height: 2px; background: var(--sand); }
+  .nav-right { display: flex; align-items: center; gap: 0.8rem; }
+  .nav-cta { background: transparent; border: 1px solid var(--sand); color: var(--sand); padding: 0.55rem 1.4rem; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.25s; text-decoration: none; display: inline-block; }
+  .nav-cta:hover { background: var(--sand); color: var(--ocean-deep); }
+  .nav-portal-btn { background: rgba(200,169,126,0.12); border: 1px solid rgba(200,169,126,0.45); color: var(--sand); padding: 0.5rem 1.1rem; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 500; text-decoration: none; transition: all 0.25s; white-space: nowrap; }
+  .nav-portal-btn:hover { background: rgba(200,169,126,0.22); color: var(--sand-light); }
+  .nav-mobile-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+  .nav-mobile-toggle span { width: 24px; height: 2px; background: var(--sand-light); }
+  .mobile-menu { display: none; position: fixed; top: 0; right: -100%; width: 78%; max-width: 320px; height: 100vh; background: var(--ocean-deep); z-index: 200; padding: 6rem 2rem 2rem; transition: right 0.3s ease; border-left: 1px solid var(--border); }
+  .mobile-menu.open { right: 0; }
+  .mobile-menu a { display: block; color: var(--sand-light); text-decoration: none; padding: 1rem 0; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid rgba(200,169,126,0.12); }
+  .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 150; }
+  .mobile-overlay.open { display: block; }
+
+  .section-tag { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ocean-teal); margin-bottom: 1rem; font-weight: 500; }
+  .section-h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; color: var(--ocean-deep); margin-bottom: 1.4rem; }
+  .section-h2 em { font-style: italic; color: var(--ocean-teal); }
+
+  .page-hero { position: relative; padding: 10rem 5% 5rem; background: var(--ocean-deep); }
+  .page-hero-content { position: relative; z-index: 2; max-width: 760px; }
+  .page-hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--sand); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; }
+  .page-hero-eyebrow::before { content: ''; width: 36px; height: 1px; background: var(--sand); }
+  .page-hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.4rem, 5vw, 3.8rem); line-height: 1.1; color: var(--white); margin-bottom: 1.2rem; }
+  .page-hero h1 em { font-style: italic; color: var(--seafoam); }
+  .page-hero p { font-size: 1rem; color: rgba(232,213,183,0.78); line-height: 1.7; font-weight: 300; max-width: 600px; }
+
+  /* CASE STUDY FEATURE */
+  .case-study { padding: 6rem 5%; max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center; }
+  .case-visual { background: linear-gradient(135deg, #0A0A0A, #1a1a1a); padding: 2.5rem; position: relative; min-height: 360px; display: flex; flex-direction: column; justify-content: space-between; }
+  .case-visual-logo { font-family: 'Bebas Neue', 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.1em; color: white; }
+  .case-visual-logo span { color: #D4A853; }
+  .case-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .case-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #D4A853; }
+  .case-stat-lbl { font-size: 0.62rem; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 0.2rem; }
+  .case-content .otag { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ocean-teal); margin-bottom: 0.8rem; font-weight: 500; }
+  .case-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--ocean-deep); font-weight: 300; margin-bottom: 1.2rem; }
+  .case-content p { font-size: 0.92rem; color: var(--text-mid); line-height: 1.8; margin-bottom: 1rem; }
+  .case-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.2rem; }
+  .case-tag { font-size: 0.68rem; letter-spacing: 0.05em; padding: 0.3rem 0.8rem; background: var(--sand-pale); color: var(--ocean-teal); }
+
+  /* INSIGHTS GRID */
+  .insights-section { background: var(--sand-pale); padding: 6rem 5%; }
+  .insights-hdr { text-align: center; max-width: 700px; margin: 0 auto 3.5rem; }
+  .insights-hdr .section-tag { display: flex; justify-content: center; }
+  .insights-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
+  .insight-card { background: var(--white); padding: 2rem; transition: transform 0.3s; cursor: pointer; border-bottom: 3px solid transparent; }
+  .insight-card:hover { transform: translateY(-4px); border-bottom-color: var(--sand); }
+  .insight-tag { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ocean-teal); margin-bottom: 0.8rem; }
+  .insight-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--ocean-deep); margin-bottom: 0.8rem; line-height: 1.3; }
+  .insight-desc { font-size: 0.82rem; color: var(--text-mid); line-height: 1.65; margin-bottom: 1.2rem; }
+  .insight-link { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sand); }
+
+  /* ONE PAGER DOWNLOAD */
+  .download-section { padding: 6rem 5%; max-width: 1000px; margin: 0 auto; }
+  .download-card { background: var(--ocean-deep); padding: 3.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; }
+  .download-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--white); font-weight: 300; margin-bottom: 0.8rem; }
+  .download-card h3 em { color: var(--sand); font-style: italic; }
+  .download-card p { font-size: 0.88rem; color: rgba(168,213,226,0.7); line-height: 1.6; }
+  .btn-download { background: var(--sand); color: var(--ocean-deep); padding: 0.9rem 2rem; border: none; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; white-space: nowrap; transition: all 0.25s; }
+  .btn-download:hover { background: var(--sand-light); }
+
+  /* FAQ */
+  .faq-section { padding: 6rem 5%; max-width: 800px; margin: 0 auto; }
+  .faq-hdr { text-align: center; margin-bottom: 3rem; }
+  .faq-hdr .section-tag { display: flex; justify-content: center; }
+  .faq-item { border-bottom: 1px solid var(--border); padding: 1.5rem 0; cursor: pointer; }
+  .faq-q { display: flex; justify-content: space-between; align-items: center; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--ocean-deep); }
+  .faq-toggle { color: var(--sand); font-size: 1.3rem; transition: transform 0.3s; }
+  .faq-item.open .faq-toggle { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; font-size: 0.85rem; color: var(--text-mid); line-height: 1.7; }
+  .faq-item.open .faq-a { max-height: 300px; margin-top: 1rem; }
+
+  .cta-band { background: linear-gradient(135deg, var(--ocean-deep), var(--ocean-mid)); padding: 5rem 5%; text-align: center; }
+  .cta-band h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem,3.5vw,2.6rem); color: var(--white); font-weight: 300; margin-bottom: 1rem; }
+  .cta-band h2 em { color: var(--sand); font-style: italic; }
+  .cta-band p { color: rgba(168,213,226,0.7); margin-bottom: 2rem; font-size: 0.95rem; }
+  .btn-primary { background: var(--sand); color: var(--ocean-deep); padding: 0.9rem 2rem; border: none; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; text-decoration: none; display: inline-block; transition: all 0.25s; }
+  .btn-primary:hover { background: var(--sand-light); transform: translateY(-2px); }
+
+  footer { background: var(--ocean-deep); padding: 3.5rem 5% 2rem; border-top: 1px solid rgba(200,169,126,0.15); }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; max-width: 1200px; margin: 0 auto 2.5rem; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--sand-light); margin-bottom: 0.8rem; }
+  .footer-logo span { color: var(--sand); }
+  .footer-desc { font-size: 0.78rem; color: rgba(168,213,226,0.55); line-height: 1.7; max-width: 280px; }
+  .footer-col-title { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sand); margin-bottom: 1rem; }
+  .footer-col a { display: block; color: rgba(232,213,183,0.6); text-decoration: none; font-size: 0.8rem; margin-bottom: 0.7rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--sand); }
+  .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(200,169,126,0.1); font-size: 0.68rem; color: rgba(122,155,181,0.5); letter-spacing: 0.05em; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(13,43,62,0.85); z-index: 500; align-items: center; justify-content: center; padding: 2rem; }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: var(--white); max-width: 480px; width: 100%; padding: 2.5rem; position: relative; }
+  .modal-close { position: absolute; top: 1.2rem; right: 1.2rem; background: none; border: none; font-size: 1.4rem; color: var(--text-light); cursor: pointer; }
+  .modal-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--ocean-deep); margin-bottom: 0.6rem; font-weight: 400; }
+  .modal-box p { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 1.5rem; }
+  .modal-box input, .modal-box select, .modal-box textarea { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border); margin-bottom: 0.9rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; background: var(--sand-pale); outline: none; }
+  .modal-box button.submit { width: 100%; background: var(--ocean-deep); color: white; padding: 0.9rem; border: none; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+
+  @media (max-width: 980px) {
+    .nav-links { display: none; }
+    .nav-mobile-toggle { display: flex; }
+    .case-study { grid-template-columns: 1fr; }
+    .insights-grid { grid-template-columns: 1fr 1fr; }
+    .download-card { grid-template-columns: 1fr; text-align: center; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .insights-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    nav { padding: 1rem 5%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sandstone<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="resources.html" class="active">Resources</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="portal.html" class="nav-portal-btn">⬡ Client Portal</a>
+    <button class="nav-cta" onclick="openModal()">Start a Project</button>
+    <button class="nav-mobile-toggle" onclick="toggleMobile()" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobile()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="resources.html">Resources</a>
+  <a href="portal.html">Client Portal</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="page-hero-eyebrow">Resources & Insights</div>
+    <h1>Proof, perspective,<br>and <em>practical tools.</em></h1>
+    <p>Case studies from our engagements, perspectives on scaling and exit planning, and downloadable resources for founders evaluating outside help.</p>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section class="case-study">
+  <div class="case-visual">
+    <div class="case-visual-logo">DYMES<span>.</span></div>
+    <div class="case-stats">
+      <div><div class="case-stat-num">3 Weeks</div><div class="case-stat-lbl">Time to Launch</div></div>
+      <div><div class="case-stat-num">5</div><div class="case-stat-lbl">Creators Onboarded</div></div>
+      <div><div class="case-stat-num">100%</div><div class="case-stat-lbl">Manual Process Replaced</div></div>
+      <div><div class="case-stat-num">$0</div><div class="case-stat-lbl">Monthly SaaS Fees</div></div>
+    </div>
+  </div>
+  <div class="case-content">
+    <div class="otag">Case Study · Outcome: Scale</div>
+    <h3>From spreadsheets to a real operating system.</h3>
+    <p>Dymes Agency, an LA-based creator and influencer agency, came to Sandstone managing brand deals, content shoots, and creator schedules across texts, DMs, and disconnected spreadsheets.</p>
+    <p>We built a fully custom Events & Calendar platform and Client Dashboard — deployed directly on their domain, with zero ongoing software fees and full data ownership. The result: one shared system the entire agency and creator roster now run on daily.</p>
+    <div class="case-tags">
+      <span class="case-tag">Custom AI Tooling</span>
+      <span class="case-tag">Operations</span>
+      <span class="case-tag">Sprint Engagement</span>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section class="insights-section">
+  <div class="insights-hdr">
+    <div class="section-tag">Perspectives</div>
+    <h2 class="section-h2">Thinking from <em>the field.</em></h2>
+  </div>
+  <div class="insights-grid">
+    <div class="insight-card">
+      <div class="insight-tag">Scale</div>
+      <div class="insight-title">The operational ceiling most founders don't see coming</div>
+      <div class="insight-desc">Why revenue growth often outpaces the systems underneath it — and the early warning signs to watch for.</div>
+      <div class="insight-link">Read more →</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-tag">Exit Planning</div>
+      <div class="insight-title">What buyers actually pay a premium for</div>
+      <div class="insight-desc">Clean financials and documented systems move valuation more than most founders realize — here's what we see in diligence.</div>
+      <div class="insight-link">Read more →</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-tag">Cost Reduction</div>
+      <div class="insight-title">Where AI tooling actually pays for itself</div>
+      <div class="insight-desc">A practical look at which workflows are worth automating first — and which aren't worth the engineering time yet.</div>
+      <div class="insight-link">Read more →</div>
+    </div>
+  </div>
+</section>
+
+<!-- ONE PAGER DOWNLOAD -->
+<section class="download-section">
+  <div class="download-card">
+    <div>
+      <h3>The Sandstone <em>One-Pager</em></h3>
+      <p>A condensed overview of our outcome model, engagement tiers, and team — built for sharing internally with your co-founders or board.</p>
+    </div>
+    <button class="btn-download" onclick="alert('Download starting — in production this links to the PDF file.')">Download PDF ↓</button>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-hdr">
+    <div class="section-tag">Common Questions</div>
+    <h2 class="section-h2">Before you <em>reach out.</em></h2>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Do you take equity in exchange for your work?<span class="faq-toggle">+</span></div>
+    <div class="faq-a">No. Sandstone is entirely fee-based. We never take equity, board seats, or any ownership stake. You retain full control of your cap table throughout and after the engagement.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">What size company do you typically work with?<span class="faq-toggle">+</span></div>
+    <div class="faq-a">Most clients fall in the $0–20M revenue range — past the earliest startup stage, but before they have the budget or need for full-time C-suite hires across finance, legal, and operations.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Can you focus on more than one outcome at once?<span class="faq-toggle">+</span></div>
+    <div class="faq-a">Yes — many engagements blend two outcomes (for example, cutting cost while preparing for a sale). The Scale tier is built specifically for multi-outcome programs.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">What happens when the engagement ends?<span class="faq-toggle">+</span></div>
+    <div class="faq-a">We build every deliverable — dashboards, financial models, legal documents, AI tools — to run independently after we leave. Your team gets full training and documentation as part of every engagement.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">How is this different from hiring a fractional CFO?<span class="faq-meanings"></span><span class="faq-toggle">+</span></div>
+    <div class="faq-a">A fractional CFO covers one function. Sandstone combines financial, legal, operational, and technical expertise inside a single coordinated project — with a dedicated Project Lead managing all of it for you.</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <h2>Have a question we <em>didn't cover?</em></h2>
+  <p>Reach out directly — we respond to every inquiry within 1 business day.</p>
+  <button class="btn-primary" onclick="openModal()">Start a Project →</button>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Sandstone<span>.</span></div>
+      <p class="footer-desc">A third-party consulting and business strategy firm helping growth-stage companies scale, optimize, and prepare for exit — without the cost of full-time executive hires.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="resources.html">Resources</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Client Access</div>
+      <a href="portal.html">Client Portal</a>
+      <a href="portal.html">Agency Login</a>
+      <a href="portal.html">Creator Login</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Connect</div>
+      <a href="#" onclick="openModal();return false;">Start a Project</a>
+      <a href="mailto:hello@sandstonegrowth.com">hello@sandstonegrowth.com</a>
+      <a href="#">Newport Beach, CA</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Sandstone Growth Advisors. All rights reserved.</div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h3>Let's start a conversation.</h3>
+    <p>Tell us about your business and what you're looking to achieve. We'll follow up within 1 business day.</p>
+    <input type="text" placeholder="Full Name">
+    <input type="email" placeholder="Email Address">
+    <input type="text" placeholder="Company Name">
+    <select>
+      <option value="" disabled selected>What's your primary goal?</option>
+      <option>Scale the business</option>
+      <option>Increase revenue</option>
+      <option>Decrease cost</option>
+      <option>Prepare for sale</option>
+      <option>Not sure yet</option>
+    </select>
+    <textarea rows="3" placeholder="Tell us a bit about your business..."></textarea>
+    <button class="submit" onclick="alert('Thank you! We will be in touch within 1 business day.');closeModal();">Submit →</button>
+  </div>
+</div>
+
+<script>
+function openModal(){document.getElementById('modalOverlay').classList.add('open');}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
+function toggleMobile(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('mobileOverlay').classList.toggle('open');
+}
+function toggleFaq(item){
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(f){f.classList.remove('open');f.querySelector('.faq-toggle').textContent='+';});
+  if(!isOpen){item.classList.add('open');item.querySelector('.faq-toggle').textContent='×';}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services · Sandstone Growth Advisors</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #C8A97E; --sand-light: #E8D5B7; --sand-pale: #F5EDE0;
+    --ocean-deep: #0D2B3E; --ocean-mid: #1A4A6B; --ocean-teal: #2E7DA8; --ocean-light: #5BA3C9;
+    --seafoam: #A8D5E2; --white: #FDFAF6; --text-dark: #0D1F2D; --text-mid: #3A5268; --text-light: #7A9BB5;
+    --border: rgba(200,169,126,0.25);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text-dark); overflow-x: hidden; }
+  img { max-width: 100%; display: block; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 5%; background: rgba(13,43,62,0.94); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,169,126,0.2); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--sand-light); letter-spacing: 0.04em; text-decoration: none; }
+  .nav-logo span { color: var(--sand); }
+  .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+  .nav-links a { color: rgba(232,213,183,0.75); text-decoration: none; font-size: 0.8rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; position: relative; }
+  .nav-links a:hover { color: var(--sand); }
+  .nav-links a.active { color: var(--sand); }
+  .nav-links a.active::after { content: ''; position: absolute; bottom: -8px; left: 0; right: 0; height: 2px; background: var(--sand); }
+  .nav-right { display: flex; align-items: center; gap: 0.8rem; }
+  .nav-cta { background: transparent; border: 1px solid var(--sand); color: var(--sand); padding: 0.55rem 1.4rem; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.25s; text-decoration: none; display: inline-block; }
+  .nav-cta:hover { background: var(--sand); color: var(--ocean-deep); }
+  .nav-portal-btn { background: rgba(200,169,126,0.12); border: 1px solid rgba(200,169,126,0.45); color: var(--sand); padding: 0.5rem 1.1rem; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 500; text-decoration: none; transition: all 0.25s; white-space: nowrap; }
+  .nav-portal-btn:hover { background: rgba(200,169,126,0.22); color: var(--sand-light); }
+  .nav-mobile-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+  .nav-mobile-toggle span { width: 24px; height: 2px; background: var(--sand-light); }
+  .mobile-menu { display: none; position: fixed; top: 0; right: -100%; width: 78%; max-width: 320px; height: 100vh; background: var(--ocean-deep); z-index: 200; padding: 6rem 2rem 2rem; transition: right 0.3s ease; border-left: 1px solid var(--border); }
+  .mobile-menu.open { right: 0; }
+  .mobile-menu a { display: block; color: var(--sand-light); text-decoration: none; padding: 1rem 0; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid rgba(200,169,126,0.12); }
+  .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 150; }
+  .mobile-overlay.open { display: block; }
+
+  .section-tag { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ocean-teal); margin-bottom: 1rem; font-weight: 500; }
+  .section-h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; color: var(--ocean-deep); margin-bottom: 1.4rem; }
+  .section-h2 em { font-style: italic; color: var(--ocean-teal); }
+
+  .page-hero { position: relative; padding: 10rem 5% 5rem; background: var(--ocean-deep); }
+  .page-hero-content { position: relative; z-index: 2; max-width: 760px; }
+  .page-hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--sand); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; }
+  .page-hero-eyebrow::before { content: ''; width: 36px; height: 1px; background: var(--sand); }
+  .page-hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.4rem, 5vw, 3.8rem); line-height: 1.1; color: var(--white); margin-bottom: 1.2rem; }
+  .page-hero h1 em { font-style: italic; color: var(--seafoam); }
+  .page-hero p { font-size: 1rem; color: rgba(232,213,183,0.78); line-height: 1.7; font-weight: 300; max-width: 600px; }
+
+  /* OUTCOME MODEL SECTION */
+  .outcomes-section { padding: 6rem 5%; max-width: 1200px; margin: 0 auto; }
+  .outcomes-hdr { text-align: center; max-width: 700px; margin: 0 auto 4rem; }
+  .outcomes-hdr .section-tag { display: flex; justify-content: center; }
+
+  .outcome-block { display: grid; grid-template-columns: 0.9fr 1.6fr; gap: 3rem; align-items: center; margin-bottom: 5rem; padding-bottom: 4rem; border-bottom: 1px solid var(--border); }
+  .outcome-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .outcome-block.reverse { direction: rtl; }
+  .outcome-block.reverse > * { direction: ltr; }
+
+  .outcome-visual { background: var(--ocean-deep); padding: 3rem 2rem; position: relative; min-height: 280px; display: flex; flex-direction: column; justify-content: center; }
+  .outcome-num { font-family: 'Cormorant Garamond', serif; font-size: 5rem; color: rgba(200,169,126,0.25); line-height: 1; position: absolute; top: 1.5rem; right: 1.5rem; }
+  .outcome-icon-big { font-size: 2.6rem; margin-bottom: 1rem; }
+  .outcome-visual-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--white); line-height: 1.2; }
+
+  .outcome-content .otag { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ocean-teal); margin-bottom: 0.6rem; font-weight: 500; }
+  .outcome-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; color: var(--ocean-deep); font-weight: 400; margin-bottom: 1rem; }
+  .outcome-content p.desc { font-size: 0.92rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 1.4rem; }
+  .outcome-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .outcome-list-item { font-size: 0.82rem; color: var(--text-mid); display: flex; align-items: flex-start; gap: 0.5rem; }
+  .outcome-list-item::before { content: '—'; color: var(--sand); flex-shrink: 0; }
+
+  /* INTEGRATED ADVANTAGE */
+  .advantage-strip { background: var(--sand-pale); padding: 5rem 5%; }
+  .advantage-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+  .advantage-inner .section-tag { display: flex; justify-content: center; }
+  .advantage-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; margin-top: 3rem; }
+  .adv-card { background: var(--white); padding: 1.8rem 1.4rem; text-align: left; border-top: 3px solid var(--sand); }
+  .adv-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+  .adv-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--ocean-deep); margin-bottom: 0.5rem; }
+  .adv-desc { font-size: 0.78rem; color: var(--text-light); line-height: 1.6; }
+
+  /* PRICING */
+  .pricing-section { padding: 6rem 5%; max-width: 1100px; margin: 0 auto; }
+  .pricing-hdr { text-align: center; max-width: 640px; margin: 0 auto 3.5rem; }
+  .pricing-hdr .section-tag { display: flex; justify-content: center; }
+  .pricing-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .price-tier { background: var(--sand-pale); padding: 2.4rem 2rem; position: relative; border: 1px solid transparent; transition: all 0.3s; }
+  .price-tier.featured { background: var(--ocean-deep); transform: scale(1.03); }
+  .tier-badge { position: absolute; top: -12px; right: 1.5rem; background: var(--sand); color: var(--ocean-deep); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.8rem; font-weight: 600; }
+  .tier-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--ocean-deep); margin-bottom: 0.4rem; }
+  .price-tier.featured .tier-name { color: var(--white); }
+  .tier-duration { font-size: 0.72rem; color: var(--text-light); letter-spacing: 0.04em; margin-bottom: 1rem; }
+  .price-tier.featured .tier-duration { color: var(--seafoam); }
+  .tier-price { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--ocean-teal); margin-bottom: 1rem; font-weight: 400; }
+  .price-tier.featured .tier-price { color: var(--sand); }
+  .tier-desc { font-size: 0.85rem; color: var(--text-mid); line-height: 1.6; }
+  .price-tier.featured .tier-desc { color: rgba(168,213,226,0.8); }
+
+  .cta-band { background: linear-gradient(135deg, var(--ocean-deep), var(--ocean-mid)); padding: 5rem 5%; text-align: center; }
+  .cta-band h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem,3.5vw,2.6rem); color: var(--white); font-weight: 300; margin-bottom: 1rem; }
+  .cta-band h2 em { color: var(--sand); font-style: italic; }
+  .cta-band p { color: rgba(168,213,226,0.7); margin-bottom: 2rem; font-size: 0.95rem; }
+  .btn-primary { background: var(--sand); color: var(--ocean-deep); padding: 0.9rem 2rem; border: none; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; text-decoration: none; display: inline-block; transition: all 0.25s; }
+  .btn-primary:hover { background: var(--sand-light); transform: translateY(-2px); }
+
+  footer { background: var(--ocean-deep); padding: 3.5rem 5% 2rem; border-top: 1px solid rgba(200,169,126,0.15); }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; max-width: 1200px; margin: 0 auto 2.5rem; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--sand-light); margin-bottom: 0.8rem; }
+  .footer-logo span { color: var(--sand); }
+  .footer-desc { font-size: 0.78rem; color: rgba(168,213,226,0.55); line-height: 1.7; max-width: 280px; }
+  .footer-col-title { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sand); margin-bottom: 1rem; }
+  .footer-col a { display: block; color: rgba(232,213,183,0.6); text-decoration: none; font-size: 0.8rem; margin-bottom: 0.7rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--sand); }
+  .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(200,169,126,0.1); font-size: 0.68rem; color: rgba(122,155,181,0.5); letter-spacing: 0.05em; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(13,43,62,0.85); z-index: 500; align-items: center; justify-content: center; padding: 2rem; }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: var(--white); max-width: 480px; width: 100%; padding: 2.5rem; position: relative; }
+  .modal-close { position: absolute; top: 1.2rem; right: 1.2rem; background: none; border: none; font-size: 1.4rem; color: var(--text-light); cursor: pointer; }
+  .modal-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--ocean-deep); margin-bottom: 0.6rem; font-weight: 400; }
+  .modal-box p { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 1.5rem; }
+  .modal-box input, .modal-box select, .modal-box textarea { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border); margin-bottom: 0.9rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; background: var(--sand-pale); outline: none; }
+  .modal-box button.submit { width: 100%; background: var(--ocean-deep); color: white; padding: 0.9rem; border: none; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+
+  @media (max-width: 980px) {
+    .nav-links { display: none; }
+    .nav-mobile-toggle { display: flex; }
+    .outcome-block, .outcome-block.reverse { grid-template-columns: 1fr; direction: ltr; }
+    .advantage-grid { grid-template-columns: 1fr 1fr; }
+    .pricing-strip { grid-template-columns: 1fr; }
+    .price-tier.featured { transform: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .outcome-list { grid-template-columns: 1fr; }
+    .advantage-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    nav { padding: 1rem 5%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sandstone<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="resources.html">Resources</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="portal.html" class="nav-portal-btn">⬡ Client Portal</a>
+    <button class="nav-cta" onclick="openModal()">Start a Project</button>
+    <button class="nav-mobile-toggle" onclick="toggleMobile()" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobile()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="resources.html">Resources</a>
+  <a href="portal.html">Client Portal</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="page-hero-eyebrow">What We Deliver</div>
+    <h1>Four outcomes.<br>One <em>integrated partner.</em></h1>
+    <p>Sandstone doesn't sell hours or generic retainers. Every engagement is structured around a specific business outcome — and staffed with the exact mix of finance, legal, operations, and technical expertise needed to deliver it.</p>
+  </div>
+</section>
+
+<!-- OUTCOME MODEL -->
+<section class="outcomes-section">
+  <div class="outcomes-hdr">
+    <div class="section-tag">Our Business Model</div>
+    <h2 class="section-h2">Choose your <em>outcome.</em></h2>
+    <p style="font-size:0.92rem;color:var(--text-mid);line-height:1.7;">We organize every engagement around one of four outcomes. Most clients are focused on one primary goal — we build the engagement scope entirely around getting you there.</p>
+  </div>
+
+  <!-- 01 SCALE -->
+  <div class="outcome-block">
+    <div class="outcome-visual">
+      <div class="outcome-num">01</div>
+      <div class="outcome-icon-big">📈</div>
+      <div class="outcome-visual-title">Scale the<br>Business</div>
+    </div>
+    <div class="outcome-content">
+      <div class="otag">Outcome 01</div>
+      <h3>Build the infrastructure your growth has outpaced.</h3>
+      <p class="desc">Most companies hit a wall not because demand stops, but because the operational backbone underneath can't keep up. We diagnose the bottleneck — systems, process, team structure — and build what's missing so growth doesn't break the business.</p>
+      <div class="outcome-list">
+        <div class="outcome-list-item">Go-to-market execution planning</div>
+        <div class="outcome-list-item">Process design & documentation</div>
+        <div class="outcome-list-item">Team & vendor coordination</div>
+        <div class="outcome-list-item">Custom operational dashboards</div>
+        <div class="outcome-list-item">CRM configuration & deployment</div>
+        <div class="outcome-list-item">Post-raise operational buildout</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 REVENUE -->
+  <div class="outcome-block reverse">
+    <div class="outcome-visual">
+      <div class="outcome-num">02</div>
+      <div class="outcome-icon-big">💰</div>
+      <div class="outcome-visual-title">Increase<br>Revenue</div>
+    </div>
+    <div class="outcome-content">
+      <div class="otag">Outcome 02</div>
+      <h3>Find the dollars already inside your business.</h3>
+      <p class="desc">Revenue growth isn't always about new customers. We audit pricing, packaging, and capital structure to find what's leaking, then build the financial infrastructure and investor materials to support the next stage of fundraising or expansion.</p>
+      <div class="outcome-list">
+        <div class="outcome-list-item">Pricing & packaging strategy</div>
+        <div class="outcome-list-item">Financial modeling & forecasting</div>
+        <div class="outcome-list-item">Capital formation & investor readiness</div>
+        <div class="outcome-list-item">New revenue line development</div>
+        <div class="outcome-list-item">Cash flow architecture</div>
+        <div class="outcome-list-item">CFO-level strategic guidance</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 COST -->
+  <div class="outcome-block">
+    <div class="outcome-visual">
+      <div class="outcome-num">03</div>
+      <div class="outcome-icon-big">✂️</div>
+      <div class="outcome-visual-title">Decrease<br>Cost</div>
+    </div>
+    <div class="outcome-content">
+      <div class="otag">Outcome 03</div>
+      <h3>Strip out the waste, keep the output.</h3>
+      <p class="desc">We find the operational fat — redundant vendors, manual processes that should be automated, headcount inefficiency — and remove it without slowing the business down. Often funded entirely by the savings it generates.</p>
+      <div class="outcome-list">
+        <div class="outcome-list-item">Vendor audit & renegotiation</div>
+        <div class="outcome-list-item">Custom AI workflow automation</div>
+        <div class="outcome-list-item">Process efficiency audits</div>
+        <div class="outcome-list-item">Operational intelligence dashboards</div>
+        <div class="outcome-list-item">Headcount & org structure review</div>
+        <div class="outcome-list-item">Tech stack consolidation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 EXIT -->
+  <div class="outcome-block reverse">
+    <div class="outcome-visual">
+      <div class="outcome-num">04</div>
+      <div class="outcome-icon-big">🤝</div>
+      <div class="outcome-visual-title">Prepare for<br>Sale</div>
+    </div>
+    <div class="outcome-content">
+      <div class="otag">Outcome 04</div>
+      <h3>Maximize valuation before you go to market.</h3>
+      <p class="desc">Buyers pay a premium for clean books, documented systems, and a business that doesn't depend entirely on the founder. We build the legal, financial, and operational infrastructure that turns "founder-run" into "buyer-ready."</p>
+      <div class="outcome-list">
+        <div class="outcome-list-item">Financial clean-up & due diligence prep</div>
+        <div class="outcome-list-item">Legal infrastructure & entity structuring</div>
+        <div class="outcome-list-item">Operating model documentation</div>
+        <div class="outcome-list-item">Management team transition planning</div>
+        <div class="outcome-list-item">Valuation positioning strategy</div>
+        <div class="outcome-list-item">Buyer-facing data room build</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- INTEGRATED ADVANTAGE -->
+<section class="advantage-strip">
+  <div class="advantage-inner">
+    <div class="section-tag">The Sandstone Advantage</div>
+    <h2 class="section-h2">One engagement.<br>Every <em>discipline.</em></h2>
+    <p style="font-size:0.92rem;color:var(--text-mid);line-height:1.7;max-width:640px;margin:0 auto;">No competitor combines legal services, financial advisory, and custom AI tool development within a single project engagement. That integration is what makes outcomes achievable on Sandstone's timeline.</p>
+    <div class="advantage-grid">
+      <div class="adv-card">
+        <div class="adv-icon">📊</div>
+        <div class="adv-title">Financial Advisory</div>
+        <div class="adv-desc">Real-time dashboards, capital raise materials, and models built around your actual data.</div>
+      </div>
+      <div class="adv-card">
+        <div class="adv-icon">⚖️</div>
+        <div class="adv-title">Legal Strategy</div>
+        <div class="adv-desc">California bar-admitted counsel embedded in every engagement — MSAs, compliance, entity structuring.</div>
+      </div>
+      <div class="adv-card">
+        <div class="adv-icon">🤖</div>
+        <div class="adv-title">Agentic AI Tools</div>
+        <div class="adv-desc">Custom-built operational tools deployed within your project sprint — dashboards, CRMs, automation.</div>
+      </div>
+      <div class="adv-card">
+        <div class="adv-icon">⚙️</div>
+        <div class="adv-title">Operations & Systems</div>
+        <div class="adv-desc">Structured, executable plans that translate strategy into the operational backbone growth requires.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section">
+  <div class="pricing-hdr">
+    <div class="section-tag">Engagement Structure</div>
+    <h2 class="section-h2">Sized to the <em>outcome.</em></h2>
+    <p style="font-size:0.92rem;color:var(--text-mid);line-height:1.7;">Every tier is fee-based and equity-free. No retainers, no long-term lock-in — just a defined scope, a defined timeline, and a defined outcome.</p>
+  </div>
+  <div class="pricing-strip">
+    <div class="price-tier">
+      <div class="tier-name">Sprint</div>
+      <div class="tier-duration">2 Months · 1 Lead + 1 Support</div>
+      <div class="tier-price">$18K – $30K</div>
+      <div class="tier-desc">One focused project against a single outcome. A complete deliverable for less than a single month of retainer fees at most fractional finance firms.</div>
+    </div>
+    <div class="price-tier featured">
+      <div class="tier-badge">Most Popular</div>
+      <div class="tier-name">Build</div>
+      <div class="tier-duration">3–4 Months · 1 Lead + 2 Support</div>
+      <div class="tier-price">$40K – $75K</div>
+      <div class="tier-desc">A multi-function project combining financial, legal, and AI tool deliverables in a single coordinated engagement.</div>
+    </div>
+    <div class="price-tier">
+      <div class="tier-name">Scale</div>
+      <div class="tier-duration">5–6 Months · 1 Lead + 3 Support</div>
+      <div class="tier-price">$80K – $150K+</div>
+      <div class="tier-desc">A full-scope program addressing multiple outcomes at once. A fraction of what full-time CFO, GC, and ops hires would cost combined.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <h2>Not sure which outcome <em>fits you?</em></h2>
+  <p>Tell us where the business is today. We'll tell you exactly which engagement makes sense.</p>
+  <button class="btn-primary" onclick="openModal()">Start a Project →</button>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Sandstone<span>.</span></div>
+      <p class="footer-desc">A third-party consulting and business strategy firm helping growth-stage companies scale, optimize, and prepare for exit — without the cost of full-time executive hires.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="resources.html">Resources</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Client Access</div>
+      <a href="portal.html">Client Portal</a>
+      <a href="portal.html">Agency Login</a>
+      <a href="portal.html">Creator Login</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Connect</div>
+      <a href="#" onclick="openModal();return false;">Start a Project</a>
+      <a href="mailto:hello@sandstonegrowth.com">hello@sandstonegrowth.com</a>
+      <a href="#">Newport Beach, CA</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Sandstone Growth Advisors. All rights reserved.</div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h3>Let's start a conversation.</h3>
+    <p>Tell us about your business and what you're looking to achieve. We'll follow up within 1 business day.</p>
+    <input type="text" placeholder="Full Name">
+    <input type="email" placeholder="Email Address">
+    <input type="text" placeholder="Company Name">
+    <select>
+      <option value="" disabled selected>What's your primary goal?</option>
+      <option>Scale the business</option>
+      <option>Increase revenue</option>
+      <option>Decrease cost</option>
+      <option>Prepare for sale</option>
+      <option>Not sure yet</option>
+    </select>
+    <textarea rows="3" placeholder="Tell us a bit about your business..."></textarea>
+    <button class="submit" onclick="alert('Thank you! We will be in touch within 1 business day.');closeModal();">Submit →</button>
+  </div>
+</div>
+
+<script>
+function openModal(){document.getElementById('modalOverlay').classList.add('open');}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
+function toggleMobile(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('mobileOverlay').classList.toggle('open');
+}
+</script>
+</body>
+</html>
