@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creator Dashboard · Sandstone Growth Advisors</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #C8A97E;
+    --sand-light: #E8D5B7;
+    --sand-pale: #F5EDE0;
+    --ocean-deep: #0D2B3E;
+    --ocean-mid: #1A4A6B;
+    --ocean-teal: #2E7DA8;
+    --ocean-light: #5BA3C9;
+    --seafoam: #A8D5E2;
+    --white: #FDFAF6;
+    --text-dark: #0D1F2D;
+    --text-mid: #3A5268;
+    --text-light: #7A9BB5;
+    --border: rgba(200,169,126,0.25);
+    --ig-grad: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF);
+    --tt-color: #010101;
+    --tt-accent: #FE2C55;
+    --tt-blue: #25F4EE;
+    --green: #4ADE80;
+    --red: #F87171;
+    --yellow: #FBBF24;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0A1929;
+    color: var(--white);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5%;
+    background: rgba(10,25,41,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(200,169,126,0.15);
+  }
+  .nav-left { display:flex; align-items:center; gap:2rem; }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight:600;
+    color: var(--sand-light); letter-spacing:0.04em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--sand); }
+  .nav-badge {
+    font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase;
+    color: var(--tt-accent); border:1px solid rgba(254,44,85,0.35);
+    padding:0.2rem 0.6rem; font-weight:500;
+  }
+  .nav-right { display:flex; align-items:center; gap:1.5rem; }
+  .nav-back {
+    font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+    color: var(--text-light); text-decoration:none; transition:color 0.2s;
+    display:flex; align-items:center; gap:0.4rem;
+  }
+  .nav-back:hover { color: var(--sand); }
+  .creator-name-badge {
+    display:flex; align-items:center; gap:0.6rem;
+    background: rgba(255,255,255,0.05);
+    border:1px solid rgba(200,169,126,0.2);
+    padding:0.4rem 0.9rem;
+    font-size:0.75rem; color:var(--sand-light);
+  }
+  .creator-avatar {
+    width:26px; height:26px; border-radius:50%;
+    background: var(--ig-grad);
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.65rem; font-weight:600; color:white;
+  }
+
+  /* ── LOGIN GATE ── */
+  #login-gate {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Blurred dashboard preview behind login */
+  .gate-bg-preview {
+    position: absolute; inset:0;
+    background: linear-gradient(180deg, #0A1929 0%, #0D2B3E 100%);
+    overflow: hidden;
+  }
+  .gate-bg-preview::after {
+    content:'';
+    position:absolute; inset:0;
+    background: rgba(10,25,41,0.75);
+    backdrop-filter: blur(6px);
+  }
+
+  /* Fake blurred dashboard grid in background */
+  .bg-grid {
+    position:absolute; top:80px; left:2%; right:2%;
+    display:grid; grid-template-columns: repeat(4,1fr);
+    gap:1rem; opacity:0.3; filter:blur(2px); pointer-events:none;
+  }
+  .bg-card {
+    background: rgba(255,255,255,0.06);
+    border:1px solid rgba(200,169,126,0.1);
+    border-radius:2px; height:120px;
+  }
+  .bg-card-tall { height:240px; }
+  .bg-bar-chart {
+    padding:1rem; display:flex; gap:4px; align-items:flex-end; height:100%;
+  }
+  .bg-bar {
+    flex:1; background:rgba(91,163,201,0.4);
+    border-radius:1px;
+  }
+
+  .login-card {
+    position:relative; z-index:10;
+    background: rgba(13,43,62,0.97);
+    border:1px solid rgba(200,169,126,0.3);
+    padding:3rem 2.5rem;
+    width:100%; max-width:420px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+  }
+  .login-eyebrow {
+    font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--sand); margin-bottom:0.6rem;
+  }
+  .login-title {
+    font-family:'Cormorant Garamond',serif;
+    font-size:2rem; font-weight:300;
+    color:var(--white); margin-bottom:0.3rem; line-height:1.1;
+  }
+  .login-sub {
+    font-size:0.78rem; color:var(--text-light); margin-bottom:2rem;
+    line-height:1.6;
+  }
+
+  .platform-pills {
+    display:flex; gap:0.6rem; margin-bottom:2rem; flex-wrap:wrap;
+  }
+  .platform-pill {
+    display:flex; align-items:center; gap:0.4rem;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    padding:0.35rem 0.7rem;
+    font-size:0.65rem; letter-spacing:0.06em;
+    color:var(--text-light);
+  }
+  .pill-dot { width:6px; height:6px; border-radius:50%; }
+  .pill-dot.ig { background: #DD2A7B; }
+  .pill-dot.tt { background: var(--tt-accent); }
+  .pill-dot.fin { background: var(--sand); }
+  .pill-dot.ev { background: var(--seafoam); }
+
+  .form-group { display:flex; flex-direction:column; gap:0.4rem; margin-bottom:1rem; }
+  .form-label { font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-light); }
+  .form-input {
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(200,169,126,0.2);
+    color:var(--white); padding:0.85rem 1rem;
+    font-family:'DM Sans',sans-serif; font-size:0.88rem;
+    outline:none; transition:border-color 0.2s; font-weight:300;
+    width:100%;
+  }
+  .form-input::placeholder { color:rgba(122,155,181,0.45); }
+  .form-input:focus { border-color:var(--sand); }
+
+  .login-btn {
+    width:100%; background:var(--sand); color:var(--ocean-deep);
+    border:none; padding:1rem;
+    font-family:'DM Sans',sans-serif; font-size:0.8rem;
+    letter-spacing:0.12em; text-transform:uppercase; font-weight:500;
+    cursor:pointer; margin-top:0.5rem; transition:all 0.25s;
+  }
+  .login-btn:hover { background:var(--sand-light); }
+
+  .login-note {
+    font-size:0.68rem; color:rgba(122,155,181,0.5);
+    text-align:center; margin-top:1rem; line-height:1.6;
+  }
+  .login-note a { color:var(--sand); text-decoration:none; }
+
+  /* Demo hint */
+  .demo-hint {
+    background:rgba(200,169,126,0.07);
+    border:1px solid rgba(200,169,126,0.15);
+    padding:0.8rem 1rem; margin-top:1.2rem;
+    font-size:0.7rem; color:var(--text-light); line-height:1.6;
+  }
+  .demo-hint strong { color:var(--sand); }
+
+  /* ── DASHBOARD (hidden until login) ── */
+  #dashboard { display:none; padding-top:70px; min-height:100vh; }
+
+  /* Dashboard top bar */
+  .dash-topbar {
+    background: rgba(13,43,62,0.8);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,169,126,0.12);
+    padding:1rem 2.5%;
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:1rem;
+  }
+  .dash-greeting {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.4rem; font-weight:300; color:var(--white);
+  }
+  .dash-greeting span { color:var(--sand); font-style:italic; }
+  .dash-date { font-size:0.72rem; color:var(--text-light); margin-top:0.1rem; letter-spacing:0.06em; }
+
+  .dash-quick-stats {
+    display:flex; gap:1.5rem; flex-wrap:wrap;
+  }
+  .qs {
+    text-align:center;
+  }
+  .qs-num {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.4rem; font-weight:400; color:var(--sand);
+  }
+  .qs-label { font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light); }
+
+  /* Tab navigation */
+  .dash-tabs {
+    display:flex; gap:0; border-bottom:1px solid rgba(200,169,126,0.12);
+    padding:0 2.5%; background:rgba(10,25,41,0.6);
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .dash-tabs::-webkit-scrollbar { display:none; }
+  .dash-tab {
+    padding:1rem 1.5rem;
+    font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--text-light); cursor:pointer;
+    border-bottom:2px solid transparent;
+    white-space:nowrap; transition:all 0.2s;
+    display:flex; align-items:center; gap:0.5rem;
+    background:none; border-left:none; border-right:none; border-top:none;
+    font-family:'DM Sans',sans-serif;
+  }
+  .dash-tab:hover { color:var(--sand-light); }
+  .dash-tab.active { color:var(--sand); border-bottom-color:var(--sand); }
+
+  /* Tab panels */
+  .dash-panel { display:none; padding:2.5rem 2.5%; animation:fadePanel 0.3s ease; }
+  .dash-panel.active { display:block; }
+  @keyframes fadePanel { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
+
+  /* Panel grid layouts */
+  .panel-grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; margin-bottom:2rem; }
+  .panel-grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; margin-bottom:2rem; }
+  .panel-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:2rem; }
+  .panel-grid-21 { display:grid; grid-template-columns:2fr 1fr; gap:1.5rem; margin-bottom:2rem; }
+
+  /* Stat cards */
+  .stat-tile {
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(200,169,126,0.12);
+    padding:1.4rem 1.5rem;
+    position:relative; overflow:hidden;
+    transition:border-color 0.2s;
+  }
+  .stat-tile:hover { border-color:rgba(200,169,126,0.3); }
+  .stat-tile-label {
+    font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase;
+    color:var(--text-light); margin-bottom:0.6rem;
+    display:flex; align-items:center; gap:0.5rem;
+  }
+  .stat-tile-num {
+    font-family:'Cormorant Garamond',serif;
+    font-size:2rem; font-weight:300; color:var(--white);
+    line-height:1;
+  }
+  .stat-tile-change {
+    font-size:0.68rem; margin-top:0.4rem;
+    display:flex; align-items:center; gap:0.3rem;
+  }
+  .stat-tile-change.up { color:var(--green); }
+  .stat-tile-change.down { color:var(--red); }
+  .stat-tile-change.neutral { color:var(--text-light); }
+  .stat-tile-accent {
+    position:absolute; top:0; right:0;
+    width:3px; height:100%;
+  }
+
+  /* Platform badge */
+  .platform-badge {
+    display:inline-flex; align-items:center; gap:0.3rem;
+    font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase;
+    padding:0.2rem 0.5rem; font-weight:500;
+  }
+  .platform-badge.ig { background:rgba(221,42,123,0.15); color:#F58529; border:1px solid rgba(221,42,123,0.25); }
+  .platform-badge.tt { background:rgba(254,44,85,0.1); color:var(--tt-accent); border:1px solid rgba(254,44,85,0.2); }
+
+  /* Chart containers */
+  .chart-card {
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(200,169,126,0.1);
+    padding:1.5rem;
+  }
+  .chart-title {
+    font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--text-light); margin-bottom:1.2rem;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .chart-title-main { color:var(--sand-light); font-size:0.8rem; letter-spacing:0.05em; text-transform:none; font-weight:400; }
+
+  /* Bar chart */
+  .bar-chart { display:flex; gap:6px; align-items:flex-end; height:120px; }
+  .bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .bar-fill {
+    width:100%; border-radius:1px 1px 0 0;
+    transition:height 0.6s ease;
+    position:relative;
+  }
+  .bar-fill.ig-color { background:linear-gradient(180deg,#DD2A7B,rgba(221,42,123,0.3)); }
+  .bar-fill.tt-color { background:linear-gradient(180deg,var(--tt-accent),rgba(254,44,85,0.3)); }
+  .bar-fill.sand-color { background:linear-gradient(180deg,var(--sand),rgba(200,169,126,0.3)); }
+  .bar-fill.teal-color { background:linear-gradient(180deg,var(--ocean-teal),rgba(46,125,168,0.3)); }
+  .bar-label { font-size:0.55rem; color:var(--text-light); }
+
+  /* Line chart (SVG) */
+  .line-chart-wrap { position:relative; height:130px; }
+  .line-chart-wrap svg { width:100%; height:100%; }
+
+  /* Top posts table */
+  .data-table { width:100%; border-collapse:collapse; }
+  .data-table th {
+    font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--text-light); padding:0.6rem 0.8rem;
+    border-bottom:1px solid rgba(200,169,126,0.12); text-align:left;
+    font-weight:400;
+  }
+  .data-table td {
+    font-size:0.78rem; color:rgba(255,255,255,0.8);
+    padding:0.75rem 0.8rem;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    font-weight:300;
+  }
+  .data-table tr:hover td { background:rgba(255,255,255,0.02); }
+  .post-thumb {
+    width:36px; height:36px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.1rem;
+    border:1px solid rgba(255,255,255,0.08);
+    flex-shrink:0;
+  }
+  .post-row-inner { display:flex; align-items:center; gap:0.7rem; }
+
+  /* ── FINANCIALS ── */
+  .finance-summary {
+    background:rgba(200,169,126,0.06);
+    border:1px solid rgba(200,169,126,0.2);
+    padding:2rem;
+    margin-bottom:2rem;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:2rem;
+  }
+  .fin-block-label {
+    font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase;
+    color:var(--text-light); margin-bottom:0.4rem;
+  }
+  .fin-block-num {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.8rem; font-weight:300; color:var(--sand);
+  }
+  .fin-block-sub { font-size:0.68rem; color:var(--text-light); margin-top:0.2rem; }
+
+  .invoice-list { display:flex; flex-direction:column; gap:0.6rem; }
+  .invoice-row {
+    display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+    align-items:center; gap:1rem;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.06);
+    padding:1rem 1.2rem;
+    transition:background 0.2s;
+  }
+  .invoice-row:hover { background:rgba(255,255,255,0.05); }
+  .invoice-brand { font-size:0.82rem; color:var(--white); font-weight:400; }
+  .invoice-desc { font-size:0.68rem; color:var(--text-light); margin-top:0.2rem; }
+  .invoice-amount {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.1rem; color:var(--sand);
+  }
+  .invoice-date { font-size:0.7rem; color:var(--text-light); }
+  .status-badge {
+    font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase;
+    padding:0.25rem 0.6rem; font-weight:500; text-align:center;
+  }
+  .status-badge.paid { background:rgba(74,222,128,0.12); color:var(--green); border:1px solid rgba(74,222,128,0.2); }
+  .status-badge.pending { background:rgba(251,191,36,0.1); color:var(--yellow); border:1px solid rgba(251,191,36,0.2); }
+  .status-badge.overdue { background:rgba(248,113,113,0.1); color:var(--red); border:1px solid rgba(248,113,113,0.2); }
+
+  /* ── EVENTS ── */
+  .events-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:1.5rem; }
+  .event-card {
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(200,169,126,0.12);
+    padding:1.5rem;
+    display:flex; gap:1.2rem; align-items:flex-start;
+    transition:all 0.25s;
+  }
+  .event-card:hover { border-color:rgba(200,169,126,0.3); background:rgba(255,255,255,0.05); }
+  .event-date-block {
+    text-align:center; flex-shrink:0;
+    background:rgba(200,169,126,0.1);
+    border:1px solid rgba(200,169,126,0.2);
+    padding:0.6rem 0.8rem; min-width:52px;
+  }
+  .event-month { font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--sand); }
+  .event-day { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:300; color:var(--white); line-height:1; }
+  .event-name { font-size:0.88rem; color:var(--white); font-weight:400; margin-bottom:0.3rem; }
+  .event-detail { font-size:0.72rem; color:var(--text-light); line-height:1.6; }
+  .event-tags { display:flex; gap:0.4rem; flex-wrap:wrap; margin-top:0.6rem; }
+  .event-tag {
+    font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase;
+    padding:0.2rem 0.5rem; border:1px solid rgba(255,255,255,0.1);
+    color:var(--text-light);
+  }
+  .event-tag.brand { border-color:rgba(200,169,126,0.3); color:var(--sand); }
+  .event-tag.appearance { border-color:rgba(168,213,226,0.3); color:var(--seafoam); }
+  .event-tag.content { border-color:rgba(46,125,168,0.3); color:var(--ocean-light); }
+
+  /* Mini calendar for events */
+  .events-calendar { background:rgba(255,255,255,0.03); border:1px solid rgba(200,169,126,0.1); padding:1.5rem; }
+  .ecal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
+  .ecal-month { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--sand-light); }
+  .ecal-nav { background:none; border:1px solid rgba(200,169,126,0.2); color:var(--text-light); cursor:pointer; padding:0.3rem 0.6rem; font-size:0.8rem; transition:all 0.2s; }
+  .ecal-nav:hover { border-color:var(--sand); color:var(--sand); }
+  .ecal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+  .ecal-day-header { font-size:0.55rem; text-align:center; color:var(--text-light); letter-spacing:0.1em; text-transform:uppercase; padding:0.3rem 0; }
+  .ecal-day {
+    text-align:center; padding:0.4rem 0.2rem;
+    font-size:0.72rem; color:var(--text-light);
+    border-radius:2px; cursor:pointer; transition:all 0.15s;
+    position:relative;
+  }
+  .ecal-day:hover { background:rgba(200,169,126,0.1); color:var(--sand-light); }
+  .ecal-day.today { color:var(--seafoam); font-weight:500; }
+  .ecal-day.has-event::after {
+    content:''; position:absolute; bottom:2px; left:50%; transform:translateX(-50%);
+    width:4px; height:4px; border-radius:50%; background:var(--sand);
+  }
+  .ecal-day.empty { cursor:default; }
+
+  /* ── PROJECTS ── */
+  .project-card {
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(200,169,126,0.12);
+    padding:1.5rem 1.8rem;
+    margin-bottom:1rem;
+    transition:all 0.25s;
+  }
+  .project-card:hover { border-color:rgba(200,169,126,0.3); background:rgba(255,255,255,0.05); }
+  .project-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem; }
+  .project-name { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--white); font-weight:400; }
+  .project-brand { font-size:0.72rem; color:var(--text-light); margin-top:0.15rem; }
+  .project-meta { display:flex; gap:0.8rem; align-items:center; flex-wrap:wrap; }
+  .project-progress-wrap { margin-bottom:1rem; }
+  .project-progress-label { display:flex; justify-content:space-between; font-size:0.65rem; color:var(--text-light); margin-bottom:0.4rem; letter-spacing:0.06em; }
+  .project-progress-bar { height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden; }
+  .project-progress-fill { height:100%; border-radius:2px; background:linear-gradient(90deg,var(--ocean-teal),var(--ocean-light)); transition:width 0.8s ease; }
+  .project-tasks { display:grid; grid-template-columns:repeat(3,1fr); gap:0.5rem; margin-top:0.8rem; }
+  .task-item {
+    display:flex; align-items:center; gap:0.5rem;
+    font-size:0.72rem; color:var(--text-light);
+    background:rgba(255,255,255,0.03); padding:0.5rem 0.7rem;
+    border:1px solid rgba(255,255,255,0.05);
+    cursor:pointer; transition:all 0.2s;
+  }
+  .task-item:hover { background:rgba(255,255,255,0.06); }
+  .task-check {
+    width:14px; height:14px; border:1px solid rgba(200,169,126,0.3);
+    border-radius:2px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    font-size:0.6rem;
+  }
+  .task-check.done { background:var(--sand); border-color:var(--sand); color:var(--ocean-deep); }
+  .task-item.done-task { color:rgba(122,155,181,0.5); text-decoration:line-through; }
+
+  /* ── MEETINGS ── */
+  .meeting-card {
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(200,169,126,0.12);
+    padding:1.4rem 1.6rem;
+    display:flex; gap:1.5rem; align-items:center;
+    margin-bottom:0.8rem; transition:all 0.25s;
+    flex-wrap:wrap;
+  }
+  .meeting-card:hover { border-color:rgba(200,169,126,0.25); background:rgba(255,255,255,0.04); }
+  .meeting-time-block { flex-shrink:0; text-align:center; min-width:60px; }
+  .meeting-time { font-family:'Cormorant Garamond',serif; font-size:1.3rem; color:var(--sand); font-weight:300; }
+  .meeting-ampm { font-size:0.6rem; color:var(--text-light); letter-spacing:0.1em; text-transform:uppercase; }
+  .meeting-divider { width:1px; height:40px; background:rgba(200,169,126,0.15); flex-shrink:0; }
+  .meeting-info { flex:1; min-width:150px; }
+  .meeting-name { font-size:0.88rem; color:var(--white); font-weight:400; margin-bottom:0.2rem; }
+  .meeting-detail { font-size:0.7rem; color:var(--text-light); }
+  .meeting-join-btn {
+    background:transparent; border:1px solid var(--ocean-teal);
+    color:var(--ocean-light); padding:0.5rem 1.2rem;
+    font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase;
+    cursor:pointer; font-family:'DM Sans',sans-serif;
+    transition:all 0.2s; white-space:nowrap; flex-shrink:0;
+  }
+  .meeting-join-btn:hover { background:var(--ocean-teal); color:white; }
+  .meeting-join-btn.past { border-color:rgba(255,255,255,0.1); color:var(--text-light); cursor:default; }
+  .meeting-join-btn.past:hover { background:transparent; color:var(--text-light); }
+
+  /* Section headers inside panels */
+  .panel-section-title {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.4rem; font-weight:300; color:var(--white);
+    margin-bottom:0.3rem;
+  }
+  .panel-section-sub { font-size:0.78rem; color:var(--text-light); margin-bottom:1.5rem; font-weight:300; }
+
+  .panel-row-header {
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:1.2rem; flex-wrap:wrap; gap:0.5rem;
+  }
+  .panel-action-btn {
+    background:transparent; border:1px solid rgba(200,169,126,0.3);
+    color:var(--sand); padding:0.45rem 1rem;
+    font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase;
+    cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s;
+  }
+  .panel-action-btn:hover { background:var(--sand); color:var(--ocean-deep); }
+
+  /* Engagement rate ring */
+  .eng-ring-wrap { display:flex; align-items:center; gap:1rem; }
+  .eng-ring {
+    width:70px; height:70px; position:relative; flex-shrink:0;
+  }
+  .eng-ring svg { width:70px; height:70px; transform:rotate(-90deg); }
+  .eng-ring-val {
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond',serif;
+    font-size:0.95rem; color:var(--sand);
+  }
+  .eng-ring-label { font-size:0.72rem; color:var(--text-light); line-height:1.6; }
+  .eng-ring-label strong { color:var(--white); display:block; font-weight:400; }
+
+  /* Audience breakdown */
+  .audience-bar { margin-bottom:0.8rem; }
+  .audience-bar-header { display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-light); margin-bottom:0.3rem; }
+  .audience-bar-track { height:6px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; }
+  .audience-bar-fill { height:100%; border-radius:3px; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width:4px; height:4px; }
+  ::-webkit-scrollbar-track { background:rgba(255,255,255,0.02); }
+  ::-webkit-scrollbar-thumb { background:rgba(200,169,126,0.3); border-radius:2px; }
+
+  /* Responsive */
+  @media (max-width:900px) {
+    .panel-grid-4 { grid-template-columns:repeat(2,1fr); }
+    .panel-grid-3 { grid-template-columns:1fr 1fr; }
+    .panel-grid-2, .panel-grid-21, .events-grid { grid-template-columns:1fr; }
+    .finance-summary { grid-template-columns:repeat(2,1fr); }
+    .invoice-row { grid-template-columns:1fr 1fr; }
+    .project-tasks { grid-template-columns:1fr 1fr; }
+    .bg-grid { grid-template-columns:repeat(2,1fr); }
+    .dash-quick-stats { gap:1rem; }
+  }
+  @media (max-width:520px) {
+    .panel-grid-4, .panel-grid-3 { grid-template-columns:1fr; }
+    .finance-summary { grid-template-columns:1fr 1fr; }
+    .project-tasks { grid-template-columns:1fr; }
+    .invoice-row { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">Sandstone<span>.</span></a>
+    <div class="nav-badge">Creator Dashboard</div>
+  </div>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back">← Main Site</a>
+    <div class="creator-name-badge" id="nav-creator-badge" style="display:none;">
+      <div class="creator-avatar" id="nav-avatar">?</div>
+      <span id="nav-creator-name">Creator</span>
+    </div>
+  </div>
+</nav>
+
+<!-- LOGIN GATE -->
+<div id="login-gate">
+  <div class="gate-bg-preview">
+    <!-- Fake blurred dashboard in background -->
+    <div class="bg-grid">
+      <div class="bg-card"><div class="bg-bar-chart">
+        <div class="bg-bar" style="height:40%"></div><div class="bg-bar" style="height:65%"></div>
+        <div class="bg-bar" style="height:50%"></div><div class="bg-bar" style="height:80%"></div>
+        <div class="bg-bar" style="height:55%"></div><div class="bg-bar" style="height:70%"></div>
+      </div></div>
+      <div class="bg-card bg-card-tall"></div>
+      <div class="bg-card"></div>
+      <div class="bg-card bg-card-tall"></div>
+      <div class="bg-card bg-card-tall"></div>
+      <div class="bg-card"></div>
+      <div class="bg-card bg-card-tall"></div>
+      <div class="bg-card"><div class="bg-bar-chart">
+        <div class="bg-bar" style="height:60%"></div><div class="bg-bar" style="height:45%"></div>
+        <div class="bg-bar" style="height:90%"></div><div class="bg-bar" style="height:35%"></div>
+        <div class="bg-bar" style="height:70%"></div><div class="bg-bar" style="height:55%"></div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="login-card">
+    <div class="login-eyebrow">Sandstone Growth Advisors</div>
+    <div class="login-title">Creator<br>Dashboard</div>
+    <div class="login-sub">Your analytics, financials, events, and projects — all in one place.</div>
+
+    <div class="platform-pills">
+      <div class="platform-pill"><div class="pill-dot ig"></div>Instagram</div>
+      <div class="platform-pill"><div class="pill-dot tt"></div>TikTok</div>
+      <div class="platform-pill"><div class="pill-dot fin"></div>Financials</div>
+      <div class="platform-pill"><div class="pill-dot ev"></div>Events</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Creator Handle or Email</label>
+      <input type="text" class="form-input" id="login-handle" placeholder="@yourhandle or email">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Access Code</label>
+      <input type="password" class="form-input" id="login-code" placeholder="Provided by your Agency">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Access My Dashboard →</button>
+    <div class="login-note">Access provided through your agency partnership with Sandstone.<br>Need access? <a href="index.html#portal" onclick="openModal()">Contact us →</a></div>
+
+    <div class="demo-hint">
+      <strong>Demo mode:</strong> Enter any handle + code <strong>demo</strong> to preview the dashboard.
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+
+  <!-- Top bar -->
+  <div class="dash-topbar">
+    <div>
+      <div class="dash-greeting">Welcome back, <span id="dash-creator-name">Creator</span></div>
+      <div class="dash-date" id="dash-date"></div>
+    </div>
+    <div class="dash-quick-stats">
+      <div class="qs"><div class="qs-num">847K</div><div class="qs-label">Total Followers</div></div>
+      <div class="qs"><div class="qs-num">$24.6K</div><div class="qs-label">YTD Earnings</div></div>
+      <div class="qs"><div class="qs-num">3</div><div class="qs-label">Active Projects</div></div>
+      <div class="qs"><div class="qs-num">2</div><div class="qs-label">Upcoming Events</div></div>
+    </div>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="dash-tabs">
+    <button class="dash-tab active" onclick="switchTab('overview')">📊 Overview</button>
+    <button class="dash-tab" onclick="switchTab('instagram')">📸 Instagram</button>
+    <button class="dash-tab" onclick="switchTab('tiktok')">🎵 TikTok</button>
+    <button class="dash-tab" onclick="switchTab('financials')">💰 Financials</button>
+    <button class="dash-tab" onclick="switchTab('events')">📅 Events</button>
+    <button class="dash-tab" onclick="switchTab('projects')">🗂️ Projects</button>
+    <button class="dash-tab" onclick="switchTab('meetings')">🤝 Meetings</button>
+  </div>
+
+  <!-- ── OVERVIEW ── -->
+  <div class="dash-panel active" id="panel-overview">
+    <div class="panel-grid-4">
+      <div class="stat-tile">
+        <div class="stat-tile-accent" style="background:var(--ig-grad)"></div>
+        <div class="stat-tile-label"><span class="platform-badge ig">IG</span> Followers</div>
+        <div class="stat-tile-num">524K</div>
+        <div class="stat-tile-change up">↑ +3.2% this month</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-accent" style="background:var(--tt-accent)"></div>
+        <div class="stat-tile-label"><span class="platform-badge tt">TT</span> Followers</div>
+        <div class="stat-tile-num">323K</div>
+        <div class="stat-tile-change up">↑ +8.7% this month</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-accent" style="background:var(--sand)"></div>
+        <div class="stat-tile-label">💰 Monthly Earnings</div>
+        <div class="stat-tile-num">$6.2K</div>
+        <div class="stat-tile-change up">↑ +12% vs last month</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-accent" style="background:var(--seafoam)"></div>
+        <div class="stat-tile-label">🔥 Avg Engagement</div>
+        <div class="stat-tile-num">4.8%</div>
+        <div class="stat-tile-change up">↑ Above industry avg</div>
+      </div>
+    </div>
+
+    <div class="panel-grid-21">
+      <!-- Follower growth chart -->
+      <div class="chart-card">
+        <div class="chart-title">
+          <span class="chart-title-main">Follower Growth — Last 7 Months</span>
+          <span>IG + TT</span>
+        </div>
+        <div class="bar-chart" id="overview-growth-chart"></div>
+        <div style="display:flex;gap:1rem;margin-top:0.8rem;">
+          <div style="display:flex;align-items:center;gap:0.4rem;font-size:0.65rem;color:var(--text-light);">
+            <div style="width:10px;height:10px;background:#DD2A7B;border-radius:1px;"></div> Instagram
+          </div>
+          <div style="display:flex;align-items:center;gap:0.4rem;font-size:0.65rem;color:var(--text-light);">
+            <div style="width:10px;height:10px;background:var(--tt-accent);border-radius:1px;"></div> TikTok
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent activity -->
+      <div class="chart-card">
+        <div class="chart-title"><span class="chart-title-main">Recent Activity</span></div>
+        <div style="display:flex;flex-direction:column;gap:0.8rem;">
+          <div style="display:flex;gap:0.8rem;align-items:flex-start;">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--green);margin-top:5px;flex-shrink:0;"></div>
+            <div><div style="font-size:0.75rem;color:var(--white);">Brand deal signed — Fabletics</div><div style="font-size:0.65rem;color:var(--text-light);">2 days ago</div></div>
+          </div>
+          <div style="display:flex;gap:0.8rem;align-items:flex-start;">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--tt-accent);margin-top:5px;flex-shrink:0;"></div>
+            <div><div style="font-size:0.75rem;color:var(--white);">TikTok reel hit 1.2M views</div><div style="font-size:0.65rem;color:var(--text-light);">3 days ago</div></div>
+          </div>
+          <div style="display:flex;gap:0.8rem;align-items:flex-start;">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--sand);margin-top:5px;flex-shrink:0;"></div>
+            <div><div style="font-size:0.75rem;color:var(--white);">Invoice #0042 paid — $3,500</div><div style="font-size:0.65rem;color:var(--text-light);">5 days ago</div></div>
+          </div>
+          <div style="display:flex;gap:0.8rem;align-items:flex-start;">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--seafoam);margin-top:5px;flex-shrink:0;"></div>
+            <div><div style="font-size:0.75rem;color:var(--white);">Event confirmed — LA Brand Summit</div><div style="font-size:0.65rem;color:var(--text-light);">1 week ago</div></div>
+          </div>
+          <div style="display:flex;gap:0.8rem;align-items:flex-start;">
+            <div style="width:6px;height:6px;border-radius:50%;background:#DD2A7B;margin-top:5px;flex-shrink:0;"></div>
+            <div><div style="font-size:0.75rem;color:var(--white);">IG post reached 180K accounts</div><div style="font-size:0.65rem;color:var(--text-light);">1 week ago</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top performing posts -->
+    <div class="chart-card">
+      <div class="chart-title"><span class="chart-title-main">Top Performing Posts</span><span>Last 30 Days</span></div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Post</th>
+            <th>Platform</th>
+            <th>Reach</th>
+            <th>Likes</th>
+            <th>Comments</th>
+            <th>Eng. Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><div class="post-row-inner"><div class="post-thumb">🏄</div><span>Summer beach reel</span></div></td><td><span class="platform-badge tt">TikTok</span></td><td>1.2M</td><td>84K</td><td>3.2K</td><td style="color:var(--green);">7.3%</td></tr>
+          <tr><td><div class="post-row-inner"><div class="post-thumb">☀️</div><span>Morning routine GRWM</span></div></td><td><span class="platform-badge ig">IG Reel</span></td><td>620K</td><td>41K</td><td>1.8K</td><td style="color:var(--green);">6.9%</td></tr>
+          <tr><td><div class="post-row-inner"><div class="post-thumb">👗</div><span>Fabletics try-on haul</span></div></td><td><span class="platform-badge ig">IG Post</span></td><td>310K</td><td>22K</td><td>890</td><td style="color:var(--yellow);">4.2%</td></tr>
+          <tr><td><div class="post-row-inner"><div class="post-thumb">🌊</div><span>Newport Beach vlog</span></div></td><td><span class="platform-badge tt">TikTok</span></td><td>280K</td><td>19K</td><td>740</td><td style="color:var(--yellow);">3.8%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── INSTAGRAM ── -->
+  <div class="dash-panel" id="panel-instagram">
+    <div class="panel-grid-4">
+      <div class="stat-tile">
+        <div class="stat-tile-accent" style="background:var(--ig-grad)"></div>
+        <div class="stat-tile-label">Followers</div>
+        <div class="stat-tile-num">524K</div>
+        <div class="stat-tile-change up">↑ +16.8K this month</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-accent" style="background:#F58529"></div>
+        <div class="stat-tile-label">Avg Reach / Post</div>
+        <div class="stat-tile-num">182K</div>
+        <div class="stat-tile-change up">↑ +9.1%</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-accent" style="background:#DD2A7B"></div>
+        <div class="stat-tile-label">Engagement Rate</div>
+        <div class="stat-tile-num">4.6%</div>
+        <div class="stat-tile-change neutral">→ Stable</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-accent" style="background:#8134AF"></div>
+        <div class="stat-tile-label">Story Views / Day</div>
+        <div class="stat-tile-num">38K</div>
+        <div class="stat-tile-change up">↑ +5.2%</div>
+      </div>
+    </div>
+
+    <div class="panel-grid-2">
+      <div class="chart-card">
+        <div class="chart-title"><span class="chart-title-main">Weekly Reach — Instagram</span></div>
+        <div class="bar-chart" id="ig-reach-chart"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title"><span class="chart-title-main">Engagement Rate</span></div>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="eng-ring-wrap">
+            <div class="eng-ring">
+              <svg viewBox="0 0 70 70"><circle cx="35" cy="35" r="28" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/><circle cx="35" cy="35" r="28" fill="none" stroke="#DD2A7B" stroke-width="6" stroke-dasharray="175.9 175.9" stroke-dashoffset="95" stroke-linecap="round"/></svg>
+              <div class="eng-ring-val">4.6%</div>
+            </div>
+            <div class="eng-ring-label"><strong>Instagram Engagement</strong>Industry avg: 1.9% · Yours: 4.6%</div>
+          </div>
+          <div>
+            <div class="audience-bar">
+              <div class="audience-bar-header"><span>Female</span><span>62%</span></div>
+              <div class="audience-bar-track"><div class="audience-bar-fill" style="width:62%;background:linear-gradient(90deg,#DD2A7B,#8134AF);"></div></div>
+            </div>
+            <div class="audience-bar">
+              <div class="audience-bar-header"><span>Male</span><span>38%</span></div>
+              <div class="audience-bar-track"><div class="audience-bar-fill" style="width:38%;background:linear-gradient(90deg,var(--ocean-teal),var(--ocean-light));"></div></div>
+            </div>
+            <div class="audience-bar" style="margin-top:0.8rem;">
+              <div class="audience-bar-header"><span>Ages 18–24</span><span>41%</span></div>
+              <div class="audience-bar-track"><div class="audience-bar-fill" style="width:41%;background:var(--sand);"></div></div>
+            </div>
+            <div class="audience-bar">
+              <div class="audience-bar-header"><span>Ages 25–34</span><span>35%</span></div>
+              <div class="audience-bar-track"><div class="audience-bar-fill" style="width:35%;background:rgba(200,169,126,0.5);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title"><span class="chart-title-main">Top Instagram Posts</span><span>Last 30 Days</span></div>
+      <table class="data-table">
+        <thead><tr><th>Post</th><th>Type</th><th>Reach</th><th>Likes</th><th>Comments</th><th>Saves</th><th>Eng. Rate</th></tr></thead>
+        <tbody>
+          <tr><td><div class="post-row-inner"><div class="post-thumb">☀️</div>Morning routine GRWM</div></td><td>Reel</td><td>620K</td><td>41K</td><td>1,820</td><td>6.4K</td><td style="color:var(--green);">6.9%</td></tr>
+          <tr><td><div class="post-row-inner"><div class="post-thumb">👗</div>Fabletics try-on haul</div></td><td>Post</td><td>310K</td><td>22K</td><td>890</td><td>3.1K</td><td style="color:var(--yellow);">4.2%</td></tr>
+          <tr><td><div class="post-row-inner"><div class="post-thumb">🌅</div>Golden hour Newport</div></td><td>Carousel</td><td>195K</td><td>14K</td><td>620</td><td>2.2K</td><td style="color:var(--yellow);">3.6%</td></tr>
+          <tr><td><div class="post-row-inner"><div class="post-thumb">🥗</div>Healthy lunch ideas</div></td><td>Reel</td><td>140K</td><td>9.8K</td><td>410</td><td>1.8K</td><td style="color:var(--text-light);">2.9%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── TIKTOK ── -->
+  <div class="dash-panel" id="panel-tiktok">
+    <div class="panel-grid-4">
+      <div class="stat-tile">
+        <div class="stat-tile-accent" style="background:var(--tt-accent)"></div>
+        <div class="stat-tile-label">Followers</div>
+        <div class="stat-tile-num">323K</div>
+        <div class="stat-tile-change up">↑ +28.1K this month</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-accent" style="background:var(--tt-blue)"></div>
+        <div class="stat-tile-label">Video Views / Mo</div>
+        <div class="stat-tile-num">4.1M</div>
+        <div class="stat-tile-change up">↑ +22%</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-accent" style="background:var(--tt-accent)"></div>
+        <div class="stat-tile-label">Avg Engagement</div>
+        <div class="stat-tile-num">5.2%</div>
+        <div class="stat-tile-change up">↑ Strong growth</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-accent" style="background:var(--tt-blue)"></div>
+        <div class="stat-tile-label">Profile Visits / Mo</div>
+        <div class="stat-tile-num">94K</div>
+        <div class="stat-tile-change up">↑ +18.4%</div>
+      </div>
+    </div>
+
+    <div class="panel-grid-2">
+      <div class="chart-card">
+        <div class="chart-title"><span class="chart-title-main">Weekly Video Views — TikTok</span></div>
+        <div class="bar-chart" id="tt-views-chart"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title"><span class="chart-title-main">Audience & Engagement</span></div>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="eng-ring-wrap">
+            <div class="eng-ring">
+              <svg viewBox="0 0 70 70"><circle cx="35" cy="35" r="28" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/><circle cx="35" cy="35" r="28" fill="none" stroke="var(--tt-accent)" stroke-width="6" stroke-dasharray="175.9 175.9" stroke-dashoffset="83" stroke-linecap="round"/></svg>
+              <div class="eng-ring-val">5.2%</div>
+            </div>
+            <div class="eng-ring-label"><strong>TikTok Engagement</strong>Industry avg: 2.6% · Yours: 5.2%</div>
+          </div>
+          <div>
+            <div class="audience-bar">
+              <div class="audience-bar-header"><span>Ages 18–24</span><span>53%</span></div>
+              <div class="audience-bar-track"><div class="audience-bar-fill" style="width:53%;background:var(--tt-accent);"></div></div>
+            </div>
+            <div class="audience-bar">
+              <div class="audience-bar-header"><span>Ages 25–34</span><span>29%</span></div>
+              <div class="audience-bar-track"><div class="audience-bar-fill" style="width:29%;background:rgba(254,44,85,0.5);"></div></div>
+            </div>
+            <div class="audience-bar">
+              <div class="audience-bar-header"><span>US Audience</span><span>78%</span></div>
+              <div class="audience-bar-track"><div class="audience-bar-fill" style="width:78%;background:var(--tt-blue);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title"><span class="chart-title-main">Top TikTok Videos</span><span>Last 30 Days</span></div>
+      <table class="data-table">
+        <thead><tr><th>Video</th><th>Views</th><th>Likes</th><th>Comments</th><th>Shares</th><th>Eng. Rate</th></tr></thead>
+        <tbody>
+          <tr><td><div class="post-row-inner"><div class="post-thumb">🏄</div>Summer beach reel</div></td><td>1.2M</td><td>84K</td><td>3,210</td><td>12.4K</td><td style="color:var(--green);">7.3%</td></tr>
+          <tr><td><div class="post-row-inner"><div class="post-thumb">🌊</div>Newport Beach vlog</div></td><td>280K</td><td>19K</td><td>740</td><td>3.2K</td><td style="color:var(--yellow);">3.8%</td></tr>
+          <tr><td><div class="post-row-inner"><div class="post-thumb">💪</div>Workout routine POV</div></td><td>210K</td><td>15K</td><td>580</td><td>2.1K</td><td style="color:var(--yellow);">3.5%</td></tr>
+          <tr><td><div class="post-row-inner"><div class="post-thumb">🍜</div>What I eat in a day</div></td><td>175K</td><td>12K</td><td>490</td><td>1.8K</td><td style="color:var(--text-light);">2.9%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── FINANCIALS ── -->
+  <div class="dash-panel" id="panel-financials">
+    <div class="finance-summary">
+      <div><div class="fin-block-label">YTD Earnings</div><div class="fin-block-num">$24,600</div><div class="fin-block-sub" style="color:var(--green);">↑ +38% vs last year</div></div>
+      <div><div class="fin-block-label">Pending Invoices</div><div class="fin-block-num">$7,200</div><div class="fin-block-sub">2 invoices outstanding</div></div>
+      <div><div class="fin-block-label">Avg Deal Size</div><div class="fin-block-num">$3,400</div><div class="fin-block-sub">Across 7 brand deals</div></div>
+      <div><div class="fin-block-label">Next Payout</div><div class="fin-block-num">May 15</div><div class="fin-block-sub">$3,500 · Fabletics</div></div>
+    </div>
+
+    <div class="panel-grid-2" style="margin-bottom:2rem;">
+      <div class="chart-card">
+        <div class="chart-title"><span class="chart-title-main">Monthly Earnings — 2025</span></div>
+        <div class="bar-chart" id="fin-earnings-chart"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title"><span class="chart-title-main">Revenue by Type</span></div>
+        <div style="display:flex;flex-direction:column;gap:0.9rem;margin-top:0.5rem;">
+          <div class="audience-bar"><div class="audience-bar-header"><span>Brand Deals</span><span>$14,200 · 58%</span></div><div class="audience-bar-track"><div class="audience-bar-fill" style="width:58%;background:var(--sand);"></div></div></div>
+          <div class="audience-bar"><div class="audience-bar-header"><span>Sponsored Content</span><span>$6,400 · 26%</span></div><div class="audience-bar-track"><div class="audience-bar-fill" style="width:26%;background:var(--ocean-teal);"></div></div></div>
+          <div class="audience-bar"><div class="audience-bar-header"><span>Affiliate / Commission</span><span>$2,800 · 11%</span></div><div class="audience-bar-track"><div class="audience-bar-fill" style="width:11%;background:var(--seafoam);"></div></div></div>
+          <div class="audience-bar"><div class="audience-bar-header"><span>Appearances / Events</span><span>$1,200 · 5%</span></div><div class="audience-bar-track"><div class="audience-bar-fill" style="width:5%;background:var(--tt-accent);"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-row-header">
+      <div><div class="panel-section-title">Invoices & Payments</div><div class="panel-section-sub">All brand deals and contracts</div></div>
+      <button class="panel-action-btn">+ New Invoice</button>
+    </div>
+    <div class="invoice-list">
+      <div class="invoice-row">
+        <div><div class="invoice-brand">Fabletics</div><div class="invoice-desc">Instagram + TikTok sponsored post series</div></div>
+        <div class="invoice-amount">$3,500</div>
+        <div class="invoice-date">Due May 15</div>
+        <div><span class="status-badge pending">Pending</span></div>
+      </div>
+      <div class="invoice-row">
+        <div><div class="invoice-brand">Hydrant</div><div class="invoice-desc">3-post Instagram campaign</div></div>
+        <div class="invoice-amount">$3,700</div>
+        <div class="invoice-date">Due May 22</div>
+        <div><span class="status-badge pending">Pending</span></div>
+      </div>
+      <div class="invoice-row">
+        <div><div class="invoice-brand">Vuori Clothing</div><div class="invoice-desc">Spring campaign — TikTok + IG Reels</div></div>
+        <div class="invoice-amount">$4,200</div>
+        <div class="invoice-date">Paid Apr 8</div>
+        <div><span class="status-badge paid">Paid</span></div>
+      </div>
+      <div class="invoice-row">
+        <div><div class="invoice-brand">Brightland Olive Oil</div><div class="invoice-desc">Recipe integration reel</div></div>
+        <div class="invoice-amount">$2,800</div>
+        <div class="invoice-date">Paid Mar 22</div>
+        <div><span class="status-badge paid">Paid</span></div>
+      </div>
+      <div class="invoice-row">
+        <div><div class="invoice-brand">Erewhon Market</div><div class="invoice-desc">Story series + in-store appearance</div></div>
+        <div class="invoice-amount">$2,100</div>
+        <div class="invoice-date">Paid Mar 5</div>
+        <div><span class="status-badge paid">Paid</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EVENTS ── -->
+  <div class="dash-panel" id="panel-events">
+    <div class="panel-row-header">
+      <div><div class="panel-section-title">Upcoming Events</div><div class="panel-section-sub">Brand appearances, content shoots, and activations</div></div>
+      <button class="panel-action-btn">+ Add Event</button>
+    </div>
+
+    <div class="events-grid">
+      <div>
+        <div class="event-card">
+          <div class="event-date-block"><div class="event-month">May</div><div class="event-day">14</div></div>
+          <div>
+            <div class="event-name">LA Brand Summit 2025</div>
+            <div class="event-detail">Creator panel + networking · SoFi Stadium, Inglewood<br>9:00 AM – 5:00 PM PT · Travel covered by agency</div>
+            <div class="event-tags"><span class="event-tag appearance">Appearance</span><span class="event-tag brand">Brand</span></div>
+          </div>
+        </div>
+        <div class="event-card" style="margin-top:1rem;">
+          <div class="event-date-block"><div class="event-month">May</div><div class="event-day">21</div></div>
+          <div>
+            <div class="event-name">Fabletics Content Shoot</div>
+            <div class="event-detail">Summer collection shoot · Malibu Beach<br>8:00 AM – 2:00 PM PT · Call sheet TBD</div>
+            <div class="event-tags"><span class="event-tag content">Content</span><span class="event-tag brand">Paid</span></div>
+          </div>
+        </div>
+        <div class="event-card" style="margin-top:1rem;">
+          <div class="event-date-block"><div class="event-month">Jun</div><div class="event-day">3</div></div>
+          <div>
+            <div class="event-name">Sandstone Quarterly Review</div>
+            <div class="event-detail">Strategy & financials review with your Project Lead<br>Virtual · 30 min · Zoom link sent</div>
+            <div class="event-tags"><span class="event-tag">Advisory</span><span class="event-tag">Sandstone</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mini calendar -->
+      <div class="events-calendar">
+        <div class="ecal-header">
+          <button class="ecal-nav">‹</button>
+          <div class="ecal-month">May 2026</div>
+          <button class="ecal-nav">›</button>
+        </div>
+        <div class="ecal-grid" id="events-cal-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROJECTS ── -->
+  <div class="dash-panel" id="panel-projects">
+    <div class="panel-row-header">
+      <div><div class="panel-section-title">Active Projects</div><div class="panel-section-sub">Brand campaigns, content series, and agency deliverables</div></div>
+      <button class="panel-action-btn">+ New Project</button>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div><div class="project-name">Fabletics Summer Campaign</div><div class="project-brand">Fabletics · Brand Deal</div></div>
+        <div class="project-meta">
+          <span class="status-badge" style="background:rgba(74,222,128,0.1);color:var(--green);border:1px solid rgba(74,222,128,0.2);">Active</span>
+          <span style="font-size:0.68rem;color:var(--text-light);">Due Jun 15</span>
+        </div>
+      </div>
+      <div class="project-progress-wrap">
+        <div class="project-progress-label"><span>Overall Progress</span><span>65%</span></div>
+        <div class="project-progress-bar"><div class="project-progress-fill" style="width:65%;"></div></div>
+      </div>
+      <div class="project-tasks">
+        <div class="task-item done-task" onclick="toggleTask(this)"><div class="task-check done">✓</div>Creative brief approved</div>
+        <div class="task-item done-task" onclick="toggleTask(this)"><div class="task-check done">✓</div>Contract signed</div>
+        <div class="task-item done-task" onclick="toggleTask(this)"><div class="task-check done">✓</div>Content shoot scheduled</div>
+        <div class="task-item" onclick="toggleTask(this)"><div class="task-check"></div>Deliver 3 IG posts</div>
+        <div class="task-item" onclick="toggleTask(this)"><div class="task-check"></div>Deliver 2 TikTok reels</div>
+        <div class="task-item" onclick="toggleTask(this)"><div class="task-check"></div>Final approval & go-live</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div><div class="project-name">Hydrant Q2 Content Series</div><div class="project-brand">Hydrant · Sponsored Posts</div></div>
+        <div class="project-meta">
+          <span class="status-badge" style="background:rgba(251,191,36,0.1);color:var(--yellow);border:1px solid rgba(251,191,36,0.2);">In Review</span>
+          <span style="font-size:0.68rem;color:var(--text-light);">Due May 31</span>
+        </div>
+      </div>
+      <div class="project-progress-wrap">
+        <div class="project-progress-label"><span>Overall Progress</span><span>40%</span></div>
+        <div class="project-progress-bar"><div class="project-progress-fill" style="width:40%;background:linear-gradient(90deg,var(--yellow),rgba(251,191,36,0.4));"></div></div>
+      </div>
+      <div class="project-tasks">
+        <div class="task-item done-task" onclick="toggleTask(this)"><div class="task-check done">✓</div>Agreement signed</div>
+        <div class="task-item" onclick="toggleTask(this)"><div class="task-check"></div>Draft content for review</div>
+        <div class="task-item" onclick="toggleTask(this)"><div class="task-check"></div>Brand approval</div>
+        <div class="task-item" onclick="toggleTask(this)"><div class="task-check"></div>Post 3 sponsored stories</div>
+        <div class="task-item" onclick="toggleTask(this)"><div class="task-check"></div>Submit performance report</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div><div class="project-name">Agency Onboarding — Sandstone</div><div class="project-brand">Sandstone Growth Advisors · Advisory</div></div>
+        <div class="project-meta">
+          <span class="status-badge" style="background:rgba(91,163,201,0.1);color:var(--ocean-light);border:1px solid rgba(91,163,201,0.2);">Setup</span>
+          <span style="font-size:0.68rem;color:var(--text-light);">Ongoing</span>
+        </div>
+      </div>
+      <div class="project-progress-wrap">
+        <div class="project-progress-label"><span>Overall Progress</span><span>80%</span></div>
+        <div class="project-progress-bar"><div class="project-progress-fill" style="width:80%;background:linear-gradient(90deg,var(--sand),rgba(200,169,126,0.4));"></div></div>
+      </div>
+      <div class="project-tasks">
+        <div class="task-item done-task" onclick="toggleTask(this)"><div class="task-check done">✓</div>MSA executed</div>
+        <div class="task-item done-task" onclick="toggleTask(this)"><div class="task-check done">✓</div>Financial model set up</div>
+        <div class="task-item done-task" onclick="toggleTask(this)"><div class="task-check done">✓</div>Dashboard access granted</div>
+        <div class="task-item done-task" onclick="toggleTask(this)"><div class="task-check done">✓</div>Platform analytics linked</div>
+        <div class="task-item" onclick="toggleTask(this)"><div class="task-check"></div>Q2 strategy session</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MEETINGS ── -->
+  <div class="dash-panel" id="panel-meetings">
+    <div class="panel-grid-2">
+      <div>
+        <div class="panel-row-header">
+          <div><div class="panel-section-title">Upcoming Meetings</div><div class="panel-section-sub">With your Sandstone Project Lead & agency</div></div>
+          <button class="panel-action-btn" onclick="switchTab('events')">+ Schedule</button>
+        </div>
+
+        <div class="meeting-card">
+          <div class="meeting-time-block"><div class="meeting-time">10:00</div><div class="meeting-ampm">AM PT</div></div>
+          <div class="meeting-divider"></div>
+          <div class="meeting-info">
+            <div class="meeting-name">Weekly Check-In — Reid Connolly</div>
+            <div class="meeting-detail">May 9 · 30 min · Financial review + brand deal updates</div>
+          </div>
+          <button class="meeting-join-btn">Join Zoom →</button>
+        </div>
+
+        <div class="meeting-card">
+          <div class="meeting-time-block"><div class="meeting-time">2:00</div><div class="meeting-ampm">PM PT</div></div>
+          <div class="meeting-divider"></div>
+          <div class="meeting-info">
+            <div class="meeting-name">Agency Strategy Session</div>
+            <div class="meeting-detail">May 14 · 45 min · Q2 content strategy alignment</div>
+          </div>
+          <button class="meeting-join-btn">Join Zoom →</button>
+        </div>
+
+        <div class="meeting-card">
+          <div class="meeting-time-block"><div class="meeting-time">11:00</div><div class="meeting-ampm">AM PT</div></div>
+          <div class="meeting-divider"></div>
+          <div class="meeting-info">
+            <div class="meeting-name">Fabletics Brand Kickoff</div>
+            <div class="meeting-detail">May 21 · 60 min · Campaign brief + content direction</div>
+          </div>
+          <button class="meeting-join-btn">Join Zoom →</button>
+        </div>
+
+        <div style="margin-top:1.5rem; border-top:1px solid rgba(200,169,126,0.1); padding-top:1.5rem;">
+          <div class="panel-section-title" style="font-size:1.1rem;margin-bottom:0.8rem;">Past Meetings</div>
+          <div class="meeting-card" style="opacity:0.55;">
+            <div class="meeting-time-block"><div class="meeting-time">10:00</div><div class="meeting-ampm">AM PT</div></div>
+            <div class="meeting-divider"></div>
+            <div class="meeting-info">
+              <div class="meeting-name">Monthly Financial Review</div>
+              <div class="meeting-detail">May 1 · 45 min · Earnings recap + invoice status</div>
+            </div>
+            <button class="meeting-join-btn past">View Notes</button>
+          </div>
+          <div class="meeting-card" style="opacity:0.55;">
+            <div class="meeting-time-block"><div class="meeting-time">3:30</div><div class="meeting-ampm">PM PT</div></div>
+            <div class="meeting-divider"></div>
+            <div class="meeting-info">
+              <div class="meeting-name">Onboarding — Sandstone</div>
+              <div class="meeting-detail">Apr 22 · 60 min · Dashboard setup + goals</div>
+            </div>
+            <button class="meeting-join-btn past">View Notes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schedule new meeting -->
+      <div class="portal-card" style="background:rgba(13,43,62,0.8);border:1px solid rgba(200,169,126,0.2);padding:2rem;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--white);margin-bottom:0.3rem;">Schedule a Meeting</div>
+        <div style="font-size:0.72rem;color:var(--text-light);margin-bottom:1.5rem;">Book time with your Project Lead</div>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="form-group" style="margin:0;">
+            <label class="form-label">Meeting Type</label>
+            <select class="form-input" style="cursor:pointer;">
+              <option disabled selected>Select type</option>
+              <option>Weekly Check-In (30 min)</option>
+              <option>Financial Review (45 min)</option>
+              <option>Brand Deal Strategy (45 min)</option>
+              <option>Content Planning (30 min)</option>
+              <option>Quarterly Review (60 min)</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label class="form-label">Preferred Date</label>
+            <input type="date" class="form-input">
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label class="form-label">Preferred Time (PT)</label>
+            <select class="form-input" style="cursor:pointer;">
+              <option disabled selected>Select time</option>
+              <option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option>
+              <option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option>
+            </select>
+          </div>
+          <button class="login-btn" style="margin-top:0.5rem;" onclick="alert('Meeting request sent! Your Project Lead will confirm within 24 hours.')">Request Meeting →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end dashboard -->
+
+<script>
+  // ── LOGIN ──
+  function doLogin() {
+    const handle = document.getElementById('login-handle').value.trim();
+    const code = document.getElementById('login-code').value.trim();
+    if (!handle) { alert('Please enter your creator handle or email.'); return; }
+    if (!code) { alert('Please enter your access code.'); return; }
+
+    const displayName = handle.startsWith('@') ? handle : '@' + handle.split('@')[0];
+
+    // Show dashboard
+    document.getElementById('login-gate').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+
+    // Update name displays
+    document.getElementById('dash-creator-name').textContent = displayName;
+    document.getElementById('nav-creator-name').textContent = displayName;
+    document.getElementById('nav-avatar').textContent = displayName.replace('@','').charAt(0).toUpperCase();
+    document.getElementById('nav-creator-badge').style.display = 'flex';
+
+    // Set date
+    const now = new Date();
+    document.getElementById('dash-date').textContent = now.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+    // Render charts
+    setTimeout(() => {
+      renderCharts();
+      renderEventsCalendar();
+    }, 100);
+  }
+
+  // Enter key login
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && document.getElementById('login-gate').style.display !== 'none') doLogin();
+  });
+
+  // ── TABS ──
+  function switchTab(tab) {
+    document.querySelectorAll('.dash-tab').forEach((t,i) => {
+      const tabs = ['overview','instagram','tiktok','financials','events','projects','meetings'];
+      t.classList.toggle('active', tabs[i] === tab);
+    });
+    document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById('panel-' + tab);
+    if (panel) panel.classList.add('active');
+  }
+
+  // ── TASKS ──
+  function toggleTask(el) {
+    const check = el.querySelector('.task-check');
+    const isDone = el.classList.contains('done-task');
+    el.classList.toggle('done-task', !isDone);
+    check.classList.toggle('done', !isDone);
+    check.textContent = isDone ? '' : '✓';
+  }
+
+  // ── CHARTS ──
+  function renderCharts() {
+    // Overview growth
+    buildBarChart('overview-growth-chart', [
+      {h:'42%',cls:'ig-color'},{h:'48%',cls:'tt-color'},
+      {h:'55%',cls:'ig-color'},{h:'62%',cls:'tt-color'},
+      {h:'60%',cls:'ig-color'},{h:'75%',cls:'tt-color'},
+      {h:'68%',cls:'ig-color'},{h:'85%',cls:'tt-color'},
+      {h:'72%',cls:'ig-color'},{h:'90%',cls:'tt-color'},
+      {h:'78%',cls:'ig-color'},{h:'95%',cls:'tt-color'},
+      {h:'82%',cls:'ig-color'},{h:'100%',cls:'tt-color'},
+    ], ['Nov','Nov','Dec','Dec','Jan','Jan','Feb','Feb','Mar','Mar','Apr','Apr','May','May']);
+
+    // IG reach
+    buildBarChart('ig-reach-chart', [
+      {h:'55%',cls:'ig-color'},{h:'70%',cls:'ig-color'},{h:'48%',cls:'ig-color'},
+      {h:'82%',cls:'ig-color'},{h:'60%',cls:'ig-color'},{h:'90%',cls:'ig-color'},{h:'74%',cls:'ig-color'},
+    ], ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']);
+
+    // TT views
+    buildBarChart('tt-views-chart', [
+      {h:'60%',cls:'tt-color'},{h:'45%',cls:'tt-color'},{h:'80%',cls:'tt-color'},
+      {h:'55%',cls:'tt-color'},{h:'95%',cls:'tt-color'},{h:'70%',cls:'tt-color'},{h:'85%',cls:'tt-color'},
+    ], ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']);
+
+    // Financials
+    buildBarChart('fin-earnings-chart', [
+      {h:'30%',cls:'sand-color'},{h:'40%',cls:'sand-color'},{h:'50%',cls:'sand-color'},
+      {h:'45%',cls:'sand-color'},{h:'70%',cls:'sand-color'},{h:'60%',cls:'sand-color'},
+      {h:'80%',cls:'sand-color'},{h:'75%',cls:'sand-color'},
+    ], ['Oct','Nov','Dec','Jan','Feb','Mar','Apr','May']);
+  }
+
+  function buildBarChart(id, bars, labels) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = '';
+    bars.forEach((b, i) => {
+      const col = document.createElement('div');
+      col.className = 'bar-col';
+      col.innerHTML = `<div class="bar-fill ${b.cls}" style="height:${b.h};min-height:4px;"></div><div class="bar-label">${labels && labels[i] ? labels[i] : ''}</div>`;
+      el.appendChild(col);
+    });
+  }
+
+  // ── EVENTS CALENDAR ──
+  function renderEventsCalendar() {
+    const grid = document.getElementById('events-cal-grid');
+    if (!grid) return;
+    const eventDays = [14, 21, 3]; // May 14, 21, Jun 3 (show May)
+    const days = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+    let html = days.map(d => `<div class="ecal-day-header">${d}</div>`).join('');
+    const firstDay = new Date(2026, 4, 1).getDay(); // May 2026
+    const daysInMay = 31;
+    const today = 8; // May 8 2026
+    for (let i=0;i<firstDay;i++) html += `<div class="ecal-day empty"></div>`;
+    for (let d=1;d<=daysInMay;d++) {
+      let cls = 'ecal-day';
+      if (d === today) cls += ' today';
+      if (eventDays.includes(d)) cls += ' has-event';
+      if (d < today) cls += ' past';
+      html += `<div class="${cls}">${d}</div>`;
+    }
+    grid.innerHTML = html;
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Portal · Sandstone Growth Advisors</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ocean: #0D2B3E;
+  --ocean-mid: #1A4A6B;
+  --ocean-teal: #2E7DA8;
+  --sand: #C8A97E;
+  --sand-light: #E8D5B7;
+  --seafoam: #A8D5E2;
+  --white: #FDFAF6;
+  --muted: #7A9BB5;
+  --border: rgba(200,169,126,0.22);
+  --faint: rgba(200,169,126,0.07);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--ocean);
+  color: var(--white);
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* animated ocean background */
+.bg {
+  position: fixed; inset: 0; z-index: 0;
+  background: linear-gradient(160deg, #0A1F2E 0%, #0D2B3E 50%, #0A2233 100%);
+}
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(200,169,126,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,169,126,0.04) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+.wave-wrap {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 0; height: 40vh; overflow: hidden;
+}
+.wave { position: absolute; bottom: 0; left: -10%; width: 120%; }
+.wave svg { width: 100%; }
+.w1 { animation: wv 9s linear infinite; opacity: .5; }
+.w2 { animation: wv 13s linear infinite reverse; opacity: .3; bottom: 10px; }
+.w3 { animation: wv 17s linear infinite; opacity: .18; bottom: 20px; }
+@keyframes wv { 0%,100%{transform:translateX(0)} 50%{transform:translateX(-4%)} }
+
+/* floating particles */
+.particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.p { position: absolute; width: 2px; height: 2px; background: var(--sand); border-radius: 50%; opacity: 0; animation: tw var(--d) ease-in-out infinite var(--dl); }
+@keyframes tw { 0%,100%{opacity:0;transform:scale(.5)} 50%{opacity:.5;transform:scale(1)} }
+
+/* NAV */
+nav {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 5%;
+  border-bottom: 1px solid var(--border);
+  background: rgba(13,43,62,0.6);
+  backdrop-filter: blur(12px);
+}
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 600;
+  color: var(--sand-light); letter-spacing: 0.04em; text-decoration: none;
+}
+.logo em { color: var(--sand); font-style: normal; }
+.nav-back {
+  font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none; transition: color .2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.nav-back:hover { color: var(--sand); }
+
+/* MAIN */
+.main {
+  position: relative; z-index: 10;
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 2rem 5%;
+}
+
+.portal-wrap {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; max-width: 900px; width: 100%;
+  border: 1px solid var(--border);
+  box-shadow: 0 40px 100px rgba(0,0,0,.5);
+  animation: fadeUp .6s ease both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+/* left: brand panel */
+.portal-brand {
+  background: linear-gradient(160deg, #0D2B3E 0%, #112236 100%);
+  border-right: 1px solid var(--border);
+  padding: 3rem 2.5rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+.portal-brand::before {
+  content: '';
+  position: absolute; bottom: -80px; right: -80px;
+  width: 280px; height: 280px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(46,125,168,0.12) 0%, transparent 70%);
+}
+.brand-eyebrow {
+  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--sand); display: flex; align-items: center; gap: 10px;
+  margin-bottom: 1rem;
+}
+.brand-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--sand); }
+.brand-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem; font-weight: 300; color: var(--white); line-height: 1.15;
+  margin-bottom: 1.2rem;
+}
+.brand-title em { font-style: italic; color: var(--seafoam); }
+.brand-rule { width: 44px; height: 2px; background: var(--sand); margin-bottom: 1.2rem; }
+.brand-desc {
+  font-size: 0.82rem; color: var(--muted); line-height: 1.8;
+  font-weight: 300; margin-bottom: 2rem;
+}
+.feature-list { display: flex; flex-direction: column; gap: 10px; }
+.feature-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.75rem; color: rgba(200,169,126,0.7);
+  padding: 8px 0; border-bottom: 1px solid rgba(200,169,126,0.08);
+}
+.feature-item:last-child { border-bottom: none; }
+.feature-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--sand); flex-shrink: 0; }
+.brand-footer {
+  margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--border);
+  font-size: 0.62rem; color: rgba(122,155,181,0.4); letter-spacing: 0.06em;
+}
+
+/* right: login panel */
+.portal-login {
+  background: rgba(13,43,62,0.95);
+  padding: 3rem 2.5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  backdrop-filter: blur(20px);
+}
+.login-eyebrow {
+  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ocean-teal); margin-bottom: 0.8rem;
+}
+.login-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem; font-weight: 300; color: var(--white);
+  margin-bottom: 0.4rem;
+}
+.login-sub {
+  font-size: 0.78rem; color: var(--muted); margin-bottom: 2rem;
+  line-height: 1.6; font-weight: 300;
+}
+
+/* client type selector */
+.client-types {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 8px; margin-bottom: 1.8rem;
+}
+.ctype {
+  padding: 10px 6px; border: 1px solid rgba(200,169,126,0.15);
+  cursor: pointer; text-align: center; transition: all .2s;
+  background: rgba(255,255,255,0.03);
+}
+.ctype:hover { border-color: var(--border); background: rgba(255,255,255,0.05); }
+.ctype.active { border-color: var(--sand); background: rgba(200,169,126,0.08); }
+.ctype-icon { font-size: 1.1rem; display: block; margin-bottom: 4px; }
+.ctype-lbl {
+  font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); display: block;
+}
+.ctype.active .ctype-lbl { color: var(--sand); }
+
+/* form */
+.fgroup { margin-bottom: 1rem; }
+.flbl {
+  font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); display: block; margin-bottom: 5px;
+}
+.finput {
+  width: 100%; padding: 11px 13px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(200,169,126,0.15);
+  color: var(--white); font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem; font-weight: 300; outline: none;
+  transition: border-color .2s, background .2s;
+  -webkit-appearance: none;
+}
+.finput::placeholder { color: rgba(122,155,181,0.35); }
+.finput:focus { border-color: var(--sand); background: rgba(200,169,126,0.04); }
+
+.login-btn {
+  width: 100%; padding: 13px; background: var(--sand); color: var(--ocean);
+  border: none; font-family: 'DM Sans', sans-serif; font-size: 0.78rem;
+  letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;
+  cursor: pointer; transition: all .2s; margin-top: 0.5rem;
+}
+.login-btn:hover { background: var(--sand-light); }
+
+.login-error {
+  font-size: 0.72rem; color: #F87171; margin-top: 0.8rem;
+  text-align: center; display: none; letter-spacing: 0.04em;
+}
+.login-error.show { display: block; }
+
+.login-note {
+  font-size: 0.65rem; color: rgba(122,155,181,0.45);
+  text-align: center; margin-top: 1rem; line-height: 1.7; letter-spacing: 0.03em;
+}
+.login-note a { color: var(--sand); text-decoration: none; }
+
+/* demo hint */
+.demo-codes {
+  margin-top: 1.5rem; padding: 1rem;
+  background: rgba(200,169,126,0.06); border: 1px solid rgba(200,169,126,0.12);
+}
+.demo-codes-hdr {
+  font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--sand); margin-bottom: 8px;
+}
+.demo-code-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 0.72rem;
+}
+.demo-code-row:last-child { border-bottom: none; }
+.dc-type { color: var(--muted); }
+.dc-code {
+  font-family: 'Courier New', monospace; color: var(--sand);
+  background: rgba(200,169,126,0.1); padding: 2px 8px;
+  font-size: 0.68rem; cursor: pointer; transition: background .15s;
+}
+.dc-code:hover { background: rgba(200,169,126,0.2); }
+
+/* loading state */
+.loading-wrap {
+  display: none; position: fixed; inset: 0; z-index: 100;
+  background: var(--ocean); align-items: center; justify-content: center;
+  flex-direction: column; gap: 16px;
+}
+.loading-wrap.show { display: flex; }
+.loader-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; font-weight: 300; color: var(--sand-light);
+  animation: ldPulse 1.5s ease-in-out infinite;
+}
+@keyframes ldPulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+.loader-bar-wrap {
+  width: 180px; height: 2px; background: rgba(200,169,126,0.15);
+}
+.loader-bar {
+  height: 100%; background: var(--sand);
+  animation: ldBar 1.2s ease-in-out forwards;
+}
+@keyframes ldBar { from{width:0} to{width:100%} }
+.loader-txt {
+  font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media(max-width:700px) {
+  .portal-wrap { grid-template-columns: 1fr; }
+  .portal-brand { display: none; }
+  .client-types { grid-template-columns: repeat(3,1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="bg-grid"></div>
+<div class="particles" id="particles"></div>
+<div class="wave-wrap">
+  <div class="wave w1"><svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,50 C240,90 480,10 720,50 C960,90 1200,10 1440,50 L1440,100 L0,100 Z" fill="rgba(26,74,107,0.5)"/></svg></div>
+  <div class="wave w2"><svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,40 C360,80 720,10 1080,50 C1260,70 1380,30 1440,50 L1440,100 L0,100 Z" fill="rgba(46,125,168,0.3)"/></svg></div>
+  <div class="wave w3"><svg viewBox="0 0 1440,100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,60 C200,30 600,80 900,50 C1100,30 1300,70 1440,55 L1440,100 L0,100 Z" fill="rgba(13,43,62,0.8)"/></svg></div>
+</div>
+
+<div class="loading-wrap" id="loadingWrap">
+  <div class="loader-logo">Sandstone.</div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  <div class="loader-txt">Loading your dashboard</div>
+</div>
+
+<nav>
+  <a href="index.html" class="logo">Sandstone<em>.</em></a>
+  <a href="index.html" class="nav-back">← Back to main site</a>
+</nav>
+
+<div class="main">
+  <div class="portal-wrap">
+
+    <!-- Brand panel -->
+    <div class="portal-brand">
+      <div>
+        <div class="brand-eyebrow">Client Portal</div>
+        <h1 class="brand-title">Your Growth<br><em>Dashboard</em></h1>
+        <div class="brand-rule"></div>
+        <p class="brand-desc">One secure workspace for every Sandstone client. Track performance, manage finances, schedule events, and stay aligned with your Project Lead.</p>
+        <div class="feature-list">
+          <div class="feature-item"><div class="feature-dot"></div>Real-time performance analytics</div>
+          <div class="feature-item"><div class="feature-dot"></div>Revenue tracking &amp; tax estimator</div>
+          <div class="feature-item"><div class="feature-dot"></div>Events &amp; scheduling calendar</div>
+          <div class="feature-item"><div class="feature-dot"></div>Invoice management</div>
+          <div class="feature-item"><div class="feature-dot"></div>Project milestones &amp; check-ins</div>
+          <div class="feature-item"><div class="feature-dot"></div>Direct access to your Project Lead</div>
+        </div>
+      </div>
+      <div class="brand-footer">
+        Sandstone Growth Advisors &nbsp;·&nbsp; Newport Beach, CA &nbsp;·&nbsp; Secure &amp; Confidential
+      </div>
+    </div>
+
+    <!-- Login panel -->
+    <div class="portal-login">
+      <div class="login-eyebrow">Secure Access</div>
+      <div class="login-title">Welcome back.</div>
+      <p class="login-sub">Select your client type and enter your credentials to access your dashboard.</p>
+
+      <!-- Client type -->
+      <div class="client-types">
+        <div class="ctype active" data-type="agency" onclick="selectType(this)">
+          <span class="ctype-icon">🏢</span>
+          <span class="ctype-lbl">Agency</span>
+        </div>
+        <div class="ctype" data-type="creator" onclick="selectType(this)">
+          <span class="ctype-icon">✦</span>
+          <span class="ctype-lbl">Creator</span>
+        </div>
+        <div class="ctype" data-type="brand" onclick="selectType(this)">
+          <span class="ctype-icon">📈</span>
+          <span class="ctype-lbl">Brand / SMB</span>
+        </div>
+      </div>
+
+      <div class="fgroup">
+        <label class="flbl">Email or Company Name</label>
+        <input class="finput" id="f-email" type="text" placeholder="you@company.com" autocomplete="off">
+      </div>
+      <div class="fgroup">
+        <label class="flbl">Access Code</label>
+        <input class="finput" id="f-code" type="password" placeholder="Provided by your Project Lead" autocomplete="off">
+      </div>
+
+      <button class="login-btn" onclick="doLogin()">Access My Dashboard →</button>
+      <div class="login-error" id="loginError">Invalid access code. Please check with your Project Lead.</div>
+
+      <div class="login-note">
+        Don't have access yet? <a href="index.html#portal">Start a project →</a><br>
+        Access codes are provided during your onboarding session.
+      </div>
+
+      <div class="demo-codes">
+        <div class="demo-codes-hdr">Demo Access Codes</div>
+        <div class="demo-code-row">
+          <span class="dc-type">Agency (Dymes)</span>
+          <span class="dc-code" onclick="fillCode('DYMES2026')" title="Click to fill">DYMES2026</span>
+        </div>
+        <div class="demo-code-row">
+          <span class="dc-type">Creator</span>
+          <span class="dc-code" onclick="fillCode('CREATOR2026')" title="Click to fill">CREATOR2026</span>
+        </div>
+        <div class="demo-code-row">
+          <span class="dc-type">Brand / SMB</span>
+          <span class="dc-code" onclick="fillCode('BRAND2026')" title="Click to fill">BRAND2026</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Particles
+var pc = document.getElementById('particles');
+for(var i=0;i<50;i++){
+  var p=document.createElement('div');p.className='p';
+  p.style.left=Math.random()*100+'%';p.style.top=Math.random()*70+'%';
+  p.style.setProperty('--d',(3+Math.random()*5)+'s');
+  p.style.setProperty('--dl',(Math.random()*6)+'s');
+  pc.appendChild(p);
+}
+
+var clientType='agency';
+function selectType(el){
+  document.querySelectorAll('.ctype').forEach(function(c){c.classList.remove('active')});
+  el.classList.add('active');
+  clientType=el.dataset.type;
+}
+
+function fillCode(code){
+  document.getElementById('f-code').value=code;
+  // auto-select type based on code
+  if(code==='DYMES2026'){
+    document.querySelectorAll('.ctype').forEach(function(c){c.classList.remove('active')});
+    document.querySelector('.ctype[data-type="agency"]').classList.add('active');
+    clientType='agency';
+  } else if(code==='CREATOR2026'){
+    document.querySelectorAll('.ctype').forEach(function(c){c.classList.remove('active')});
+    document.querySelector('.ctype[data-type="creator"]').classList.add('active');
+    clientType='creator';
+  } else if(code==='BRAND2026'){
+    document.querySelectorAll('.ctype').forEach(function(c){c.classList.remove('active')});
+    document.querySelector('.ctype[data-type="brand"]').classList.add('active');
+    clientType='brand';
+  }
+}
+
+var CODES={
+  'DYMES2026':   {type:'agency',   dest:'dashboard-agency.html',  name:'Dymes Agency'},
+  'CREATOR2026': {type:'creator',  dest:'dashboard-client.html?type=creator&name=Creator', name:'Creator'},
+  'BRAND2026':   {type:'brand',    dest:'dashboard-client.html?type=brand&name=Your+Brand', name:'Brand'},
+};
+
+function doLogin(){
+  var email=document.getElementById('f-email').value.trim();
+  var code=document.getElementById('f-code').value.trim().toUpperCase();
+  var err=document.getElementById('loginError');
+  if(!email){err.textContent='Please enter your email or company name.';err.classList.add('show');return}
+  if(!code){err.textContent='Please enter your access code.';err.classList.add('show');return}
+  var match=CODES[code];
+  if(!match){err.classList.add('show');return}
+  err.classList.remove('show');
+  // show loading
+  document.getElementById('loadingWrap').classList.add('show');
+  // store session
+  try{sessionStorage.setItem('sga_user',JSON.stringify({email:email,type:match.type,name:match.name,code:code}))}catch(e){}
+  setTimeout(function(){window.location.href=match.dest},1400);
+}
+
+// Enter key
+document.addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
+</script>
+</body>
+</html>
