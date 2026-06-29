@@ -260,17 +260,17 @@ function toast(msg){
 // ── TABS ──
 var creatorTabs=[
   {id:'overview', icon:'◈', label:'Overview'},
-  {id:'analytics',icon:'📊',label:'Analytics'},
-  {id:'financials',icon:'💰',label:'Financials'},
-  {id:'events',   icon:'📅',label:'Events'},
-  {id:'meetings', icon:'🤝',label:'Meetings'},
+  {id:'analytics',icon:'',label:'Analytics'},
+  {id:'financials',icon:'',label:'Financials'},
+  {id:'events',   icon:'',label:'Events'},
+  {id:'meetings', icon:'',label:'Meetings'},
 ];
 var brandTabs=[
   {id:'overview',  icon:'◈', label:'Overview'},
-  {id:'operations',icon:'⚙',label:'Operations'},
-  {id:'financials',icon:'💰',label:'Financials'},
-  {id:'events',    icon:'📅',label:'Events'},
-  {id:'meetings',  icon:'🤝',label:'Meetings'},
+  {id:'operations',icon:'',label:'Operations'},
+  {id:'financials',icon:'',label:'Financials'},
+  {id:'events',    icon:'',label:'Events'},
+  {id:'meetings',  icon:'',label:'Meetings'},
 ];
 var TABS=isCreator?creatorTabs:brandTabs;
 
@@ -628,7 +628,7 @@ function buildMeetings(){return`
       </div>
       <div><label class="fi-lbl">Notes (optional)</label><input class="fi-inp" id="sched-notes" placeholder="Topics to cover, questions..."></div>
       <button class="book-btn" onclick="bookMeeting()">Request Meeting →</button>
-      <div id="sched-confirm" style="display:none;text-align:center;padding:12px;font-size:.78rem;color:var(--seafoam);margin-top:8px">✦ Request sent! Your Project Lead will confirm within 24 hours.</div>
+      <div id="sched-confirm" style="display:none;text-align:center;padding:12px;font-size:.78rem;color:var(--seafoam);margin-top:8px">Request sent! Your Project Lead will confirm within 24 hours.</div>
     </div>
   </div>
 </div>`;}
